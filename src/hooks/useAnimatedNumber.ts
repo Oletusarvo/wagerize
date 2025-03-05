@@ -17,10 +17,10 @@ export function useAnimatedNumber(targetValue: number, updateSpeed = 0, rounding
           clearInterval(interval);
         }
 
-        return rounding ? (newValue < 0 ? Math.ceil(newValue) : Math.floor(newValue)) : newValue;
+        return newValue;
       });
     }, updateSpeed);
   }, [targetValue]);
 
-  return { currentValue };
+  return rounding ? Math.trunc(currentValue) : currentValue;
 }

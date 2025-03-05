@@ -5,11 +5,10 @@ import { useAnimatedNumber } from '@/hooks/useAnimatedNumber';
 import { useClassName } from '@/hooks/useClassName';
 import { Casino } from '@mui/icons-material';
 import { usePathname } from 'next/navigation';
-import { useEffect } from 'react';
 
 export function WalletDisplay() {
-  const { user, status: sessionStatus, updateSession } = useUserContext();
-  const { currentValue: currentBalance } = useAnimatedNumber(user?.wallet.balance || 0, 25, true);
+  const { user, updateSession } = useUserContext();
+  const currentBalance = useAnimatedNumber(user?.wallet.balance || 0, 25, true);
   const pathname = usePathname();
   const balance = user
     ? new Intl.NumberFormat('en-US', {

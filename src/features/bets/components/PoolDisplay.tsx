@@ -5,7 +5,7 @@ import { useClassName } from '@/hooks/useClassName';
 import { Casino } from '@mui/icons-material';
 
 export function PoolDisplay({ amount, status = 'neutral' }: PoolDisplayProps) {
-  const { currentValue: currentPool } = useAnimatedNumber(amount, 25, true);
+  const currentPool = useAnimatedNumber(amount, 25, true);
 
   const className = useClassName([
     'w-[75%] rounded-full border flex gap-2 items-center justify-center aspect-square text-2xl',
