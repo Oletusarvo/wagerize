@@ -5,6 +5,7 @@
   "start_url": "/",
   "background_color": "#ffffff",
   "theme_color": "#6f3b6a",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "/vercel.svg",
