@@ -19,10 +19,11 @@ export function useRegisterForm() {
   const onSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
-      registerCredentialsSchema.parse(credentials);
+
       let currentStatus: typeof status = 'loading';
       setStatus(currentStatus);
       try {
+        registerCredentialsSchema.parse(credentials);
         const result = await registerUserAction(credentials);
         if (result.code === 0) {
           toast.success('Registration succeeded!');
@@ -35,13 +36,14 @@ export function useRegisterForm() {
           currentStatus = 'error';
         }
       } catch (err) {
+        console.log(err.message);
         toast.error('An unknown error occured!');
         currentStatus = 'error';
       } finally {
         setStatus(currentStatus);
       }
     },
-    [setStatus, router, registerUserAction]
+    [setStatus, router, registerUserAction, credentials]
   );
 
   return { credentials, updateCredentials, onSubmit, status };

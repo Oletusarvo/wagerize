@@ -45,7 +45,7 @@ export function useLoginForm() {
         setStatus(currentStatus);
       }
     },
-    [credentials, setStatus]
+    [credentials, setStatus, router]
   );
 
   return { credentials, status, onSubmit, updateCredentials };

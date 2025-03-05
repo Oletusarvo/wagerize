@@ -49,7 +49,12 @@ export function RegisterForm() {
       </InputGroup>
       <div className='flex w-full justify-between items-center'>
         <span>
-          I have read the <Link href='/'>Terms Of Service.</Link>
+          I have read the{' '}
+          <Link
+            href='/tos.pdf'
+            target='_blank'>
+            Terms Of Service.
+          </Link>
         </span>
         <input
           type='checkbox'

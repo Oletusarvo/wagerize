@@ -36,14 +36,14 @@ export function AppHeader() {
   return (
     <Header>
       <div className='flex justify-between items-center w-full'>
-        <div>
+        <div className='flex flex-col'>
           <Link
             className='flex gap-2 items-center index-link'
             href='/'>
             <Casino sx={{ transform: 'rotate(45deg)' }} />
             <h1 className='text-xl font-semibold'>Wager Wave</h1>
           </Link>
-          <small>{pkg.version}</small>
+          <small className='ml-8'>{pkg.version}</small>
         </div>
 
         <nav className='gap-8 xs:hidden lg:flex'>{getLinks()}</nav>
