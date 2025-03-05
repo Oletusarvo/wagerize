@@ -1,6 +1,6 @@
 {
-  "name": "betting_app",
-  "version": "0.1.0",
+  "name": "wager_wave",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "node server.mjs --turbopack",

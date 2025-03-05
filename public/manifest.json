@@ -1,9 +1,10 @@
 {
-  "short_name": "BA",
-  "name": "Betting App",
+  "short_name": "WW",
+  "name": "Wager Wave",
   "display": "standalone",
   "start_url": "/",
   "background_color": "#ffffff",
+  "theme_color": "#6f3b6a",
   "icons": [
     {
       "src": "/vercel.svg",
