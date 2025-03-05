@@ -15,14 +15,17 @@ export abstract class Bets {
     ctx: Knex | Knex.Transaction;
   }) {
     const q = ctx('bets.bet as bet').leftJoin(db.raw('bets.bid as bid on bid.bet_id = bet.id'));
+    //.leftJoin(db.raw('bets.outcome as outcome on outcome.bet_id = bet.id'));
+
     if (search) {
       q.where(function () {
-        const str = `${search}`;
-        this.where(db.raw("data->>'title' ilike ?", [str])).orWhere(
-          db.raw("data->>'description' ilike ?", [str])
-        );
+        const str = `%${search}%`;
+        this.whereRaw("data->>'title' ILIKE ?", [str]).orWhereRaw("data->>'description' ILIKE ?", [
+          str,
+        ]);
       });
     }
+
     if (query) {
       if (search) {
         q.andWhere(query);
@@ -31,7 +34,11 @@ export abstract class Bets {
       }
     }
 
-    q.select([...(select || 'bet.*'), db.raw('COALESCE(sum (bid.amount), 0) as pool')]);
+    q.select([
+      ...(select || 'bet.*'),
+      db.raw('COALESCE(sum (bid.amount), 0) as pool'),
+      //db.raw("json_agg(json_build_object('id', outcome.id, 'label', outcome.label)) as outcomes"),
+    ]);
     return q.groupBy('bet.id');
   }
 
@@ -45,5 +52,10 @@ export abstract class Bets {
       .first();
 
     bet.bid = bid;
+  }
+
+  static async joinOutcomes(bet: any) {
+    const outcomes = await db('bets.outcome').where({ bet_id: bet.id }).select('id', 'label');
+    bet.outcomes = outcomes;
   }
 }

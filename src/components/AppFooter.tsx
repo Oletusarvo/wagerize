@@ -53,7 +53,7 @@ export function AppFooter() {
   };
 
   return (
-    <footer className='lg:px-default xs:px-4 py-4 z-20 app-footer flex gap-8 items-center justify-center'>
+    <footer className='lg:px-default xs:px-4 py-4 z-20 app-footer flex gap-8 items-center justify-center bg-white'>
       {pathname === 'dashboard' || pathname === '' ? (
         getNavContent()
       ) : (

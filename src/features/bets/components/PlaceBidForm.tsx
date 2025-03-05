@@ -4,30 +4,32 @@ import { Button } from '@/components/feature/Button';
 import { Form } from '@/components/feature/Form';
 import { Container } from '@/components/ui/Container';
 import { usePlaceBidForm } from '../hooks/usePlaceBidForm';
+import { useList } from '@/hooks/useList';
+import { RadioButton } from '@/components/feature/RadioButton';
 
 export function PlaceBidForm({ betId, outcomes, minBid }) {
   const { onSubmit, setSelectedOutcome, selectedOutcome, status } = usePlaceBidForm(betId, minBid);
+  const radioButtons = useList(
+    outcomes,
+    ({ item }) => {
+      console.log(item);
+      return (
+        <RadioButton
+          name='outcome'
+          value={item.id}
+          selectedValue={selectedOutcome}
+          label={item.label}
+          onClick={value => setSelectedOutcome(value)}
+        />
+      );
+    },
+    [selectedOutcome, setSelectedOutcome]
+  );
+
   return (
     <Form onSubmit={onSubmit}>
       <div className='flex w-full flex-col gap-2'>
-        {outcomes.map((o, i) => {
-          return (
-            <Container
-              as='div'
-              key={`outcome-${i}`}
-              onClick={() => setSelectedOutcome(o.id)}>
-              <div className='flex w-full justify-between items-center'>
-                <h1>{o.label}</h1>
-                <input
-                  type='radio'
-                  name='outcome'
-                  checked={selectedOutcome === o.id}
-                  onChange={() => setSelectedOutcome(o.id)}
-                />
-              </div>
-            </Container>
-          );
-        })}
+        {radioButtons}
 
         <Button
           fullWidth

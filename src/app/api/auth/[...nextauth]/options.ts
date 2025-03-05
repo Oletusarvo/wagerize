@@ -53,8 +53,9 @@ export const options: NextAuthOptions = {
       if (trigger === 'update' && token.id) {
         const wallet = await db('users.wallet')
           .where({ user_id: token.id })
-          .select('balance')
+          .select(db.raw('cast(balance as integer)'))
           .first();
+
         console.log('New wallet: ', wallet);
         token.wallet = wallet;
       } else if (user) {

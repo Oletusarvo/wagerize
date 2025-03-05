@@ -5,7 +5,7 @@
   --font-mono: var(--font-geist-mono);
   --color-accent: #6f3b6a;
   --color-border: var(--color-slate-200);
-  --spacing-default: 16rem;
+  --spacing-default: 32rem;
   --radius-inputs: 12px;
   --breakpoint-xs: 360px;
   --animate-slide-down: SlideDown;
@@ -23,6 +23,7 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fafafa;
 }
 
 a {
@@ -43,6 +44,7 @@ textarea {
 
 input,
 textarea {
+  background-color: white;
   outline: none;
   border: 1px solid var(--color-border);
 }

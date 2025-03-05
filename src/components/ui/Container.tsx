@@ -6,7 +6,7 @@ export function Container({ children, as, ...props }) {
     {
       ...props,
       className:
-        'flex flex-col xs:p-2 lg:p-4 gap-2 rounded-md border border-border w-full cursor-pointer hover:shadow-md text-black',
+        'flex flex-col xs:p-2 lg:p-4 gap-2 rounded-md border border-border w-full cursor-pointer hover:shadow-md text-black bg-white',
     },
     children
   );

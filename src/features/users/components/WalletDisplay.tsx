@@ -17,7 +17,7 @@ export function WalletDisplay() {
     : 0;
 
   const className = useClassName([
-    'py-2 bg-white z-10 flex gap-1 justify-end font-semibold lg:px-default xs:px-4 items-center',
+    'py-2 z-10 backdrop-blur-sm flex gap-1 justify-end font-semibold lg:px-default xs:px-4 items-center',
     currentBalance > 0 ? 'text-green-600' : currentBalance < 0 ? 'text-red-600' : 'text-accent',
   ]);
 
