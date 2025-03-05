@@ -1,30 +1,26 @@
 import { Container } from '@/components/ui/Container';
 import { Main } from '@/components/ui/Main';
+import { getSession } from '@/utils/getSession';
+import { Add, Casino } from '@mui/icons-material';
+
 import Link from 'next/link';
 
 export default async function Dashboard() {
+  const session = await getSession();
   return (
     <Main>
       <h1 className='text-xl font-semibold text-gray-500'>Welcome!</h1>
       <div className='grid lg:grid-cols-2 xs:grid-cols-1 w-full lg:gap-4 xs:gap-2 py-4'>
         <Container
           as={Link}
-          href='/auth/bets'>
-          <div className='flex w-full justify-between items-center'>
-            <h1 className='font-semibold'>Bets</h1>
+          href='/auth/bets?page=0'>
+          <div className='w-full flex gap-4 items-center'>
+            <Casino />
+            <div className='flex flex-col gap-1'>
+              <h1 className='font-semibold'>Bets</h1>
+              <p>Browse bets created by you, and others.</p>
+            </div>
           </div>
-
-          <p>Browse bets created by you, and others.</p>
-        </Container>
-
-        <Container
-          as={Link}
-          href='/auth/bets'>
-          <div className='flex w-full justify-between items-center'>
-            <h1 className='font-semibold'>Your bets</h1>
-          </div>
-
-          <p>Manage bets you have created.</p>
         </Container>
       </div>
     </Main>

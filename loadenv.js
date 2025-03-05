@@ -1,9 +1,8 @@
 const env = process.env.NODE_ENV;
-console.log(env);
-const config = env === 'development' && {
-  path: './.env.local',
-};
+const config =
+  (env === 'development' && {
+    path: './.env.local',
+  }) ||
+  undefined;
 
-require('dotenv').config({
-  path: './.env.local',
-});
+require('dotenv').config(config);

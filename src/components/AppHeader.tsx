@@ -18,7 +18,6 @@ export function AppHeader() {
     if (status === 'authenticated' && user) {
       return (
         <>
-          <Link href='/auth/dashboard'>Dashboard</Link>
           <Link href='/logout'>Logout</Link>
         </>
       );
@@ -52,7 +51,7 @@ export function AppHeader() {
             <nav
               onClick={() => setMenuOpen(false)}
               id='drop-down-menu'
-              className='absolute shadow-md top-20 left-0 w-full flex flex-col items-end gap-8 z-10 bg-white p-4 border-b border-border animate-slide-down duration-500'>
+              className='absolute top-20 left-0 w-full flex flex-col items-end gap-8 z-10 bg-white p-4 border-b border-border animate-slide-down duration-500'>
               {getLinks()}
             </nav>
           )}

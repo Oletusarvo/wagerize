@@ -1,20 +1,24 @@
 import { useRecord } from '@/hooks/useRecord';
 import { useStatus } from '@/hooks/useStatus';
-import { useEffect } from 'react';
 import { createBetAction } from '../actions/createBetAction';
 import toast from 'react-hot-toast';
+import { useBatch } from '@/hooks/useBatch';
+import { useRouter } from 'next/navigation';
 
 export function useCreateBetForm() {
   const { record: bet, updateOnChange: updateBet } = useRecord({
-    title: '',
     author_id: '',
     created_at: null,
     expires_at: null,
     data: {
+      title: '',
+      description: '',
       min_bid: 1,
     },
   });
 
+  const router = useRouter();
+  const { batch: options, add: addOption, del: deleteOpt } = useBatch();
   const [status, setStatus] = useStatus();
 
   const onSubmit = async (e: React.FormEvent) => {
@@ -22,12 +26,17 @@ export function useCreateBetForm() {
     let currentStatus: typeof status = 'loading';
     setStatus(currentStatus);
     try {
-      const result = await createBetAction(bet);
+      const result = await createBetAction(bet, options);
       if (result.code !== 0) {
+        if (result.code === 'unknown') {
+          toast.error('An unexpected error occured!');
+        }
         currentStatus = 'error';
       } else {
         toast.success('Bet created successfully!');
+
         currentStatus = 'done';
+        router.push('/auth/bets');
       }
     } catch (err) {
       toast.error('An unknown error occured!');
@@ -36,5 +45,5 @@ export function useCreateBetForm() {
       setStatus(currentStatus);
     }
   };
-  return { bet, updateBet, status, onSubmit };
+  return { bet, updateBet, status, onSubmit, options, addOption, deleteOpt };
 }

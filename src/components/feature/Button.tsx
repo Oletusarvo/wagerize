@@ -4,7 +4,7 @@ import { Spinner } from '../ui/Spinner';
 type ButtonProps = Omit<React.ComponentProps<'button'>, 'className'> & {
   loading?: boolean;
   fullWidth?: boolean;
-  variant?: 'contained';
+  variant?: 'contained' | 'outlined';
   color?: 'accent';
 };
 

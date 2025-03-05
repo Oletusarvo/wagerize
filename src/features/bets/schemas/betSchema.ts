@@ -10,12 +10,15 @@ const betDataSchema = z
     _schemaVersion: z.number().int().optional(),
   })
   .strict()
-  .transform(value => (value._schemaVersion = betDataSchemaVersion));
+  .transform(value => {
+    value._schemaVersion = betDataSchemaVersion;
+    return value;
+  });
 
 export const betSchema = z.object({
   id: z.string().uuid().optional(),
   author_id: z.string().uuid(),
-  created_at: z.date().optional(),
-  expires_at: z.date().optional(),
+  created_at: z.string().optional().nullable(),
+  expires_at: z.string().optional().nullable(),
   data: betDataSchema,
 });

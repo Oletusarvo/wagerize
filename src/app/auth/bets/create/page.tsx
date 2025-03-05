@@ -3,7 +3,7 @@ import { CreateBetForm } from '@/features/bets/components/CreateBetForm';
 
 export default async function CreateBet() {
   return (
-    <Main centered>
+    <Main>
       <CreateBetForm />
     </Main>
   );

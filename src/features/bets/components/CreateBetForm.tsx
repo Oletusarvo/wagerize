@@ -9,10 +9,11 @@ import { Add } from '@mui/icons-material';
 import { useBatch } from '@/hooks/useBatch';
 import { Chip } from '@/components/ui/Chip';
 import { useRef } from 'react';
+import { IconButton } from '@mui/material';
+import { Icon } from '@/components/ui/Icon';
 
 export function CreateBetForm() {
-  const { bet, updateBet, status, onSubmit } = useCreateBetForm();
-  const { batch: options, add: addOption, del: deleteOpt } = useBatch();
+  const { bet, updateBet, status, onSubmit, options, addOption, deleteOpt } = useCreateBetForm();
   const ref = useRef(null);
   return (
     <Form onSubmit={onSubmit}>
@@ -20,13 +21,24 @@ export function CreateBetForm() {
       <InputGroup>
         <label>Title</label>
         <input
-          name='title'
+          name='data.title'
           placeholder='Type a title...'
           max={32}
           min={1}
-          value={bet.title}
+          value={bet.data.title}
           onChange={updateBet}
           required
+        />
+      </InputGroup>
+
+      <InputGroup>
+        <label>Description</label>
+        <textarea
+          spellCheck={false}
+          name='data.description'
+          placeholder='Write a description...'
+          value={bet.data.description}
+          onChange={updateBet}
         />
       </InputGroup>
       <InputGroup>
@@ -46,27 +58,44 @@ export function CreateBetForm() {
         <input
           type='date'
           name='expires_at'
-          value={bet.expires_at}
+          value={bet.expires_at !== '' ? bet.expires_at : undefined}
           onChange={updateBet}
         />
       </InputGroup>
-      <div className='flex gap-2 w-full'>
-        {options.map(opt => (
-          <Chip onDelete={() => deleteOpt(opt)}>{opt}</Chip>
-        ))}
-      </div>
+
       <div className='flex gap-2 w-full'>
         <input
           ref={ref}
           className='w-full'
+          placeholder='Type the label for an outcome...'
         />
-        <Button
-          variant='contained'
+        <IconButton
           type='button'
-          onClick={() => addOption(ref.current?.value)}>
-          <Add />
-        </Button>
+          onClick={() => {
+            addOption(ref.current?.value);
+            if (ref.current) {
+              ref.current.value = '';
+            }
+          }}>
+          <Icon
+            Component={Add}
+            size='large'
+          />
+        </IconButton>
       </div>
+      {options.length > 0 && (
+        <div className='flex gap-2 w-full flex-wrap'>
+          {options.map((opt, i) => (
+            <Chip
+              key={`bet-opt-${i}`}
+              onDelete={() => {
+                deleteOpt(opt);
+              }}>
+              {opt}
+            </Chip>
+          ))}
+        </div>
+      )}
       <div className='w-full'>
         <Button
           variant='contained'

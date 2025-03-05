@@ -35,9 +35,20 @@ nav a {
 }
 
 input,
-button {
+button,
+textarea {
   padding: 0.5rem 1rem 0.5rem 1rem;
   border-radius: var(--radius-inputs);
+}
+
+input,
+textarea {
+  outline: none;
+  border: 1px solid var(--color-border);
+}
+
+textarea {
+  resize: none;
 }
 
 button {
@@ -76,12 +87,11 @@ input[type='checkbox']:checked {
   background-color: var(--color-accent);
 }
 
-input {
-  outline: none;
-  border: 1px solid var(--color-border);
-}
-
 .index-link {
   color: var(--color-accent);
   background-color: none;
+}
+
+.app-footer {
+  border-top: 1px solid var(--color-slate-200);
 }

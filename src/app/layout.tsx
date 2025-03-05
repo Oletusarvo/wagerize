@@ -9,6 +9,7 @@ import { AppHeader } from '@/components/AppHeader';
 import { UserProvider } from '@/features/users/contexts/UserProvider';
 import { SessionProvider } from 'next-auth/react';
 import { AuthProvider } from './AuthProvider';
+import { AppFooter } from '@/components/AppFooter';
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
@@ -30,12 +31,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
+      <head>
+        <link
+          rel='manifest'
+          href='manifest.json'
+        />
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col w-full h-screen`}>
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col w-full h-screen flex-1`}>
         <AuthProvider>
           <UserProvider>
             <AppHeader />
             {children}
+            <AppFooter />
           </UserProvider>
         </AuthProvider>
         <Toaster position='top-center' />

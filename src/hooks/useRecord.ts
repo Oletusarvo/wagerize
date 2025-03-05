@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export function useRecord(initialRecord: Record<string, any>) {
   const [record, setRecord] = useState(initialRecord || null);
@@ -21,7 +21,7 @@ export function useRecord(initialRecord: Record<string, any>) {
         const newRecord = prev !== null ? { ...prev } : {};
         let currentKey = null;
         path.map((key, i: number) => {
-          const valueToSet = i < path.length - 1 ? {} : value;
+          const valueToSet = i < path.length - 1 ? { ...prev[key] } : value;
           if (currentKey) {
             newRecord[currentKey][key] = valueToSet;
             currentKey = key;
@@ -35,6 +35,6 @@ export function useRecord(initialRecord: Record<string, any>) {
     },
     [setRecord]
   );
-
+  useEffect(() => console.log(record), [record]);
   return { record, updateOnChange };
 }

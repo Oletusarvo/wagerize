@@ -1,5 +1,7 @@
+'use client';
+
 import { createContextWithHook } from '@/utils/createContextWithHook';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PassProps } from '../util/PassProps';
 
 type ToggleContextProps = {
@@ -10,15 +12,33 @@ type ToggleContextProps = {
 const [ToggleContext, useToggleContext] =
   createContextWithHook<ToggleContextProps>('ToggleContext');
 
-export function ToggleProvider({ children }) {
-  const [state, setState] = useState(false);
-  const toggleState = (newState?: boolean) => setState(newState !== undefined ? newState : !state);
+type ToggleProviderProps = React.PropsWithChildren & {
+  onChange?: (state: boolean) => void;
+  initialState?: boolean;
+};
+
+export function ToggleProvider({ children, onChange, initialState = false }: ToggleProviderProps) {
+  const [state, setState] = useState(initialState);
+
+  const toggleState = (newState?: boolean) => {
+    const fn = onChange || setState;
+    fn(newState !== undefined ? newState : !state);
+  };
+
+  useEffect(() => toggleState(initialState), [initialState]);
+
   return <ToggleContext.Provider value={{ state, toggleState }}>{children}</ToggleContext.Provider>;
 }
 
-ToggleProvider.Trigger = function ({ children }) {
+ToggleProvider.Trigger = function ({ children, ...props }) {
   const { toggleState } = useToggleContext();
-  return <PassProps onClick={() => toggleState}>{children}</PassProps>;
+  return (
+    <PassProps
+      {...props}
+      onClick={() => toggleState()}>
+      {children}
+    </PassProps>
+  );
 };
 
 ToggleProvider.Target = function ({ children }) {
