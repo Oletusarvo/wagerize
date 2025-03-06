@@ -1,3 +1,9 @@
+## [1.1.1] - 06-03-2025
+
+### Fixed
+
+- A bug in the urls, in the middleware redirections.
+
 ## [1.1.0] - 06-03-2025
 
 ### Changed
