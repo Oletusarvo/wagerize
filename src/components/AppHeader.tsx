@@ -42,7 +42,7 @@ export function AppHeader() {
             className='flex gap-2 items-center index-link'
             href='/'>
             <Casino sx={{ transform: 'rotate(45deg)' }} />
-            <h1 className='text-xl font-semibold'>Wager Wave</h1>
+            <h1 className='text-xl font-semibold'>Wagerize</h1>
           </Link>
           <small className='ml-8'>{pkg.version}</small>
         </div>

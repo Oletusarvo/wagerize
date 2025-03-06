@@ -6,23 +6,25 @@ export default async function Home() {
   return (
     <main className='lg:px-default xs:px-4 py-8 flex flex-col flex-1 text-accent gap-16 overflow-y-scroll'>
       <section className='flex flex-col gap-4'>
-        <Heading>Wager Wave - A poker inspired betting app.</Heading>
+        <Heading>Wagerize - A poker inspired betting app.</Heading>
         <p>
-          Welcome to Wager Wave — where the fun never stops and the bets are always on! Whether it’s
+          Welcome to Wagerize — where the fun never stops and the bets are always on! Whether it’s
           guessing how many people will show up at an event or making predictions about anything you
           can think of, you can create your own bets and challenge others to join in. Bets are
           placed using "Dice," our quirky virtual currency, and the best part? It’s totally free to
           play! So, get your friends together, throw down some fun challenges, and see who’s got the
           best instincts.
         </p>
-        <Link href='/register'>
-          <Button
-            fullWidth
-            type='button'
-            color='accent'>
-            Start Today
-          </Button>
-        </Link>
+        <div className='xs:w-full lg:w-[25%]'>
+          <Link href='/register'>
+            <Button
+              fullWidth
+              type='button'
+              color='accent'>
+              Start Today
+            </Button>
+          </Link>
+        </div>
       </section>
 
       <section className='flex flex-col gap-4'>

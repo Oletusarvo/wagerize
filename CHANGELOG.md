@@ -1,3 +1,10 @@
+## [1.1.4] - 06-03-2025
+
+### Changed
+
+- Changed the app name.
+- Changed the width of the CTA-button on large screens, on the index page.
+
 ## [1.1.3] - 06-03-2025
 
 ### Fixed
