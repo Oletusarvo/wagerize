@@ -1,3 +1,9 @@
+## [1.1.2] - 06-03-2025
+
+### Fixed
+
+- Another bug in the closing of bets, with division by zero, when there are no winners.
+
 ## [1.1.1] - 06-03-2025
 
 ### Fixed

@@ -28,11 +28,11 @@ export async function endBetAction(betId: string, outcomeId: string) {
 
     //Determine the share of the pool given to the creator.
     const numWinners = winningWallets.length;
-    const creatorShare = pool % numWinners;
-
+    const creatorShare = pool % (numWinners || 1);
+    console.log(pool, numWinners);
     //Calculate the share given to each winner.
-    const winnerShare = (pool - creatorShare) / numWinners;
-
+    const winnerShare = numWinners > 0 ? (pool - creatorShare) / numWinners : 0;
+    console.log(winnerShare);
     //Update the wallets of each winner.
     const promises = winningWallets.map(async wallet =>
       trx('users.wallet').where({ id: wallet.id }).increment('balance', winnerShare)

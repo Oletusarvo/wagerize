@@ -8,7 +8,7 @@ export default async function BetsPage({ searchParams }) {
   const { authorId, page, q } = await searchParams;
   const [{ count }] = await db('bets.bet').count('* as count');
   const numBets = typeof count === 'string' ? parseInt(count) : count;
-  const betsOnPage = 1;
+  const betsOnPage = 10;
   const numPages = Math.ceil(numBets / betsOnPage);
   const offset = betsOnPage * ((page && parseInt(page)) || 0);
 
