@@ -1,5 +1,9 @@
 ## [1.1.4] - 06-03-2025
 
+### Added
+
+- App PWA icon.
+
 ### Changed
 
 - Changed the app name.
