@@ -9,24 +9,29 @@ type PaginatorProps = {
 };
 export function Paginator({ currentPage, numPages, paramName }: PaginatorProps) {
   const updateSearch = useSearch(paramName);
-  console.log(currentPage, numPages);
+
   return (
-    <div className='flex w-full justify-between'>
-      <Button
-        disabled={currentPage == 0}
-        onClick={() => {
-          updateSearch(currentPage - 1);
-        }}>
-        Previous
-      </Button>
-      <Button
-        disabled={currentPage >= numPages}
-        onClick={() => {
-          console.log('Disabled: ', currentPage >= numPages);
-          updateSearch(currentPage + 1);
-        }}>
-        Next
-      </Button>
+    <div className='flex gap-4 w-full justify-end'>
+      {currentPage > 0 && (
+        <Button
+          disabled={currentPage == 0}
+          onClick={() => {
+            updateSearch(currentPage - 1);
+          }}>
+          Previous
+        </Button>
+      )}
+
+      {numPages > 1 && (
+        <Button
+          disabled={currentPage >= numPages}
+          onClick={() => {
+            console.log('Disabled: ', currentPage >= numPages);
+            updateSearch(currentPage + 1);
+          }}>
+          Next
+        </Button>
+      )}
     </div>
   );
 }

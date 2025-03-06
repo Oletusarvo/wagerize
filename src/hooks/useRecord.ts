@@ -14,6 +14,10 @@ export function useRecord(initialRecord: Record<string, any>) {
           : undefined
         : type === 'checkbox'
         ? e.target.checked
+        : type === 'date'
+        ? e.target.value === ''
+          ? undefined
+          : e.target.value
         : e.target.value;
 
     setRecord(prev => {
@@ -29,7 +33,7 @@ export function useRecord(initialRecord: Record<string, any>) {
           currentKey = key;
         }
       });
-      console.log(newRecord);
+
       return newRecord;
     });
   };

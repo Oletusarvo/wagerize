@@ -4,12 +4,13 @@ import { createBetAction } from '../actions/createBetAction';
 import toast from 'react-hot-toast';
 import { useBatch } from '@/hooks/useBatch';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export function useCreateBetForm() {
   const { record: bet, updateOnChange: updateBet } = useRecord({
     author_id: '',
     created_at: null,
-    expires_at: null,
+    expires_at: undefined,
     data: {
       title: '',
       description: '',
@@ -26,6 +27,7 @@ export function useCreateBetForm() {
     let currentStatus: typeof status = 'loading';
     setStatus(currentStatus);
     try {
+      console.log(bet.expires_at);
       const result = await createBetAction(bet, options);
       if (result.code !== 0) {
         if (result.code === 'unknown') {
@@ -36,7 +38,7 @@ export function useCreateBetForm() {
         toast.success('Bet created successfully!');
 
         currentStatus = 'done';
-        router.push('/auth/bets');
+        router.replace('/auth/bets');
       }
     } catch (err) {
       toast.error('An unknown error occured!');
@@ -45,5 +47,6 @@ export function useCreateBetForm() {
       setStatus(currentStatus);
     }
   };
+
   return { bet, updateBet, status, onSubmit, options, addOption, deleteOpt };
 }

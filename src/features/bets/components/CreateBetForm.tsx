@@ -6,15 +6,21 @@ import { InputGroup } from '@/components/ui/InputGroup';
 import { FormHeading } from '@/components/ui/FormHeading';
 import { Button } from '@/components/feature/Button';
 import { Add } from '@mui/icons-material';
+
 import { useBatch } from '@/hooks/useBatch';
 import { Chip } from '@/components/ui/Chip';
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { IconButton } from '@mui/material';
 import { Icon } from '@/components/ui/Icon';
 
 export function CreateBetForm() {
   const { bet, updateBet, status, onSubmit, options, addOption, deleteOpt } = useCreateBetForm();
   const ref = useRef(null);
+  const minimumDate = useMemo(() => {
+    const min = new Date();
+    min.setDate(min.getDate() + 1);
+    return min;
+  }, []);
   return (
     <Form onSubmit={onSubmit}>
       <FormHeading>Create Bet</FormHeading>
@@ -56,10 +62,14 @@ export function CreateBetForm() {
       <InputGroup>
         <label>Expiry date</label>
         <input
+          min={minimumDate.toISOString().split('T').at(0)}
+          className='w-full'
           type='date'
           name='expires_at'
           value={bet.expires_at !== '' ? bet.expires_at : undefined}
-          onChange={updateBet}
+          onChange={e => {
+            updateBet(e);
+          }}
         />
       </InputGroup>
 

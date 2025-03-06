@@ -1,3 +1,19 @@
+## [1.1.0] - 06-03-2025
+
+### Changed
+
+- useRecord now set empty date values to undefined.
+- Bets pagination.
+
+### Fixed
+
+- The behaviour of the back button sometimes returning to the bet creation screen, when it was not supposed to.
+- An error with the pool being a string, instead of a number, when closing a bet.
+
+### Added
+
+- Constraint on the bet dates, to disallow expiry on the same day they are created.
+
 ## [1.0.1] - 06-03-2025
 
 ### Changed

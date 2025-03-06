@@ -36,7 +36,7 @@ export abstract class Bets {
 
     q.select([
       ...(select || 'bet.*'),
-      db.raw('COALESCE(sum (bid.amount), 0) as pool'),
+      db.raw('COALESCE(sum (CAST(bid.amount as INTEGER)), 0) as pool'),
       //db.raw("json_agg(json_build_object('id', outcome.id, 'label', outcome.label)) as outcomes"),
     ]);
     return q.groupBy('bet.id');

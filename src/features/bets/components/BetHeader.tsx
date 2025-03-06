@@ -3,6 +3,7 @@ import { LockClock, TimeToLeave } from '@mui/icons-material';
 import ArrowDownward from '@mui/icons-material/ArrowDownward';
 
 export function BetHeader({ bet }) {
+  const timeLeft = bet.expires_at ? bet.expires_at.getTime() - Date.now() : null;
   return (
     <div className='flex w-full justify-between'>
       <DataPoint
@@ -12,7 +13,13 @@ export function BetHeader({ bet }) {
 
       <DataPoint
         IconComponent={LockClock}
-        content={bet.created_at ? new Date(bet.expires_at).toLocaleDateString('fi') : 'None'}
+        content={
+          timeLeft
+            ? timeLeft <= 0
+              ? 'Expired.'
+              : Math.ceil(timeLeft / 60 / 60 / 24 / 1000) + ' Day(s) left.'
+            : 'No expiry.'
+        }
       />
     </div>
   );

@@ -10,7 +10,7 @@ export function RadioButton({ onClick, value, selectedValue, label, name }) {
       as='div'
       onClick={() => changeValue()}>
       <div className='flex w-full justify-between items-center'>
-        <h1>{label}</h1>
+        <h1 className='w-full'>{label}</h1>
         <input
           type='radio'
           name={name}

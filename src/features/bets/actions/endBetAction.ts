@@ -18,10 +18,13 @@ export async function endBetAction(betId: string, outcomeId: string) {
       .groupBy('wallet.id');
 
     //Get the pool
-    const [{ summedPool }] = await trx('bets.bid')
-      .where({ bet_id: betId })
-      .sum('amount as summedPool');
-    const pool = typeof summedPool === 'string' ? parseInt(summedPool) : summedPool;
+    const [{ bidTotal }] = await trx('bets.bid').where({ bet_id: betId }).sum('amount as bidTotal');
+
+    if (bidTotal === undefined) {
+      throw new Error('Failed to sum bid amounts!');
+    }
+
+    const pool = typeof bidTotal === 'string' ? parseInt(bidTotal) : bidTotal;
 
     //Determine the share of the pool given to the creator.
     const numWinners = winningWallets.length;

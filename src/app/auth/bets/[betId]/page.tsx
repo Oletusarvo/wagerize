@@ -20,7 +20,6 @@ export default async function BetPage({ params }) {
   await Bets.joinBid(bet);
   const outcomes = await db('bets.outcome').where({ bet_id: betId }).select('id', 'label');
 
-  console.log(bet.bid);
   return (
     <Main>
       <section className='flex flex-col gap-2 py-2'>
@@ -39,7 +38,10 @@ export default async function BetPage({ params }) {
       <section className='w-full flex justify-center py-2'>
         {bet.bid === undefined ? (
           <PlaceBidButton
-            disabled={bet.bid !== undefined}
+            disabled={
+              bet.bid !== undefined ||
+              (bet.expires_at && bet.expires_at.getTime() - Date.now() <= 0)
+            }
             minBid={bet.data.min_bid}
             betId={bet.id}
             outcomes={outcomes}
