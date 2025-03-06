@@ -51,9 +51,15 @@ export function RegisterForm() {
         <span>
           I have read the{' '}
           <Link
-            href='/tos.pdf'
+            href='/tos'
             target='_blank'>
-            Terms Of Service.
+            Terms Of Service,
+          </Link>{' '}
+          and{' '}
+          <Link
+            href='/privacy'
+            target='_blank'>
+            Privacy Policy
           </Link>
         </span>
         <input
