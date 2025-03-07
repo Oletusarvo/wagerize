@@ -1,3 +1,10 @@
+## [1.2.1] - 08-03-2025
+
+### Fixed
+
+- The selected outcome on a bid not being displayed correctly.
+- Two bets being created at once, due to the service worker, by disabling the service worker for now.
+
 ## [1.2.0] - 07-03-2025
 
 ### Added

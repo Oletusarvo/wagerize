@@ -21,6 +21,7 @@ export function CreateBetForm() {
     min.setDate(min.getDate() + 1);
     return min;
   }, []);
+
   return (
     <Form onSubmit={onSubmit}>
       <FormHeading>Create Bet</FormHeading>

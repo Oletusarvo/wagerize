@@ -11,6 +11,7 @@ const optionsSchema = z.array(z.string().nonempty()).nonempty();
 export async function createBetAction(payload: Omit<BetType, 'id' | 'created_at'>, opts: string[]) {
   let result: { code: string | number } = { code: 0 };
   try {
+    console.log('Calling create bet action...');
     //Assign the current session user id as the author id.
     const session = await getSession();
     payload.author_id = session.user.id;

@@ -46,11 +46,11 @@ export abstract class Bets {
   static async joinBid(bet: any) {
     const session = await getSession();
     const bid = await db('bets.bid as bid')
-      .join(db.raw('bets.outcome as o on o.bet_id = bid.bet_id'))
+      .join(db.raw('bets.outcome as o on o.id = bid.outcome_id'))
       .where({ user_id: session.user.id, 'bid.bet_id': bet.id })
-      .select('bid.id', 'bid.amount', 'o.label as outcome')
+      .select('bid.id', db.raw('CAST(bid.amount as INTEGER)'), 'o.label as outcome')
       .first();
-
+    console.log(bid);
     bet.bid = bid;
   }
 

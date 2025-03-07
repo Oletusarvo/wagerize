@@ -16,6 +16,8 @@ export async function placeBidAction(payload: any) {
     await trx('users.wallet')
       .where({ user_id: session.user.id })
       .decrement('balance', payload.amount);
+
+    //Commit
     await trx.commit();
     revalidatePath('/auth/bets');
     return 0;

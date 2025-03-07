@@ -14,6 +14,7 @@ export function usePlaceBidForm(betId: string, minBid: number) {
     let currentStatus: typeof status = 'loading';
     setStatus(currentStatus);
     try {
+      console.log(selectedOutcome);
       const result = await placeBidAction({
         bet_id: betId,
         outcome_id: selectedOutcome,
