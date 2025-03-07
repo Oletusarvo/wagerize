@@ -74,39 +74,47 @@ export function CreateBetForm() {
         />
       </InputGroup>
 
-      <div className='flex gap-2 w-full'>
-        <input
-          ref={ref}
-          className='w-full'
-          placeholder='Type the label for an outcome...'
-        />
-        <IconButton
-          type='button'
-          onClick={() => {
-            addOption(ref.current?.value);
-            if (ref.current) {
-              ref.current.value = '';
-            }
-          }}>
-          <Icon
-            Component={Add}
-            size='large'
+      <InputGroup>
+        <label>Outcomes</label>
+        <div className='flex gap-2 w-full'>
+          <input
+            ref={ref}
+            className='w-full'
+            placeholder='Type the label for an outcome...'
           />
-        </IconButton>
-      </div>
-      {options.length > 0 && (
-        <div className='flex gap-2 w-full flex-wrap'>
-          {options.map((opt, i) => (
-            <Chip
-              key={`bet-opt-${i}`}
-              onDelete={() => {
-                deleteOpt(opt);
-              }}>
-              {opt}
-            </Chip>
-          ))}
+          <IconButton
+            type='button'
+            onClick={() => {
+              const optInput = ref.current;
+              if (optInput && optInput.value.length > 0) {
+                addOption(optInput.value);
+              }
+
+              if (ref.current) {
+                ref.current.value = '';
+              }
+            }}>
+            <Icon
+              Component={Add}
+              size='large'
+            />
+          </IconButton>
         </div>
-      )}
+        {options.length > 0 && (
+          <div className='flex gap-2 w-full flex-wrap'>
+            {options.map((opt, i) => (
+              <Chip
+                key={`bet-opt-${i}`}
+                onDelete={() => {
+                  deleteOpt(opt);
+                }}>
+                {opt}
+              </Chip>
+            ))}
+          </div>
+        )}
+      </InputGroup>
+
       <div className='w-full'>
         <Button
           variant='contained'
