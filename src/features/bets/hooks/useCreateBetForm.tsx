@@ -28,7 +28,6 @@ export function useCreateBetForm() {
       let currentStatus: typeof status = 'loading';
       setStatus(currentStatus);
       try {
-        toast.success('Creating bet...');
         const result = await createBetAction(bet, options);
         if (result.code !== 0) {
           if (result.code === 'unknown') {
