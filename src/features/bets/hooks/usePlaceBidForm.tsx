@@ -11,7 +11,6 @@ export function usePlaceBidForm(betId: string, minBid: number) {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Submitting...');
     let currentStatus: typeof status = 'loading';
     setStatus(currentStatus);
     try {

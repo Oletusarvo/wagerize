@@ -10,10 +10,12 @@ export async function endBetAction(betId: string, outcomeId: string) {
   const trx = await db.transaction();
   try {
     //Get the winning participant wallets.
-    const winningWallets = await trx('bets.bet as bet')
+    const winningWallets = await trx('users.wallet as wallet')
       .leftJoin(db.raw('bets.bid as bid on bid.bet_id = ?', [betId]))
-      .leftJoin(db.raw('users.wallet as wallet on wallet.user_id = bid.user_id'))
-      .where({ 'bid.outcome_id': outcomeId })
+      .whereRaw(
+        'bid.outcome_id = ? AND CASE WHEN bid.user_id IS NOT NULL THEN bid.user_id = wallet.user_id ELSE FALSE END',
+        [outcomeId]
+      )
       .select('wallet.id')
       .groupBy('wallet.id');
 
@@ -29,10 +31,10 @@ export async function endBetAction(betId: string, outcomeId: string) {
     //Determine the share of the pool given to the creator.
     const numWinners = winningWallets.length;
     const creatorShare = pool % (numWinners || 1);
-    console.log(pool, numWinners);
+
     //Calculate the share given to each winner.
     const winnerShare = numWinners > 0 ? (pool - creatorShare) / numWinners : 0;
-    console.log(winnerShare);
+
     //Update the wallets of each winner.
     const promises = winningWallets.map(async wallet =>
       trx('users.wallet').where({ id: wallet.id }).increment('balance', winnerShare)

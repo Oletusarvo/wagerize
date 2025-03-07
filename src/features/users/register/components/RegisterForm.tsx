@@ -6,6 +6,7 @@ import { Button } from '@/components/feature/Button';
 import Link from 'next/link';
 import { Form } from '@/components/feature/Form';
 import { FormHeading } from '@/components/ui/FormHeading';
+import { ErrorHelper } from '@/components/ui/InputHelper';
 
 export function RegisterForm() {
   const { credentials, updateCredentials, onSubmit, status } = useRegisterForm();
@@ -22,6 +23,9 @@ export function RegisterForm() {
           value={credentials.email}
           required
         />
+        {status === 'user_exists' && (
+          <ErrorHelper>An account with this email already exists!</ErrorHelper>
+        )}
       </InputGroup>
       <InputGroup>
         <label>Password</label>
@@ -46,6 +50,13 @@ export function RegisterForm() {
           value={credentials.password2}
           required
         />
+        {status === 'password_mismatch' ? (
+          <ErrorHelper>The passwords do not match!</ErrorHelper>
+        ) : status === 'password_too_long' ? (
+          <ErrorHelper>A password can only have 16 characters!</ErrorHelper>
+        ) : status === 'password_too_short' ? (
+          <ErrorHelper>A password must be at least 8 characters long!</ErrorHelper>
+        ) : null}
       </InputGroup>
       <div className='flex w-full justify-between items-center'>
         <span>

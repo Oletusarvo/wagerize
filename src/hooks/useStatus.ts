@@ -1,6 +1,8 @@
 import { useState } from 'react';
 
-export function useStatus() {
-  const [status, setStatus] = useState<'idle' | 'done' | 'error' | 'loading'>('idle');
+export function useStatus<T extends string>(additionalStatuses: T[] = []) {
+  const allStatuses = ['idle', 'done', 'error', 'loading', ...additionalStatuses] as const;
+  type StatusT = (typeof allStatuses)[number];
+  const [status, setStatus] = useState<StatusT>('idle');
   return [status, setStatus] as const;
 }

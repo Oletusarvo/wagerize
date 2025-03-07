@@ -27,7 +27,6 @@ export function useCreateBetForm() {
     let currentStatus: typeof status = 'loading';
     setStatus(currentStatus);
     try {
-      console.log(bet.expires_at);
       const result = await createBetAction(bet, options);
       if (result.code !== 0) {
         if (result.code === 'unknown') {

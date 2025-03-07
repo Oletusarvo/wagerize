@@ -1,3 +1,14 @@
+## [1.2.0] - 07-03-2025
+
+### Added
+
+- Ability to delete accounts.
+
+### Changed
+
+- Registration- and Login errors are now displayed underneath the inputs, instead of toasts, excluding unexpected errors.
+- Placed bids are now not deleted if the user who placed it, deletes their account.
+
 ## [1.1.4] - 06-03-2025
 
 ### Added

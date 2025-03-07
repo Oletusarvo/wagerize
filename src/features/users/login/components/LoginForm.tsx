@@ -6,6 +6,7 @@ import { InputGroup } from '@/components/ui/InputGroup';
 import { Button } from '@/components/feature/Button';
 import { FormHeading } from '@/components/ui/FormHeading';
 import Link from 'next/link';
+import { ErrorHelper } from '@/components/ui/InputHelper';
 
 export function LoginForm() {
   const { credentials, updateCredentials, onSubmit, status } = useLoginForm();
@@ -33,6 +34,7 @@ export function LoginForm() {
           onChange={updateCredentials}
           required
         />
+        {status === 'invalid_credentials' && <ErrorHelper>Invalid credentials!</ErrorHelper>}
       </InputGroup>
       <div className='w-full flex flex-col gap-4 items-center'>
         <Button

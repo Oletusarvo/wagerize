@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 import { loginCredentialsSchema } from '../schemas/loginCredentialsSchema';
 
 export function useLoginForm() {
-  const [status, setStatus] = useStatus();
+  const [status, setStatus] = useStatus(['invalid_credentials']);
   const { record: credentials, updateOnChange: updateCredentials } = useRecord({
     email: '',
     password: '',
@@ -25,12 +25,11 @@ export function useLoginForm() {
         if (res) {
           if (res.error) {
             if (res.error === 'invalid_email' || res.error === 'invalid_password') {
-              toast.error('Invalid credentials!');
+              currentStatus = 'invalid_credentials';
             } else {
-              toast.error('Unknown error!');
+              toast.error('An unexpected error occured!');
+              currentStatus = 'error';
             }
-
-            currentStatus = 'error';
           } else {
             currentStatus = 'done';
             toast.success('Login success!');
@@ -38,7 +37,7 @@ export function useLoginForm() {
           }
         }
       } catch (err) {
-        toast.error('An unknown error occured!');
+        toast.error('An unexpected error occured!');
         console.log(err.message);
         currentStatus = 'error';
       } finally {

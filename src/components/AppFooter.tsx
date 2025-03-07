@@ -16,7 +16,7 @@ export function AppFooter() {
 
   const getNavContent = () => {
     if (sessionStatus === 'authenticated') {
-      if (pathname.includes('/auth/bets')) {
+      if (pathname.includes('/auth/bets') || pathname.includes('/dashboard/settings')) {
         return (
           <IconButton onClick={() => router.back()}>
             <Icon

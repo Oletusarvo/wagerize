@@ -14,7 +14,12 @@ export function useRegisterForm() {
     password2: '',
   });
   const router = useRouter();
-  const [status, setStatus] = useStatus();
+  const [status, setStatus] = useStatus([
+    'password_mismatch',
+    'password_too_long',
+    'password_too_short',
+    'user_exists',
+  ]);
 
   const onSubmit = useCallback(
     async (e: React.FormEvent) => {
@@ -23,21 +28,34 @@ export function useRegisterForm() {
       let currentStatus: typeof status = 'loading';
       setStatus(currentStatus);
       try {
-        registerCredentialsSchema.parse(credentials);
-        const result = await registerUserAction(credentials);
-        if (result.code === 0) {
-          toast.success('Registration succeeded!');
-          router.replace('/login');
-          currentStatus = 'done';
+        const parseResult = registerCredentialsSchema.safeParse(credentials);
+        if (parseResult.error) {
+          const error = parseResult.error.errors.at(0);
+          currentStatus = error.message as typeof status;
         } else {
-          if (result.code === RegisterError.DUPLICATE_USER) {
-            toast.error('A user with the provided email already exists!');
+          const result = await registerUserAction(credentials);
+          if (result.code === 0) {
+            toast.success('Registration succeeded!');
+            router.replace('/login');
+            currentStatus = 'done';
+          } else {
+            if (result.code === RegisterError.DUPLICATE_USER) {
+              toast.error('A user with the provided email already exists!');
+              currentStatus = 'user_exists';
+            } else {
+              currentStatus = 'error';
+            }
           }
-          currentStatus = 'error';
         }
       } catch (err) {
-        console.log(err.message);
-        toast.error('An unknown error occured!');
+        const msg = JSON.parse(err.message);
+        console.log(msg);
+        if (msg instanceof Array) {
+          toast.error(msg.at(0).message);
+        } else {
+          toast.error('An unknown error occured!');
+        }
+
         currentStatus = 'error';
       } finally {
         setStatus(currentStatus);

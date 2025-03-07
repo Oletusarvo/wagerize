@@ -11,7 +11,6 @@ export async function registerUserAction(credentials: any) {
 
   try {
     const { email, password1 } = credentials;
-    console.log(email);
     const encyrptedPassword = await bcrypt.hash(password1, 15);
     await db('users.user').insert({
       email,

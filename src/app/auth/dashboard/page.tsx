@@ -1,14 +1,15 @@
 import { Container } from '@/components/ui/Container';
+import { FormHeading } from '@/components/ui/FormHeading';
 import { Main } from '@/components/ui/Main';
 import { getSession } from '@/utils/getSession';
-import { Add, Casino, Settings } from '@mui/icons-material';
+import { Add, Casino, ManageAccounts, Settings } from '@mui/icons-material';
 
 import Link from 'next/link';
 
 export default async function Dashboard() {
   return (
     <Main>
-      <h1 className='text-xl font-semibold text-gray-500'>Welcome!</h1>
+      <FormHeading>Welcome!</FormHeading>
       <div className='grid lg:grid-cols-2 xs:grid-cols-1 w-full lg:gap-4 xs:gap-2 py-4'>
         <DashboardItem
           href='/auth/bets?page=0&q='
@@ -21,6 +22,12 @@ export default async function Dashboard() {
           icon={<Settings />}
           title='Manage Bets'
           description={'Manage the bets you have created.'}
+        />
+        <DashboardItem
+          href='/auth/dashboard/settings'
+          icon={<ManageAccounts />}
+          title='Manage Account'
+          description={'Manage your account.'}
         />
       </div>
     </Main>

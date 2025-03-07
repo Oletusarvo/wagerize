@@ -1,14 +1,15 @@
 import { Button } from '@/components/feature/Button';
 import { Container } from '@/components/ui/Container';
 import Link from 'next/link';
+import pkg from 'betting_app/package.json';
 
 export default async function Home() {
   return (
     <main className='lg:px-default xs:px-4 py-8 flex flex-col flex-1 text-accent gap-16 overflow-y-scroll'>
       <section className='flex flex-col gap-4'>
-        <Heading>Wagerize - A poker inspired betting app.</Heading>
+        <Heading>{pkg.name} - A poker inspired betting app.</Heading>
         <p>
-          Welcome to Wagerize — where the fun never stops and the bets are always on! Whether it’s
+          Welcome to {pkg.name} — where the fun never stops and the bets are always on! Whether it’s
           guessing how many people will show up at an event or making predictions about anything you
           can think of, you can create your own bets and challenge others to join in. Bets are
           placed using "Dice," our quirky virtual currency, and the best part? It’s totally free to
