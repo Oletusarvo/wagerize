@@ -8,22 +8,24 @@ export default async function middleware(req: NextRequestWithAuth) {
   if (token) {
     //Disallow access to the front- login- or register pages once logged in.
     if (url === '/' || url === '/login' || url === '/register') {
-      const newUrl = req.nextUrl.clone();
-      newUrl.pathname = '/auth/dashboard';
-      return NextResponse.redirect(newUrl);
+      return redirectTo('/auth/dashboard', req);
     }
   } else {
-    //Redirect to the login page if not logged in, and trying to access protected areas.
+    //Redirect to the login page if trying to access protected areas while not logged in.
     if (url.startsWith('/auth')) {
-      const newUrl = req.nextUrl.clone();
-      newUrl.pathname = '/login';
-      return NextResponse.redirect(newUrl);
+      return redirectTo('/login', req);
     }
   }
 
   return NextResponse.next();
 }
 
+function redirectTo(url: string, req: NextRequestWithAuth) {
+  const newUrl = req.nextUrl.clone();
+  newUrl.pathname = url;
+  return NextResponse.redirect(newUrl);
+}
+
 export const config = {
-  matcher: ['/:path*'],
+  matcher: ['/', '/auth/:path*', '/login', '/register'],
 };

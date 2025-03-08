@@ -8,6 +8,7 @@ export const options: NextAuthOptions = {
       id: 'Credentials',
       type: 'credentials',
       name: 'Credentials',
+
       credentials: {},
       async authorize({ email, password }) {
         console.log(email, password);

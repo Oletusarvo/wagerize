@@ -12,6 +12,7 @@ import { Chip } from '@/components/ui/Chip';
 import { useMemo, useRef } from 'react';
 import { IconButton } from '@mui/material';
 import { Icon } from '@/components/ui/Icon';
+import { Drawer } from '@/components/feature/Drawer';
 
 export function CreateBetForm() {
   const { bet, updateBet, status, onSubmit, options, addOption, deleteOpt } = useCreateBetForm();

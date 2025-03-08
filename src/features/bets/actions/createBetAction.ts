@@ -10,8 +10,8 @@ import { revalidatePath } from 'next/cache';
 const optionsSchema = z.array(z.string().nonempty()).nonempty();
 export async function createBetAction(payload: Omit<BetType, 'id' | 'created_at'>, opts: string[]) {
   let result: { code: string | number } = { code: 0 };
+  const trx = await db.transaction();
   try {
-    console.log('Calling create bet action...');
     //Assign the current session user id as the author id.
     const session = await getSession();
     payload.author_id = session.user.id;
@@ -21,12 +21,12 @@ export async function createBetAction(payload: Omit<BetType, 'id' | 'created_at'
     optionsSchema.parse(opts);
 
     //Insert the new bet into the database.
-    const trx = await db.transaction();
     const [{ id }] = await trx('bets.bet').insert(parsedPayload).returning('id');
     await trx('bets.outcome').insert(opts.map(opt => ({ label: opt, bet_id: id })));
     await trx.commit();
     revalidatePath('/auth/bets');
   } catch (err) {
+    await trx.rollback();
     console.log(err.message);
     result.code = 'unknown';
   }

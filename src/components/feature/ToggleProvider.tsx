@@ -26,7 +26,7 @@ export function ToggleProvider({ children, onChange, initialState = false }: Tog
   };
 
   useEffect(() => toggleState(initialState), [initialState]);
-
+  useEffect(() => onChange && onChange(state), [state]);
   return <ToggleContext.Provider value={{ state, toggleState }}>{children}</ToggleContext.Provider>;
 }
 

@@ -19,6 +19,20 @@ module.exports = {
     },
   },
 
+  test: {
+    client: 'pg',
+    connection: {
+      host: 'localhost',
+      database: 'wagerize_test_db',
+      user: 'dev_user',
+      password: process.env.DB_PASSWORD,
+    },
+    pool: {
+      min: 0,
+      max: 2,
+    },
+  },
+
   production: {
     client: 'pg',
     connection: process.env.DB_URL,

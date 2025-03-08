@@ -1,3 +1,15 @@
+## [1.2.2] - 08-03-2025
+
+### Changed
+
+- Refactored middleware.
+
+### Fixed
+
+- An oversight in the endBetAction, where the creator share was given to the current session user. This is was technically
+  correct, as only the creator can end the bet anyway, but updated it so the reward goes to the user with the id defined
+  in the bet's author_id-column.
+
 ## [1.2.1] - 08-03-2025
 
 ### Fixed

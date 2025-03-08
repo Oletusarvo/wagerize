@@ -22,6 +22,7 @@ export async function placeBidAction(payload: any) {
     revalidatePath('/auth/bets');
     return 0;
   } catch (err) {
+    await trx.rollback();
     console.log(err.message);
     return 'unknown';
   }

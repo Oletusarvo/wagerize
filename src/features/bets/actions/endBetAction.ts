@@ -18,7 +18,7 @@ export async function endBetAction(betId: string, outcomeId: string) {
       )
       .select('wallet.id')
       .groupBy('wallet.id');
-
+    console.log(winningWallets);
     //Get the pool
     const [{ bidTotal }] = await trx('bets.bid').where({ bet_id: betId }).sum('amount as bidTotal');
 
@@ -42,10 +42,8 @@ export async function endBetAction(betId: string, outcomeId: string) {
     await Promise.all(promises);
 
     //Give the creator their share.
-    const session = await getSession();
-    await trx('users.wallet')
-      .where({ user_id: session.user.id })
-      .increment('balance', creatorShare);
+    const bet = await trx('bets.bet').where({ id: betId }).select('author_id').first();
+    await trx('users.wallet').where({ user_id: bet.author_id }).increment('balance', creatorShare);
 
     //All done. Delete the bet.
     await trx('bets.bet').where({ id: betId }).del();
@@ -53,6 +51,7 @@ export async function endBetAction(betId: string, outcomeId: string) {
 
     result.code = 0;
   } catch (err) {
+    await trx.rollback();
     console.log(err.message);
     result.code = -1;
   }
