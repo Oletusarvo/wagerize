@@ -11,8 +11,6 @@ export const options: NextAuthOptions = {
 
       credentials: {},
       async authorize({ email, password }) {
-        console.log(email, password);
-
         const user = await db('users.user as u')
           .join(db.raw('users.user_status as us on us.id = u.user_status_id'))
           .leftJoin(db.raw('users.wallet as wallet on wallet.user_id = u.id'))

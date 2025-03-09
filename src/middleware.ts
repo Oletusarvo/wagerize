@@ -17,6 +17,8 @@ export default async function middleware(req: NextRequestWithAuth) {
     }
   }
 
+  //TODO: Apply rate limiting to the /register, and /auth/bets/create POST-routes (server actions).
+
   return NextResponse.next();
 }
 
