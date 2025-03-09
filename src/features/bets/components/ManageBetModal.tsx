@@ -21,9 +21,9 @@ export function ManageBetModal({ betId, outcomes }) {
   const [status, setStatus] = useStatus();
   const router = useRouter();
 
-  const content = useList(
-    outcomes,
-    ({ item }) => {
+  const content = useList({
+    items: outcomes,
+    Component: ({ item }) => {
       return (
         <RadioButton
           name='outcome_id'
@@ -34,8 +34,8 @@ export function ManageBetModal({ betId, outcomes }) {
         />
       );
     },
-    [selectedOutcome, setSelectedOutcome]
-  );
+    deps: [selectedOutcome, setSelectedOutcome],
+  });
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

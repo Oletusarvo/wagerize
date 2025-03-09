@@ -2,7 +2,7 @@ import { Container } from '@/components/ui/Container';
 import { FormHeading } from '@/components/ui/FormHeading';
 import { Main } from '@/components/ui/Main';
 import { getSession } from '@/utils/getSession';
-import { Add, Casino, ManageAccounts, Settings } from '@mui/icons-material';
+import { Add, Casino, ManageAccounts, Money, Settings, Wallet } from '@mui/icons-material';
 
 import Link from 'next/link';
 
@@ -23,6 +23,7 @@ export default async function Dashboard() {
           title='Manage Bets'
           description={'Manage the bets you have created.'}
         />
+
         <DashboardItem
           href='/auth/dashboard/settings'
           icon={<ManageAccounts />}

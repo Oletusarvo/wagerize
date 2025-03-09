@@ -42,6 +42,11 @@ export function useRegisterForm() {
             if (result.code === RegisterError.DUPLICATE_USER) {
               toast.error('A user with the provided email already exists!');
               currentStatus = 'user_exists';
+            } else if (result.code === RegisterError.USER_COUNT) {
+              toast.error(
+                'Unfortunately, we do not allow registration of any more users at this point.'
+              );
+              currentStatus = 'error';
             } else {
               currentStatus = 'error';
             }

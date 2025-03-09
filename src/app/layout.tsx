@@ -11,6 +11,8 @@ import { SessionProvider } from 'next-auth/react';
 import { AuthProvider } from './AuthProvider';
 import { AppFooter } from '@/components/AppFooter';
 import { ServiceWorkerLoader } from '@/components/ServiceWorkerLoader';
+import dynamic from 'next/dynamic';
+
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],

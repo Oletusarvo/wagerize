@@ -5,13 +5,14 @@ import { BetListing } from './BetListing';
 import { SearchBar } from '@/components/feature/SearchBar';
 
 export function BetList({ bets }) {
-  const content = useList(
-    bets,
-    ({ item }) => {
+  const content = useList({
+    items: bets,
+    Component: ({ item }) => {
       return <BetListing bet={item} />;
     },
-    []
-  );
+    onEmpty: <span>No bets.</span>,
+    deps: [],
+  });
 
   return (
     <div className='flex flex-col gap-2 w-full flex-1'>

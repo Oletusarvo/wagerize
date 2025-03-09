@@ -9,9 +9,9 @@ import { RadioButton } from '@/components/feature/RadioButton';
 
 export function PlaceBidForm({ betId, outcomes, minBid }) {
   const { onSubmit, setSelectedOutcome, selectedOutcome, status } = usePlaceBidForm(betId, minBid);
-  const radioButtons = useList(
-    outcomes,
-    ({ item }) => {
+  const radioButtons = useList({
+    items: outcomes,
+    Component: ({ item }) => {
       console.log(item);
       return (
         <RadioButton
@@ -23,8 +23,8 @@ export function PlaceBidForm({ betId, outcomes, minBid }) {
         />
       );
     },
-    [selectedOutcome, setSelectedOutcome]
-  );
+    deps: [selectedOutcome, setSelectedOutcome],
+  });
 
   return (
     <Form onSubmit={onSubmit}>

@@ -8,6 +8,7 @@ import { usePathname } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { IconButton } from '@mui/material';
 import pkg from 'betting_app/package.json';
+import { Logo } from './Logo';
 
 export function AppHeader() {
   const { user, status } = useUserContext();
@@ -35,33 +36,34 @@ export function AppHeader() {
 
   const MenuIcon = menuOpen ? Clear : Menu;
   return (
-    <Header>
-      <div className='flex justify-between items-center w-full'>
-        <div className='flex flex-col'>
-          <Link
-            className='flex gap-2 items-center index-link'
-            href='/'>
-            <Casino sx={{ transform: 'rotate(45deg)' }} />
-            <h1 className='text-xl font-semibold'>{pkg.name}</h1>
-          </Link>
-          <small className='ml-8'>{pkg.version}</small>
-        </div>
+    <div className='flex flex-col w-full relative'>
+      <Header>
+        <div className='flex justify-between items-center w-full'>
+          <div className='flex flex-col'>
+            <Link
+              className='flex gap-2 items-center index-link'
+              href='/'>
+              <Logo />
+            </Link>
+            <small className='ml-8'>{pkg.version}</small>
+          </div>
 
-        <nav className='gap-8 xs:hidden lg:flex'>{getLinks()}</nav>
-        <div className='lg:hidden xs:block'>
-          <IconButton onClick={() => setMenuOpen(prev => !prev)}>
-            <MenuIcon sx={{ color: 'var(--color-accent)', zIndex: 30, margin: 0, padding: 0 }} />
-          </IconButton>
-          {menuOpen && (
-            <nav
-              onClick={() => setMenuOpen(false)}
-              id='drop-down-menu'
-              className='absolute top-18 left-0 w-full flex flex-col items-end gap-8 z-10 bg-white p-4 border-b border-border animate-slide-down duration-500'>
-              {getLinks()}
-            </nav>
-          )}
+          <nav className='gap-8 xs:hidden lg:flex'>{getLinks()}</nav>
+          <div className='lg:hidden xs:block'>
+            <IconButton onClick={() => setMenuOpen(prev => !prev)}>
+              <MenuIcon sx={{ color: 'var(--color-accent)', zIndex: 30, margin: 0, padding: 0 }} />
+            </IconButton>
+          </div>
         </div>
-      </div>
-    </Header>
+      </Header>
+      {menuOpen && (
+        <nav
+          onClick={() => setMenuOpen(false)}
+          id='drop-down-menu'
+          className='absolute top-[80px] w-full flex flex-col items-end gap-8 z-30 bg-white p-4 border-b border-border animate-slide-down duration-500'>
+          {getLinks()}
+        </nav>
+      )}
+    </div>
   );
 }

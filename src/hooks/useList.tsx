@@ -1,18 +1,30 @@
-import { useId, useMemo } from 'react';
+import { ReactNode, useId, useMemo } from 'react';
 
-export function useList<T>(items: T[], Component: React.FC<any>, deps: any[]) {
+export function useList<T>({
+  items,
+  Component,
+  onEmpty,
+  deps,
+}: {
+  items: T[];
+  Component: React.FC<any>;
+  onEmpty?: ReactNode;
+  deps: any[];
+}) {
   const listId = useId();
 
   return useMemo(
     () =>
-      items.map((item, i) => {
-        return (
-          <Component
-            item={item}
-            key={`${listId}-${i}`}
-          />
-        );
-      }),
-    [items, Component, ...deps]
+      items.length > 0
+        ? items.map((item, i) => {
+            return (
+              <Component
+                item={item}
+                key={`${listId}-${i}`}
+              />
+            );
+          })
+        : onEmpty,
+    [items, Component, onEmpty, ...deps]
   );
 }

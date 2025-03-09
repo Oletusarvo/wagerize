@@ -1,8 +1,16 @@
-## [1.2.2] - 08-03-2025
+## [2.0.0] - 08-03-2025
+
+### Added
+
+- Functionality to constrain the number of users who can register.
+- Back-end support for multiple currencies.
 
 ### Changed
 
 - Refactored middleware.
+- Refactored useList. Now takes an object as its argument. Also added an onEmpty-prop to it.
+- Updated the method of displaying the main menu.
+- The color of input borders to a darker slate-color.
 
 ### Fixed
 
