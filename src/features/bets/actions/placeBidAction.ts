@@ -7,15 +7,23 @@ import { revalidatePath } from 'next/cache';
 export async function placeBidAction(payload: any) {
   const trx = await db.transaction();
   try {
-    //Include the user as the author, and insert the bid.
+    /*Include the user's wallet id with the required currency, and insert the bid.
+     * Currently only supports the default DICE currency.
+     */
     const session = await getSession();
-    payload.user_id = session.user.id;
+    const [currencyId] = await trx('bets.bet').where({ id: payload.bet_id }).pluck('currency_id');
+    const [walletId] = await trx('users.wallet')
+      .where({
+        user_id: session.user.id,
+        currency_id: currencyId,
+      })
+      .pluck('id');
+
+    payload.wallet_id = walletId;
     await trx('bets.bid').insert(payload);
 
     //Decrement the user's wallet balance.
-    await trx('users.wallet')
-      .where({ user_id: session.user.id })
-      .decrement('balance', payload.amount);
+    await trx('users.wallet').where({ id: walletId }).decrement('balance', payload.amount);
 
     //Commit
     await trx.commit();

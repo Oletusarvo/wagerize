@@ -9,9 +9,8 @@ const credentials = {
 
 describe('Testing user registration', () => {
   it('Registers a user', async () => {
-    //Delete the test user if it exists.
-    await db('users.user').where({ email: credentials.email }).del();
-
+    //Delete test users.
+    await db('users.user').del();
     const result = await registerUserAction(credentials);
     expect(result.code).toBe(0);
 
@@ -22,6 +21,11 @@ describe('Testing user registration', () => {
     //Make sure the password exists, but is not a plain-text version of what was passed.
     expect(user.password).toBeDefined();
     expect(user.password).not.toBe(credentials.password1);
+
+    //Make sure there is a wallet for DICE.
+    const [currency_id] = await db('users.currency').where({ symbol: 'DICE' }).pluck('id');
+    const wallet = await db('users.wallet').where({ user_id: user.id, currency_id }).first();
+    expect(wallet).toBeDefined();
 
     //Delete the created test user.
     await db('users.user').where({ id: user.id }).del();

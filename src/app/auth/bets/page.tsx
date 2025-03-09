@@ -14,7 +14,7 @@ export default async function BetsPage({ searchParams }) {
 
   const bets = await Bets.get({
     query: authorId && { author_id: authorId },
-    select: ['bet.data', 'bet.expires_at', 'bet.id'],
+    select: ['bet.data', 'bet.expires_at', 'bet.id', 'bet.currency_id'],
     search: q,
     ctx: db,
   })

@@ -17,10 +17,13 @@ export async function createBetAction(payload: Omit<BetType, 'id' | 'created_at'
     payload.author_id = session.user.id;
 
     //Validate the bet data.
+    const [currencyId] = await trx('users.currency').where({ symbol: 'DICE' }).pluck('id');
+    payload.currency_id = currencyId;
     const parsedPayload = betSchema.parse(payload);
     optionsSchema.parse(opts);
 
     //Insert the new bet into the database.
+
     const [{ id }] = await trx('bets.bet').insert(parsedPayload).returning('id');
     await trx('bets.outcome').insert(opts.map(opt => ({ label: opt, bet_id: id })));
     await trx.commit();

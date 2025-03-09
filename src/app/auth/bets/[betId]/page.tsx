@@ -13,7 +13,7 @@ export default async function BetPage({ params }) {
   const { betId } = await params;
   const bet = await Bets.get({
     query: { 'bet.id': betId },
-    select: ['bet.data', 'bet.expires_at', 'bet.id'],
+    select: ['bet.data', 'bet.expires_at', 'bet.id', 'bet.currency_id'],
     ctx: db,
   }).first();
 

@@ -18,7 +18,7 @@ export async function endBetAction(betId: string, outcomeId: string) {
       )
       .select('wallet.id')
       .groupBy('wallet.id');
-    console.log(winningWallets);
+
     //Get the pool
     const [{ bidTotal }] = await trx('bets.bid').where({ bet_id: betId }).sum('amount as bidTotal');
 

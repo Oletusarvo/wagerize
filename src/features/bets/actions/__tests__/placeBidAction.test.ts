@@ -74,7 +74,11 @@ describe('Testing bid placement', () => {
   });
 
   it('Correctly decrements the users wallet balance', async () => {
-    const wallet = await db('users.wallet').where({ user_id: userId }).select('balance').first();
+    const [currency_id] = await db('users.currency').where({ symbol: 'DICE' }).pluck('id');
+    const wallet = await db('users.wallet')
+      .where({ user_id: userId, currency_id })
+      .select('balance')
+      .first();
     expect(parseInt(wallet.balance)).toBe(-amount);
   });
 });
