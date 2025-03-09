@@ -1,3 +1,10 @@
+## [2.1.0] - 09-03-2025
+
+### Changed
+
+- Refactored the front page.
+- Updated the app icon.
+
 ## [2.0.1] - 09-03-2025
 
 ### Fixed

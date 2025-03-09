@@ -1,0 +1,21 @@
+<svg width="512" height="512" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Define the gradient -->
+  <defs>
+    <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6f3b6a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b4f8c;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Larger die shape rotated 45 degrees with gradient fill -->
+  <rect x="14.65" y="14.65" width="70.71" height="70.71" rx="8" transform="rotate(45 50 50)" fill="url(#gradient1)"/>
+  
+  <!-- Pips positioned accordingly -->
+  <g transform="rotate(45 50 50)">
+    <circle cx="50" cy="50" r="6" fill="white"/>
+    <circle cx="28" cy="28" r="6" fill="white"/>
+    <circle cx="72" cy="72" r="6" fill="white"/>
+    <circle cx="28" cy="72" r="6" fill="white"/>
+    <circle cx="72" cy="28" r="6" fill="white"/>
+  </g>
+</svg>

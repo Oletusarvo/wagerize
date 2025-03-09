@@ -5,7 +5,7 @@
   --font-mono: var(--font-geist-mono);
   --color-accent: #6f3b6a;
   --color-border: var(--color-slate-300);
-  --spacing-default: 32rem;
+  --spacing-default: 16rem;
   --radius-inputs: 12px;
   --breakpoint-xs: 360px;
   --animate-slide-down: SlideDown 0.2s ease-out;

@@ -17,7 +17,7 @@ export function BetList({ bets }) {
   return (
     <div className='flex flex-col gap-2 w-full flex-1'>
       <SearchBar queryName='q' />
-      {content}
+      <div className='grid xs:grid-cols-1 lg:grid-cols-2 xs:gap-2 lg:gap-4'>{content}</div>
     </div>
   );
 }

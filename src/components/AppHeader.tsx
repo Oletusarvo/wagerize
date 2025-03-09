@@ -28,7 +28,6 @@ export function AppHeader() {
         <>
           <Link href='/register'>Register</Link>
           <Link href='/login'>Login</Link>
-          <Link href='/privacy'>Privacy Policy</Link>
         </>
       );
     }

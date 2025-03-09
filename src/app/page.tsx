@@ -8,36 +8,44 @@ import { GitHub, Instagram, Twitter } from '@mui/icons-material';
 export default async function Home() {
   return (
     <main className='pt-8 flex flex-col flex-1 gap-16 overflow-y-scroll'>
-      <Section>
-        <Heading>{pkg.name} - A poker inspired betting app.</Heading>
-        <p>
-          Welcome to {pkg.name} — where the fun never stops and the bets are always on! Whether it’s
-          guessing how many people will show up at an event or making predictions about anything you
-          can think of, you can create your own bets and challenge others to join in. Bets are
-          placed using "Dice," our quirky virtual currency, and the best part? It’s totally free to
-          play! So, get your friends together, throw down some fun challenges, and see who’s got the
-          best instincts.
-          <br />
-          <br />
-          <i className='text-sm text-gray-500'>
-            A limited amount of users can register at this time, due to resource constraints.
-          </i>
-        </p>
-        <div className='xs:w-full lg:w-[25%] flex-col'>
-          <Link href='/register'>
-            <Button
-              fullWidth
-              type='button'
-              color='accent'>
-              Start Today
-            </Button>
-          </Link>
+      <section className='flex xs:flex-col-reverse lg:flex-row gap-8 w-full xs:px-4 lg:px-default items-center'>
+        <div className='flex flex-col w-full gap-4'>
+          <Heading>{pkg.name} - A poker inspired betting app.</Heading>
+          <p>
+            Welcome to {pkg.name} — where the fun never stops and the bets are always on! Whether
+            it’s guessing how many people will show up at an event or making predictions about
+            anything you can think of, you can create your own bets and challenge others to join in.
+            Bets are placed using "Dice," our virtual currency, and the best part? It’s totally free
+            to play! So, get your friends together, throw down some fun challenges, and see who’s
+            got the best instincts.
+            <br />
+            <br />
+            <i className='text-sm text-gray-500'>
+              Due to resource constraints, a limited amount of users can register at this time.
+            </i>
+          </p>
+          <div className='xs:w-full lg:w-[25%] flex-col'>
+            <Link href='/register'>
+              <Button
+                fullWidth
+                type='button'
+                color='accent'>
+                Start Today
+              </Button>
+            </Link>
+          </div>
         </div>
-      </Section>
+        <img
+          width='300'
+          height='300'
+          src='/app-icon.svg'
+          className='m-8'
+        />
+      </section>
 
       <Section>
         <Heading>Features</Heading>
-        <ul className='grid grid-cols-1 gap-2'>
+        <ul className='grid xs:grid-cols-1 lg:grid-cols-3 gap-2'>
           <Container as='li'>
             <ContainerBody>
               <ContainerHeading>Virtual Currency</ContainerHeading>
@@ -71,7 +79,7 @@ export default async function Home() {
 
       <Section>
         <Heading>Planned Features</Heading>
-        <ul className='grid grid-cols-1 gap-2'>
+        <ul className='grid xs:grid-cols-1 lg:grid-cols-2 gap-2'>
           <Container as='li'>
             <ContainerBody>
               <ContainerHeading>Bid raising</ContainerHeading>
@@ -114,8 +122,8 @@ export default async function Home() {
           </Container>
         </ul>
       </Section>
-      <footer className='flex w-full py-8 bg-accent lg:px-default xs:px-4 text-white flex-col'>
-        <div className='flex flex-col gap-2 pb-12'>
+      <footer className='flex w-full py-8 bg-gradient-to-b from-accent to-[#8b4f8c] lg:px-default xs:px-4 text-white flex-col gap-8'>
+        <div className='flex flex-col gap-2'>
           <Link
             href='/tos'
             target='_blank'>
@@ -127,15 +135,18 @@ export default async function Home() {
             <span className='text-white font-semibold'>Privacy Policy</span>
           </Link>
         </div>
-        <div className='flex justify-between items-center'>
-          <Logo />
-          <div className='flex gap-4'>
-            <Link
-              target='_blank'
-              href='https://github.com/Oletusarvo/wagerize'>
-              <GitHub sx={{ color: 'white' }} />
-            </Link>
+        <div className='flex flex-col'>
+          <div className='flex justify-between items-center'>
+            <Logo />
+            <div className='flex gap-4'>
+              <Link
+                target='_blank'
+                href='https://github.com/Oletusarvo/wagerize'>
+                <GitHub sx={{ color: 'white' }} />
+              </Link>
+            </div>
           </div>
+          <span className='w-full text-sm'>&copy; oletusarvo 2025</span>
         </div>
       </footer>
     </main>

@@ -8,7 +8,7 @@ export function PoolDisplay({ amount, status = 'neutral' }: PoolDisplayProps) {
   const currentPool = useAnimatedNumber(amount, 25, true);
 
   const className = useClassName([
-    'w-[75%] rounded-full border flex gap-2 items-center justify-center aspect-square text-2xl bg-white',
+    'xs:w-[75%] rounded-full border flex gap-2 items-center justify-center aspect-square text-2xl bg-white',
     status === 'participated'
       ? 'border-red-600'
       : status === 'not_participated'
