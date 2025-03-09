@@ -20,7 +20,7 @@ export default async function ManageBetsPage() {
     .orderBy('expires_at', 'desc');
 
   await Promise.all(bets.map(async b => Bets.joinOutcomes(b)));
-  console.log(bets);
+
   return (
     <Main>
       <div className='flex flex-col gap-2 w-full'>
@@ -31,12 +31,16 @@ export default async function ManageBetsPage() {
           <br />
           Bets still in progress will not be shown.
         </p>
-        {bets.map((b, i) => (
-          <Listing
-            key={`m-b-${i}`}
-            bet={b}
-          />
-        ))}
+        {bets.length > 0 ? (
+          bets.map((b, i) => (
+            <Listing
+              key={`m-b-${i}`}
+              bet={b}
+            />
+          ))
+        ) : (
+          <span>No bets available to close.</span>
+        )}
       </div>
     </Main>
   );

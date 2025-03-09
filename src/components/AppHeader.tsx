@@ -5,7 +5,7 @@ import { Header } from './ui/Header';
 import { Casino, Clear, Menu } from '@mui/icons-material';
 import { useUserContext } from '@/features/users/contexts/UserProvider';
 import { usePathname } from 'next/navigation';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { IconButton } from '@mui/material';
 import pkg from 'betting_app/package.json';
 import { Logo } from './Logo';
@@ -15,7 +15,7 @@ export function AppHeader() {
   const pathname = usePathname();
   const currentPath = useMemo(() => pathname.split('/').at(-1), [pathname]);
   const [menuOpen, setMenuOpen] = useState(false);
-
+  const headerRef = useRef<HTMLElement>(null);
   const getLinks = () => {
     if (status === 'authenticated' && user) {
       return (
@@ -37,7 +37,7 @@ export function AppHeader() {
   const MenuIcon = menuOpen ? Clear : Menu;
   return (
     <div className='flex flex-col w-full relative'>
-      <Header>
+      <Header ref={headerRef}>
         <div className='flex justify-between items-center w-full'>
           <div className='flex flex-col'>
             <Link
@@ -60,7 +60,8 @@ export function AppHeader() {
         <nav
           onClick={() => setMenuOpen(false)}
           id='drop-down-menu'
-          className='absolute top-[80px] w-full flex flex-col items-end gap-8 z-30 bg-white p-4 border-b border-border animate-slide-down duration-500'>
+          className='absolute w-full flex flex-col items-end gap-8 z-20 bg-white p-4 border-b border-border animate-slide-down'
+          style={{ top: headerRef.current?.offsetHeight || 0 }}>
           {getLinks()}
         </nav>
       )}

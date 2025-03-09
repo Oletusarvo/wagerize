@@ -1,4 +1,11 @@
-## [2.0.0] - 08-03-2025
+## [2.0.1] - 09-03-2025
+
+### Fixed
+
+- Incorrect date on the previous update from 08-03-, to 09-03-2025.
+- The main menu animation not playing.
+
+## [2.0.0] - 09-03-2025
 
 ### Added
 

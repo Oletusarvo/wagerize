@@ -8,16 +8,22 @@
   --spacing-default: 32rem;
   --radius-inputs: 12px;
   --breakpoint-xs: 360px;
-  --animate-slide-down: SlideDown;
-}
+  --animate-slide-down: SlideDown 0.2s ease-out;
 
-@keyframes SlideDown {
-  0% {
-    transform: translate(-100px);
-  }
+  @keyframes SlideDown {
+    0% {
+      transform: translateY(-100px);
+      opacity: 0;
+    }
 
-  100% {
-    transform: translate(0);
+    ,
+    50% {
+      opacity: 1;
+    }
+
+    100% {
+      transform: translateY(0);
+    }
   }
 }
 
