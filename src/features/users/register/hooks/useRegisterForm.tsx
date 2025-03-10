@@ -48,20 +48,11 @@ export function useRegisterForm() {
               );
               currentStatus = 'error';
             } else {
+              toast.error('An unexpected error occured!');
               currentStatus = 'error';
             }
           }
         }
-      } catch (err) {
-        const msg = JSON.parse(err.message);
-        console.log(msg);
-        if (msg instanceof Array) {
-          toast.error(msg.at(0).message);
-        } else {
-          toast.error('An unknown error occured!');
-        }
-
-        currentStatus = 'error';
       } finally {
         setStatus(currentStatus);
       }
