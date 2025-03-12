@@ -14,6 +14,17 @@ export async function GET(req: NextRequest) {
 
     const { user_id } = jwt.verify(token, process.env.TOKEN_SECRET) as { user_id: string };
     if (user_id) {
+      //Check if the user is already verified
+      const [user_status_id] = await db('users.user')
+        .where({ id: user_id })
+        .pluck('user_status_id');
+
+      const [activeUserId] = await db('users.user_status').where({ label: 'Active' }).pluck('id');
+      console.log(user_status_id, activeUserId);
+      if (user_status_id == activeUserId) {
+        return new NextResponse('User already verified!', { status: 401 });
+      }
+
       await db.raw(
         ` UPDATE users.user 
           SET user_status_id = (SELECT id FROM users.user_status WHERE label = 'Active' LIMIT 1) 
@@ -21,7 +32,8 @@ export async function GET(req: NextRequest) {
         [user_id]
       );
       const newUrl = req.nextUrl.clone();
-      newUrl.pathname = `${process.env.NEXTAUTH_URL}/login`;
+      newUrl.pathname = '/login';
+      newUrl.searchParams.delete('token');
       return NextResponse.redirect(newUrl);
     } else {
       return new NextResponse('User id missing in payload!', {

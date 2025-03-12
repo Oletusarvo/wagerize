@@ -1,7 +1,7 @@
 'use client';
 
 import { useUserContext } from '@/features/users/contexts/UserProvider';
-import { Add, ArrowBack, Dashboard, Login, Person } from '@mui/icons-material';
+import { Add, ArrowBack, Casino, Dashboard, Login, Person } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -16,7 +16,12 @@ export function AppFooter() {
 
   const getNavContent = () => {
     if (sessionStatus === 'authenticated') {
-      if (pathname.includes('/auth/bets') || pathname.includes('/dashboard/settings')) {
+      if (
+        pathname === '/auth/bets/create' ||
+        pathname === '/dashboard/settings' ||
+        //Will match the path when viewing a single bet.
+        pathname.includes('/auth/bets/')
+      ) {
         return (
           <IconButton onClick={() => router.back()}>
             <Icon
@@ -28,6 +33,14 @@ export function AppFooter() {
       } else {
         return (
           <>
+            <Link href='/auth/dashboard'>
+              <IconButton>
+                <Icon
+                  Component={Person}
+                  size='large'
+                />
+              </IconButton>
+            </Link>
             <Link href='/auth/bets/create'>
               <IconButton>
                 <Icon
@@ -36,27 +49,46 @@ export function AppFooter() {
                 />
               </IconButton>
             </Link>
+            <Link href='/auth/bets'>
+              <IconButton>
+                <Icon
+                  Component={Casino}
+                  size='large'
+                />
+              </IconButton>
+            </Link>
           </>
         );
       }
     } else if (sessionStatus === 'unauthenticated') {
-      return (
-        <Link href='/login'>
-          <IconButton>
+      if (pathname === '/login' || pathname === '/register' || pathname === '/login/reset') {
+        return (
+          <IconButton onClick={() => router.back()}>
             <Icon
-              Component={Login}
+              Component={ArrowBack}
               size='large'
             />
           </IconButton>
-        </Link>
-      );
+        );
+      } else {
+        return (
+          <Link href='/login'>
+            <IconButton>
+              <Icon
+                Component={Login}
+                size='large'
+              />
+            </IconButton>
+          </Link>
+        );
+      }
     } else {
       return <Spinner />;
     }
   };
 
   return (
-    <footer className='lg:px-default xs:px-4 py-4 z-20 app-footer flex gap-8 items-center justify-center bg-white'>
+    <footer className='lg:px-default xs:px-4 py-4 z-20 app-footer flex gap-8 items-center justify-center bg-white h-[70px]'>
       {getNavContent()}
     </footer>
   );

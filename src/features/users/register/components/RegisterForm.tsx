@@ -6,13 +6,27 @@ import { Button } from '@/components/feature/Button';
 import Link from 'next/link';
 import { Form } from '@/components/feature/Form';
 import { FormHeading } from '@/components/ui/FormHeading';
-import { ErrorHelper } from '@/components/ui/InputHelper';
+import { ErrorHelper, Helper } from '@/components/ui/InputHelper';
+import { createContextWithHook } from '@/utils/createContextWithHook';
 
 export function RegisterForm() {
-  const { credentials, updateCredentials, onSubmit, status } = useRegisterForm();
+  const { credentials, updateCredentials, onSubmit, status, registerButtonDisabled } =
+    useRegisterForm();
+
   return (
     <Form onSubmit={onSubmit}>
       <FormHeading>Register</FormHeading>
+      <InputGroup>
+        <label>Date Of Birth</label>
+        <input
+          name='dateOfBirth'
+          type='date'
+          required
+          onChange={updateCredentials}
+          value={credentials.dateOfBirth}
+        />
+        {status === 'underage' && <ErrorHelper>You must be 18 years or older!</ErrorHelper>}
+      </InputGroup>
       <InputGroup>
         <label>Email</label>
         <input
@@ -62,12 +76,14 @@ export function RegisterForm() {
         <span>
           I have read the{' '}
           <Link
+            className='font-semibold'
             href='/tos'
             target='_blank'>
             Terms Of Service,
           </Link>{' '}
           and{' '}
           <Link
+            className='font-semibold'
             href='/privacy'
             target='_blank'>
             Privacy Policy
@@ -85,10 +101,14 @@ export function RegisterForm() {
           variant='contained'
           color='accent'
           loading={status === 'loading'}
-          disabled={status === 'done' || status === 'loading'}>
+          disabled={registerButtonDisabled}>
           Register
         </Button>
-        <Link href='/login'>Already have an account?</Link>
+        <Link
+          href='/login'
+          className='bold'>
+          Already have an account?
+        </Link>
       </div>
     </Form>
   );

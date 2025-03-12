@@ -1,3 +1,16 @@
+## [2.2.0] - 11-03-2025
+
+### Added
+
+- A verification email is now sent to the user's email when they register.
+- Password reset functionality.
+- Rate limiting.
+
+### Changed
+
+- Made the font semibold on buttons.
+- Users can now navigate between their dashboard, creating bets, and the bet list through the footer.
+
 ## [2.1.0] - 09-03-2025
 
 ### Changed

@@ -45,7 +45,16 @@ export function LoginForm() {
           disabled={status === 'loading' || status === 'done'}>
           Login
         </Button>
-        <Link href='/register'>Don't have an account?</Link>
+        <Link
+          href='/login/reset'
+          className='bold'>
+          Forgot Password?
+        </Link>
+        <Link
+          href='/register'
+          className='bold'>
+          Don't have an account?
+        </Link>
       </div>
     </Form>
   );

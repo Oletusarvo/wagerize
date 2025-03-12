@@ -1,16 +1,22 @@
 import db from 'betting_app/dbconfig';
 import { registerUserAction } from '../registerUserAction';
+import { transport } from 'betting_app/nodemailer.config';
+
+jest.mock('betting_app/nodemailer.config');
 
 const credentials = {
   email: 'test@email.com',
   password1: '12345678',
   password2: '12345678',
+  dateOfBirth: new Date('09-29-1991').toISOString().split('T')[0],
 };
 
 describe('Testing user registration', () => {
   it('Registers a user', async () => {
     //Delete test users.
     await db('users.user').del();
+
+    //Register a test user.
     const result = await registerUserAction(credentials);
     expect(result.code).toBe(0);
 
@@ -26,6 +32,13 @@ describe('Testing user registration', () => {
     const [currency_id] = await db('users.currency').where({ symbol: 'DICE' }).pluck('id');
     const wallet = await db('users.wallet').where({ user_id: user.id, currency_id }).first();
     expect(wallet).toBeDefined();
+
+    //Check that the nodemailer sendMail-method was called with the email as the to-arg.
+    expect(transport.sendMail).toHaveBeenCalledWith(
+      expect.objectContaining({
+        to: credentials.email,
+      })
+    );
 
     //Delete the created test user.
     await db('users.user').where({ id: user.id }).del();

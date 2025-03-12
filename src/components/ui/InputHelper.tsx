@@ -1,5 +1,13 @@
 const HelperBase = ({ children }) => <div className='text-sm'>{children}</div>;
 
+export function Helper({ children }) {
+  return (
+    <span className='text-gray-500'>
+      <HelperBase>{children}</HelperBase>
+    </span>
+  );
+}
+
 export function ErrorHelper({ children }) {
   return (
     <span className='text-red-600'>

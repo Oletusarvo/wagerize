@@ -11,17 +11,20 @@ export default async function Home() {
       <section className='flex xs:flex-col-reverse lg:flex-row gap-8 w-full xs:px-4 lg:px-default items-center'>
         <div className='flex flex-col w-full gap-4'>
           <Heading>{pkg.name} - A poker inspired betting app.</Heading>
-          <p>
-            Welcome to {pkg.name} — where the fun never stops and the bets are always on! Whether
-            it’s guessing how many people will show up at an event or making predictions about
-            anything you can think of, you can create your own bets and challenge others to join in.
-            Bets are placed using "Dice," our virtual currency, and the best part? It’s totally free
-            to play! So, get your friends together, throw down some fun challenges, and see who’s
-            got the best instincts.
+          <p className='text-lg'>
+            Welcome to <strong>{pkg.name}</strong> — where the fun never stops and the bets are
+            always on! It all started with our friend group, constantly challenging each other with
+            random bets. Instead of printing fake money to keep track of our wagers, we thought—why
+            not make an app? And just like that, <strong>{pkg.name}</strong> was born! Now, you can
+            create your own bets, challenge friends, and see who’s got the best instincts. Bets are
+            placed using <strong>Dice</strong>, our virtual currency, and the best part? It’s
+            totally free to play! So gather your crew, throw down some fun challenges, and let the
+            games begin!
             <br />
             <br />
             <i className='text-sm text-gray-500'>
-              Due to resource constraints, a limited amount of users can register at this time.
+              Due to resource constraints, only a limited amount of users can register at this time.
+              <strong> Users must be 18 years or older to register.</strong>
             </i>
           </p>
           <div className='xs:w-full lg:w-[25%] flex-col'>
@@ -50,8 +53,8 @@ export default async function Home() {
             <ContainerBody>
               <ContainerHeading>Virtual Currency</ContainerHeading>
               <p>
-                Place your bets with <strong>Dice</strong>—our quirky virtual currency that lets you
-                join in on any bet! There’s no limit to how many bets you can make, and don’t worry,
+                Place your bets with <strong>Dice</strong>—our virtual currency that lets you join
+                in on any bet! There’s no limit to how many bets you can make, and don’t worry,
                 balances can even go negative. It’s all part of the fun!
               </p>
             </ContainerBody>
@@ -123,7 +126,7 @@ export default async function Home() {
         </ul>
       </Section>
       <footer className='flex w-full py-8 bg-gradient-to-b from-accent to-[#8b4f8c] lg:px-default xs:px-4 text-white flex-col gap-8'>
-        <div className='flex flex-col gap-2'>
+        <div className='flex flex-col gap-2 w-full'>
           <Link
             href='/tos'
             target='_blank'>
@@ -137,7 +140,11 @@ export default async function Home() {
         </div>
         <div className='flex flex-col'>
           <div className='flex justify-between items-center'>
-            <Logo />
+            <div className='flex flex-col'>
+              <Logo />
+              <span className='w-full text-sm'>&copy; oletusarvo 2025</span>
+            </div>
+
             <div className='flex gap-4'>
               <Link
                 target='_blank'
@@ -146,7 +153,6 @@ export default async function Home() {
               </Link>
             </div>
           </div>
-          <span className='w-full text-sm'>&copy; oletusarvo 2025</span>
         </div>
       </footer>
     </main>

@@ -14,6 +14,7 @@ import { deleteUserAction } from '../actions/deleteUserAction';
 import toast from 'react-hot-toast';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { ResetPasswordForm } from '../../reset_password/components/ResetPasswordForm';
 
 export function AccountSettingsForm() {
   const { user, status: sessionStatus } = useUserContext();
@@ -47,7 +48,10 @@ export function AccountSettingsForm() {
   return (
     <div className='flex flex-col gap-4 w-full flex-1'>
       <FormHeading>Settings</FormHeading>
-      <p>Currently only account deletion is supported.</p>
+      <p>
+        Currently only account deletion is supported here. To reset your password, log out, and on
+        the login page, click on "forgot password?"
+      </p>
 
       <Button
         loading={status === 'loading'}

@@ -18,7 +18,7 @@ export function Button({
 }: ButtonProps) {
   const className = useMemo(() => {
     return [
-      'flex px-4 py-2 uppercase justify-center min-h-[2.5rem] items-center',
+      'flex px-4 py-2 uppercase justify-center min-h-[2.5rem] items-center font-semibold',
       fullWidth ? 'w-full' : 'w-auto',
       variant === 'contained'
         ? ['text-white', color === 'accent' ? 'bg-accent' : 'bg-none'].join(' ')

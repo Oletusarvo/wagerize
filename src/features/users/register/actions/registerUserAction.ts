@@ -6,6 +6,7 @@ import bcrypt from 'bcrypt';
 import 'betting_app/loadenv';
 import { transport } from 'betting_app/nodemailer.config';
 import jwt from 'jsonwebtoken';
+import { registerCredentialsSchema } from '../schemas/registerCredentialsSchema';
 
 export async function registerUserAction(credentials: any) {
   const result: { code: string | number } = {
@@ -16,7 +17,7 @@ export async function registerUserAction(credentials: any) {
   try {
     const maxUsers = process.env.MAX_USERS ? parseInt(process.env.MAX_USERS) : null;
     if (maxUsers && maxUsers > 0) {
-      //Limit the number of users allowed to register
+      //Limit the number of users allowed to register. A maxUsers setting of zero means no limit.
       const [{ count }] = await trx('users.user').count('* as count');
       const userCount = typeof count === 'string' ? parseInt(count) : count;
       if (userCount >= maxUsers) {
@@ -25,17 +26,20 @@ export async function registerUserAction(credentials: any) {
       }
     }
 
-    const { email, password1 } = credentials;
-    const encyrptedPassword = await bcrypt.hash(password1, 15);
+    //Parse the credentials and insert the user into the database.
+    registerCredentialsSchema.parse(credentials);
+    const { email, password1: password } = credentials;
+    const encyrptedPassword = await bcrypt.hash(password, 15);
     const [{ id: user_id }] = await trx('users.user')
       .insert({
         email,
         password: encyrptedPassword,
+        date_of_birth: credentials.dateOfBirth,
       })
       .returning('id');
 
     //Send a verification email to the new user
-    await sendActivationEmail(user_id, email);
+    await sendActivationEmailAction(user_id, email);
     await trx.commit();
   } catch (err) {
     await trx.rollback();
@@ -50,18 +54,22 @@ export async function registerUserAction(credentials: any) {
   return result;
 }
 
-async function sendActivationEmail(user_id: string, email: string) {
-  const activationToken = jwt.sign({ user_id }, process.env.TOKEN_SECRET);
+export async function sendActivationEmailAction(user_id: string, email: string) {
+  const activationToken = jwt.sign({ user_id }, process.env.TOKEN_SECRET, {
+    expiresIn: '1d',
+  });
+
   const message = {
     from: 'nistikemisti@gmail.com',
     to: email,
-    subject: 'Please verify you Wagerize account.',
+    subject: 'Please verify your email.',
     html: `
-      <h1>Verify Your Wagerize Account</h1>
+      <h1>Verify Your Email</h1>
       <strong>Hi there!</strong><br/>
-      It seems you have created an account at <a href="https://wagerize.onrender.com">Wagerize</a><br/>
-      If this was not you, you can safely ignore this email. Inactive accounts are deleted after 30 days.<br/>
-      Otherwise, please click on <a href="https://wagerize.onrender.com/api/public/users/verify?token=${activationToken}">this link</a>.<br/><br/>
+      It seems you have requested to create an account at <strong>Wagerize</strong><br/>
+      If this was not you, you can safely ignore this email.<br/><br/>
+      Otherwise, please click on <a href="${process.env.DOMAIN_URL}/api/public/users/verify?token=${activationToken}">this link</a> to verify your email.<br/><br/>
+    
       Best regards, the Wagerize team.
     `,
   };

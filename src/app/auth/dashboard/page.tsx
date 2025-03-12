@@ -12,12 +12,6 @@ export default async function Dashboard() {
       <FormHeading>Welcome!</FormHeading>
       <div className='grid lg:grid-cols-2 xs:grid-cols-1 w-full lg:gap-4 xs:gap-2 py-4'>
         <DashboardItem
-          href='/auth/bets?page=0&q='
-          icon={<Casino sx={{ transform: 'rotate(45deg)' }} />}
-          title='Bets'
-          description={'Browse bets created by you, and others.'}
-        />
-        <DashboardItem
           href='/auth/bets/manage'
           icon={<Settings />}
           title='Manage Bets'
