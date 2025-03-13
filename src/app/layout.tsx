@@ -12,6 +12,7 @@ import { AuthProvider } from './AuthProvider';
 import { AppFooter } from '@/components/AppFooter';
 import { ServiceWorkerLoader } from '@/components/ServiceWorkerLoader';
 import dynamic from 'next/dynamic';
+import { cookies } from 'next/headers';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
   title: 'Betting App',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

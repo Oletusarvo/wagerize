@@ -1,3 +1,18 @@
+## [2.3.0] - 13-03-2025
+
+### Changed
+
+- Revised the front page text content.
+- Added functionality into the ToggleProvider to optionally close its target if clicking outside of it.
+- Upated the bet-management screen to show all bets a user has created, separated by if they are expired or not.
+- Added ability to click on unexpired bets, taking the user to the betting screen for that bet.
+- Added a button to copy the link to a bet, so it can be shared.
+
+### Added
+
+- A Donation link to the front page.
+- A cookie notice.
+
 ## [2.2.0] - 13-03-2025
 
 ### Added

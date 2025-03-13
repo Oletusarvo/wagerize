@@ -10,7 +10,7 @@ export function BetList({ bets }) {
     Component: ({ item }) => {
       return <BetListing bet={item} />;
     },
-    onEmpty: <span>No bets.</span>,
+    onEmpty: <span>No challenges.</span>,
     deps: [],
   });
 

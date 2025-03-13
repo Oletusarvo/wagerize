@@ -9,10 +9,26 @@
   --radius-inputs: 12px;
   --breakpoint-xs: 360px;
   --animate-slide-down: SlideDown 0.2s ease-out;
+  --animate-slide-up: SlideUp 0.2s ease-out;
 
   @keyframes SlideDown {
     0% {
       transform: translateY(-100px);
+      opacity: 0;
+    }
+
+    50% {
+      opacity: 1;
+    }
+
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes SlideUp {
+    0% {
+      transform: translateY(100px);
       opacity: 0;
     }
 

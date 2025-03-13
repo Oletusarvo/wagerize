@@ -25,7 +25,7 @@ export function CreateBetForm() {
 
   return (
     <Form onSubmit={onSubmit}>
-      <FormHeading>Create Bet</FormHeading>
+      <FormHeading>Create Challenge</FormHeading>
       <InputGroup>
         <label>Title</label>
         <input
@@ -82,6 +82,9 @@ export function CreateBetForm() {
             ref={ref}
             className='w-full'
             placeholder='Type the label for an outcome...'
+            type='text'
+            minLength={1}
+            maxLength={32}
           />
           <IconButton
             type='button'

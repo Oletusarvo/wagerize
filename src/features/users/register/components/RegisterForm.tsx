@@ -19,6 +19,7 @@ export function RegisterForm() {
       <InputGroup>
         <label>Date Of Birth</label>
         <input
+          className='w-full'
           name='dateOfBirth'
           type='date'
           required

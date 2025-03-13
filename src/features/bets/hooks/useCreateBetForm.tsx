@@ -35,7 +35,7 @@ export function useCreateBetForm() {
           }
           currentStatus = 'error';
         } else {
-          toast.success('Bet created successfully!');
+          toast.success('Challenge created successfully!');
           currentStatus = 'done';
           router.replace('/auth/bets');
         }

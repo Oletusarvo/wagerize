@@ -1,18 +1,36 @@
 'use client';
 
 import { useUserContext } from '@/features/users/contexts/UserProvider';
-import { Add, ArrowBack, Casino, Dashboard, Login, Person } from '@mui/icons-material';
+import {
+  Add,
+  ArrowBack,
+  Casino,
+  Clear,
+  Cookie,
+  Dashboard,
+  Login,
+  Person,
+} from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Icon } from './ui/Icon';
 import { Spinner } from './ui/Spinner';
+import { ToggleProvider } from './feature/ToggleProvider';
+import { useRef, useState } from 'react';
+import { set } from 'zod';
+import { FormHeading } from './ui/FormHeading';
+import { Button } from './feature/Button';
+import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 
 export function AppFooter() {
   const { status: sessionStatus } = useUserContext();
   const pathname = usePathname();
   const currentPath = usePathname().split('/').at(-1);
+
   const router = useRouter();
+  const footerRef = useRef<HTMLElement | null>(null);
+  const [cookieNoticeOpen, setCookieNoticeOpen] = useState(false);
 
   const getNavContent = () => {
     if (sessionStatus === 'authenticated') {
@@ -72,14 +90,45 @@ export function AppFooter() {
         );
       } else {
         return (
-          <Link href='/login'>
-            <IconButton>
-              <Icon
-                Component={Login}
-                size='large'
-              />
-            </IconButton>
-          </Link>
+          <ToggleProvider onChange={state => setCookieNoticeOpen(state)}>
+            <ToggleProvider.Trigger>
+              <IconButton sx={{ justifySelf: 'flex-end', color: 'var(--color-accent)' }}>
+                {!cookieNoticeOpen ? <Cookie /> : <Clear />}
+              </IconButton>
+            </ToggleProvider.Trigger>
+            <ToggleProvider.Target hideOnClickOutside>
+              <div
+                className='border-t border-border absolute xs:left-0 lg:left-[40%] lg:translate-x-[-30%] bg-white z-10 xs:w-full lg:w-[50%] animate-slide-up flex flex-col gap-4 py-8 px-4'
+                style={{ bottom: footerRef.current?.offsetHeight || 0 }}>
+                <div className='flex items-center justify-between border-b border-border pb-4'>
+                  <FormHeading>Cookies</FormHeading>
+                  <ToggleProvider.Trigger>
+                    <IconButton>
+                      <Clear />
+                    </IconButton>
+                  </ToggleProvider.Trigger>
+                </div>
+
+                <p>
+                  We use cookies to enhance your experience on our website. The cookies we use are
+                  necessary for the functionality of the site and are used to store information
+                  about your session. These cookies are essential for ensuring that you can navigate
+                  the site and use its features.
+                  <br /> By continuing to browse our site, you agree to our use of these mandatory
+                  cookies.
+                </p>
+                <ToggleProvider.Trigger>
+                  <Button
+                    fullWidth
+                    color='accent'
+                    type='button'
+                    onClick={() => setCookieNoticeOpen(false)}>
+                    Got it
+                  </Button>
+                </ToggleProvider.Trigger>
+              </div>
+            </ToggleProvider.Target>
+          </ToggleProvider>
         );
       }
     } else {
@@ -88,7 +137,9 @@ export function AppFooter() {
   };
 
   return (
-    <footer className='lg:px-default xs:px-4 py-4 z-20 app-footer flex gap-8 items-center justify-center bg-white h-[70px]'>
+    <footer
+      ref={footerRef}
+      className='relative lg:px-default xs:px-4 py-4 z-30 app-footer flex gap-8 items-center justify-center bg-white h-[70px]'>
       {getNavContent()}
     </footer>
   );

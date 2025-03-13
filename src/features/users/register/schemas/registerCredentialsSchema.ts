@@ -4,27 +4,18 @@ import z from 'zod';
 export const registerCredentialsSchema = z
   .object({
     email: z.string().email().nonempty().trim(),
-    dateOfBirth: z.string(),
+    dateOfBirth: z.string().date(),
     password1: passwordSchema,
     password2: passwordSchema,
   })
   .strict()
   .refine(
     value => {
-      const { dateOfBirth } = value;
-      const age = new Date().getFullYear() - new Date(dateOfBirth).getFullYear(); // Updated to use date object
-      return age >= 18;
-    },
-    {
-      message: 'underage',
-    }
-  )
-  .refine(
-    value => {
       //Make sure the passwords are the same.
-      const { password1, password2 } = value;
+      const { password1, password2, dateOfBirth } = value;
       const passwordsEqual = password1 === password2;
-      return passwordsEqual;
+      const age = new Date().getFullYear() - new Date(dateOfBirth).getFullYear();
+      return passwordsEqual && age >= 18;
     },
     {
       message: 'password_mismatch',

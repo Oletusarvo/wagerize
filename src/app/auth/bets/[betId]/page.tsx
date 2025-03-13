@@ -6,7 +6,7 @@ import { BetHeader } from '@/features/bets/components/BetHeader';
 import { PlaceBidButton } from '@/features/bets/components/PlaceBidButton';
 import { PoolDisplay } from '@/features/bets/components/PoolDisplay';
 import { Bets } from '@/features/bets/DAL/Bets';
-import { Check } from '@mui/icons-material';
+import { Check, Share } from '@mui/icons-material';
 import db from 'betting_app/dbconfig';
 
 export default async function BetPage({ params }) {

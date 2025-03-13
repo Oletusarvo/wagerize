@@ -1,7 +1,7 @@
 'use client';
 
 import { createContextWithHook } from '@/utils/createContextWithHook';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { PassProps } from '../util/PassProps';
 
 type ToggleContextProps = {
@@ -21,7 +21,7 @@ export function ToggleProvider({ children, onChange, initialState = false }: Tog
   const [state, setState] = useState(initialState);
 
   const toggleState = (newState?: boolean) => {
-    const fn = onChange || setState;
+    const fn = setState;
     fn(newState !== undefined ? newState : !state);
   };
 
@@ -41,7 +41,29 @@ ToggleProvider.Trigger = function ({ children, ...props }) {
   );
 };
 
-ToggleProvider.Target = function ({ children }) {
-  const { state } = useToggleContext();
-  return state ? children : null;
+ToggleProvider.Target = function ({ children, hideOnClickOutside = false }) {
+  const { state, toggleState } = useToggleContext();
+  const ref = useRef<HTMLElement | null>(null);
+
+  const handleClickOutside = e => {
+    if (hideOnClickOutside && ref.current && !ref.current.contains(e.target)) {
+      console.log('Calling handleClickOutside');
+      toggleState(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  return state ? (
+    <PassProps
+      ref={ref}
+      onClick={handleClickOutside}>
+      {children}
+    </PassProps>
+  ) : null;
 };
