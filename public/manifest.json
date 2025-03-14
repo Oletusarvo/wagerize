@@ -6,7 +6,28 @@
   "background_color": "#ffffff",
   "theme_color": "#6f3b6a",
   "orientation": "portrait",
+
   "icons": [
+    {
+      "src": "/app-icon.svg",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "/app-icon.svg",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "/app-icon.svg",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/app-icon.svg",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
     {
       "src": "/app-icon.svg",
       "sizes": "192x192",
