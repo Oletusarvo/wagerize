@@ -15,12 +15,12 @@ import { Form } from '@/components/feature/Form';
 import { useRouter } from 'next/navigation';
 import { useUserContext } from '@/features/users/contexts/UserProvider';
 
-export function ManageBetModal({ betId, outcomes }) {
+export function ManageBetModal({ bet, outcomes }) {
   const [selectedOutcome, setSelectedOutcome] = useState(null);
   const { updateSession } = useUserContext();
   const [status, setStatus] = useStatus();
   const router = useRouter();
-
+  const betId = bet.id;
   const content = useList({
     items: outcomes,
     Component: ({ item }) => {
@@ -60,6 +60,7 @@ export function ManageBetModal({ betId, outcomes }) {
     <Modal title='End bet on outcome'>
       <Form onSubmit={onSubmit}>
         <div className='flex flex-col w-full gap-2'>
+          <p>{bet.data.description || 'No Description.'}</p>
           {content}
           <Button
             fullWidth
@@ -74,7 +75,7 @@ export function ManageBetModal({ betId, outcomes }) {
   );
 }
 
-export function ManageBetButton({ betId, outcomes }) {
+export function ManageBetButton({ bet, outcomes }) {
   return (
     <ToggleProvider>
       <ToggleProvider.Trigger>
@@ -84,7 +85,7 @@ export function ManageBetButton({ betId, outcomes }) {
       </ToggleProvider.Trigger>
       <ToggleProvider.Target>
         <ManageBetModal
-          betId={betId}
+          bet={bet}
           outcomes={outcomes}
         />
       </ToggleProvider.Target>

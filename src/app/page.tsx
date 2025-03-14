@@ -125,7 +125,7 @@ export default async function Home() {
           </Container>
         </ul>
       </Section>
-      <Section>
+      <Section hidden>
         <Heading>Support</Heading>
         <p className='text-lg lg:w-[75%] xs:w-full'>
           Like the app? Please consider donating. Your support helps with development, maintenance,
@@ -191,6 +191,12 @@ function ContainerBody({ children }) {
   return <div className='flex flex-col gap-2'>{children}</div>;
 }
 
-function Section({ children }) {
-  return <section className='flex flex-col gap-4 lg:px-default xs:px-4'>{children}</section>;
+function Section({ children, ...props }) {
+  return (
+    <section
+      {...props}
+      className='flex flex-col gap-4 lg:px-default xs:px-4'>
+      {children}
+    </section>
+  );
 }

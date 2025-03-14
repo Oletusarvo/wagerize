@@ -23,9 +23,7 @@ export function WalletDisplay() {
 
   return (
     !pathname.includes('bets/') && (
-      <div
-        className={className}
-        onClick={() => updateSession()}>
+      <div className={className}>
         <Casino sx={{ fontSize: '1rem', transform: 'rotate(45deg)' }} />
         <span>{balance}</span>
       </div>

@@ -1,5 +1,6 @@
 'use server';
 
+import { addNotificationAction } from '@/features/users/notifications/schemas/actions/addNotificationAction';
 import { getSession } from '@/utils/getSession';
 import db from 'betting_app/dbconfig';
 
@@ -16,7 +17,7 @@ export async function endBetAction(betId: string, outcomeId: string) {
         'bid.outcome_id = ? AND CASE WHEN bid.user_id IS NOT NULL THEN bid.user_id = wallet.user_id ELSE FALSE END',
         [outcomeId]
       )
-      .select('wallet.id')
+      .select('wallet.id', 'wallet.user_id')
       .groupBy('wallet.id');
 
     //Get the pool
@@ -36,8 +37,17 @@ export async function endBetAction(betId: string, outcomeId: string) {
     const winnerShare = numWinners > 0 ? (pool - creatorShare) / numWinners : 0;
 
     //Update the wallets of each winner.
-    const promises = winningWallets.map(async wallet =>
-      trx('users.wallet').where({ id: wallet.id }).increment('balance', winnerShare)
+    const promises = winningWallets.map(
+      async wallet =>
+        new Promise<void>(async (resolve, reject) => {
+          try {
+            await trx('users.wallet').where({ id: wallet.id }).increment('balance', winnerShare);
+            
+            resolve();
+          } catch (err) {
+            reject(err);
+          }
+        })
     );
     await Promise.all(promises);
 

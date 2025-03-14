@@ -1,3 +1,19 @@
+## [2.3.2] - 15-03-2025
+
+### Added
+
+- More tests for user registrations.
+- Tests for password resetting.
+- The npm scripts test:silent, and test:watch:silent.
+
+### Changed
+
+- Hid the donate-button.
+
+### Removed
+
+- The onClick-handler updating the user's session from the wallet display.
+
 ## [2.3.1] - 14-03-2025
 
 ### Changed

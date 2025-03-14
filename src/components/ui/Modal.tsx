@@ -14,7 +14,7 @@ export function Modal({ children, title }) {
         className='flex flex-col p-4 rounded-md relative w-full items-center justify-center bg-white'
         ref={ref}>
         <div className='flex w-full items-center justify-between'>
-          <h1>{title}</h1>
+          <h1 className='font-semibold text-accent'>{title}</h1>
           <ToggleProvider.Trigger>
             <IconButton>
               <Clear />

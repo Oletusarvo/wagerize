@@ -20,7 +20,6 @@ export default async function middleware(req: NextRequestWithAuth) {
     url === '/api/public/users/verify'
   ) {
     //Limit the number of times a user is allowed to hit these endpoints.
-
     const res = await rateLimiter.limit(req);
     if (res.status !== 200) {
       return res;

@@ -60,12 +60,12 @@ export default async function ManageBetsPage() {
 
 const Listing = ({ bet, expired }) => {
   return (
-    <Container as='div'>
+    <Container>
       <div className='flex w-full justify-between items-center h-[60px]'>
         <h1 className='text-nowrap overflow-hidden text-ellipsis w-[90%]'>{bet.data.title}</h1>
         {expired && (
           <ManageBetButton
-            betId={bet.id}
+            bet={bet}
             outcomes={bet.outcomes}
           />
         )}
