@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { Spinner } from '../ui/Spinner';
 
-type ButtonProps = Omit<React.ComponentProps<'button'>, 'className'> & {
+type ButtonProps = React.ComponentProps<'button'> & {
   loading?: boolean;
   fullWidth?: boolean;
   variant?: 'contained' | 'outlined';
@@ -18,6 +18,7 @@ export function Button({
 }: ButtonProps) {
   const className = useMemo(() => {
     return [
+      props.className,
       'flex px-4 py-2 uppercase justify-center min-h-[2.5rem] items-center font-semibold',
       fullWidth ? 'w-full' : 'w-auto',
       variant === 'contained'
@@ -31,7 +32,7 @@ export function Button({
     ]
       .join(' ')
       .trim();
-  }, [variant, color, fullWidth]);
+  }, [variant, color, fullWidth, props.className]);
 
   return (
     <button

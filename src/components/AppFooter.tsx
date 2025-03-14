@@ -92,9 +92,12 @@ export function AppFooter() {
         return (
           <ToggleProvider onChange={state => setCookieNoticeOpen(state)}>
             <ToggleProvider.Trigger>
-              <IconButton sx={{ justifySelf: 'flex-end', color: 'var(--color-accent)' }}>
-                {!cookieNoticeOpen ? <Cookie /> : <Clear />}
-              </IconButton>
+              {/**Must be wrapped within a button, because the IconButton ignores class names. The Trigger passes a mandatory class name to its children. */}
+              <button>
+                <IconButton sx={{ color: 'var(--color-accent)' }}>
+                  {!cookieNoticeOpen ? <Cookie /> : <Clear />}
+                </IconButton>
+              </button>
             </ToggleProvider.Trigger>
             <ToggleProvider.Target hideOnClickOutside>
               <div
@@ -103,9 +106,12 @@ export function AppFooter() {
                 <div className='flex items-center justify-between border-b border-border pb-4'>
                   <FormHeading>Cookies</FormHeading>
                   <ToggleProvider.Trigger>
-                    <IconButton>
-                      <Clear />
-                    </IconButton>
+                    {/**Ditto */}
+                    <button>
+                      <IconButton sx={{ color: 'var(--color-accent)' }}>
+                        <Clear />
+                      </IconButton>
+                    </button>
                   </ToggleProvider.Trigger>
                 </div>
 

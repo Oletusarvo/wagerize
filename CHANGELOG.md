@@ -1,3 +1,11 @@
+## [2.3.1] - 14-03-2025
+
+### Changed
+
+- Added unique id's to ToggleProvider triggers, and made the logic for closing its target when clicking outside of it,
+  not run, if clicking on any of its own triggers. This should fix a problem where attempting to close the target by clicking on
+  a trigger outside of it, would instantly re-open it.
+
 ## [2.3.0] - 13-03-2025
 
 ### Changed
