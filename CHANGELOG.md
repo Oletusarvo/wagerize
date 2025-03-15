@@ -1,3 +1,9 @@
+## [2.3.3] - 15-03-2025
+
+### Fixed
+
+- Build errors on the previous version.
+
 ## [2.3.2] - 15-03-2025
 
 ### Added

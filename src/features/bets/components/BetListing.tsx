@@ -1,7 +1,6 @@
 import { DataPoint } from '@/components/DataPoint';
 import { Chip } from '@/components/ui/Chip';
 import { Container } from '@/components/ui/Container';
-import { ContainerCard } from '@/components/ui/ContainerCard';
 import { CurrencyIcon } from '@/components/ui/CurrencyIcon';
 import { ArrowDownward, Check, Wallet } from '@mui/icons-material';
 import Link from 'next/link';
