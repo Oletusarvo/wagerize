@@ -1,3 +1,9 @@
+## [2.4.0] - 15-03-2025
+
+### Added
+
+- Limits for the number of bets, bids, and bet outcomes, that can be created by a user.
+
 ## [2.3.3] - 15-03-2025
 
 ### Fixed

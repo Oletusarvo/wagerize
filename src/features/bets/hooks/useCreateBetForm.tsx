@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import { useBatch } from '@/hooks/useBatch';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
+import { BetError, WError } from '@/utils/error';
 
 export function useCreateBetForm() {
   const { record: bet, updateOnChange: updateBet } = useRecord({
@@ -30,8 +31,14 @@ export function useCreateBetForm() {
       try {
         const result = await createBetAction(bet, options);
         if (result.code !== 0) {
-          if (result.code === 'unknown') {
+          if (result.code === -1) {
             toast.error('An unexpected error occured!');
+          } else if (result.code === WError.QUOTA_FULL) {
+            toast.error(
+              'You have created the maximum amount of challenges allowed for a user! Please close some of them and try again.'
+            );
+          } else if (result.code === BetError.MAX_OUTCOMES) {
+            toast.error('Your bet has too many outcomes!');
           }
           currentStatus = 'error';
         } else {

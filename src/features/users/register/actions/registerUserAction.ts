@@ -21,8 +21,7 @@ export async function registerUserAction(credentials: any) {
       const [{ count }] = await trx('users.user').count('* as count');
       const userCount = typeof count === 'string' ? parseInt(count) : count;
       if (userCount >= maxUsers) {
-        result.code = RegisterError.USER_COUNT;
-        return result;
+        throw new Error(RegisterError.USER_COUNT);
       }
     }
 
@@ -47,6 +46,8 @@ export async function registerUserAction(credentials: any) {
     console.log(err.message);
     if (msg.toLowerCase().includes('duplicate')) {
       result.code = RegisterError.DUPLICATE_USER;
+    } else if (msg === RegisterError.USER_COUNT) {
+      result.code = RegisterError.USER_COUNT;
     } else {
       result.code = -1;
     }

@@ -2,6 +2,8 @@ import db from 'betting_app/dbconfig';
 import { v4 } from 'uuid';
 import { placeBidAction } from '../placeBidAction';
 import { getSession } from '@/utils/getSession';
+import { createBetAction } from '../createBetAction';
+import { BetError } from '@/utils/error';
 
 jest.mock('@/utils/getSession');
 const userId = v4();
@@ -59,7 +61,7 @@ describe('Testing bid placement', () => {
   });
 
   it('Returns code 0', () => {
-    expect(result).toBe(0);
+    expect(result.code).toBe(0);
   });
 
   it('Saves the bid', async () => {
@@ -80,5 +82,67 @@ describe('Testing bid placement', () => {
       .select('balance')
       .first();
     expect(parseInt(wallet.balance)).toBe(-amount);
+  });
+
+  it('Prevents bidding if the user has hit their bid quota.', async () => {
+    await db('bets.bet').del();
+    const maxBids = 3;
+    process.env.MAX_BIDS = maxBids.toString();
+
+    (getSession as jest.Mock).mockResolvedValueOnce({ user: { id: userId } });
+
+    //Create maxBids test bets, and insert a bid on each.
+    const [walletId] = await db('users.wallet').where({ user_id: userId }).pluck('id');
+    for (let i = 0; i < maxBids; ++i) {
+      const betId = v4();
+      await db('bets.bet').insert({
+        id: betId,
+        author_id: userId,
+        data: {
+          title: `Test bet ${i}`,
+        },
+      });
+
+      //Add outcomes
+      const [{ id: outcomeId }] = await db('bets.outcome')
+        .insert({
+          label: 'a',
+          bet_id: betId,
+        })
+        .returning('id');
+
+      //Add bid
+      await db('bets.bid').insert({
+        bet_id: betId,
+        amount: 100,
+        wallet_id: walletId,
+        outcome_id: outcomeId,
+      });
+    }
+
+    //Add one additional bet
+    await db('bets.bet').insert({
+      id: betId,
+      author_id: userId,
+      data: {
+        title: `Test bet`,
+      },
+    });
+
+    //Add outcomes
+    const [{ id: outcomeId }] = await db('bets.outcome')
+      .insert({
+        label: 'a',
+        bet_id: betId,
+      })
+      .returning('id');
+
+    const result = await placeBidAction({
+      amount: 100,
+      wallet_id: walletId,
+      bet_id: betId,
+      outcome_id: outcomeId,
+    });
+    expect(result.code).toEqual(BetError.MAX_BIDS);
   });
 });

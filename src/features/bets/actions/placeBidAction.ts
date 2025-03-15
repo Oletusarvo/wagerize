@@ -1,16 +1,19 @@
 'use server';
 
+import { BetError } from '@/utils/error';
 import { getSession } from '@/utils/getSession';
 import db from 'betting_app/dbconfig';
 import { revalidatePath } from 'next/cache';
 
 export async function placeBidAction(payload: any) {
+  let result: { code: number | string } = { code: 0 };
   const trx = await db.transaction();
   try {
+    const session = await getSession();
+
     /*Include the user's wallet id with the required currency, and insert the bid.
      * Currently only supports the default DICE currency.
      */
-    const session = await getSession();
     const [currencyId] = await trx('bets.bet').where({ id: payload.bet_id }).pluck('currency_id');
     const [walletId] = await trx('users.wallet')
       .where({
@@ -20,6 +23,10 @@ export async function placeBidAction(payload: any) {
       .pluck('id');
 
     payload.wallet_id = walletId;
+
+    //Prevent bidding if the user already has participated in the maximum allowed number of bets.
+    await checkMaxBids(walletId);
+
     await trx('bets.bid').insert(payload);
 
     //Decrement the user's wallet balance.
@@ -28,10 +35,27 @@ export async function placeBidAction(payload: any) {
     //Commit
     await trx.commit();
     revalidatePath('/auth/bets');
-    return 0;
   } catch (err) {
     await trx.rollback();
-    console.log(err.message);
-    return 'unknown';
+    const msg = err.message;
+    if (msg === BetError.MAX_BIDS) {
+      result.code = msg;
+    } else {
+      console.log(err.message);
+      result.code = -1;
+    }
+  }
+  return result;
+}
+
+export async function checkMaxBids(walletId: string) {
+  const maxBids = process.env.MAX_BIDS;
+  if (!maxBids) return;
+
+  const [{ count }] = await db('bets.bid').where({ wallet_id: walletId }).count('* as count');
+  const bidCount = typeof count === 'string' ? parseInt(count) : count;
+
+  if (bidCount >= parseInt(maxBids)) {
+    throw new Error(BetError.MAX_BIDS);
   }
 }
