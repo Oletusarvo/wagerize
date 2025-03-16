@@ -11,8 +11,10 @@ export function PoolDisplay({ amount, status = 'neutral' }: PoolDisplayProps) {
     'xs:w-[75%] rounded-full border flex gap-2 items-center justify-center aspect-square text-2xl bg-white',
     status === 'participated'
       ? 'border-red-600'
-      : status === 'not_participated'
+      : status === 'open'
       ? 'border-green-600'
+      : status === 'frozen'
+      ? 'border-blue-600'
       : 'border-gray-600',
   ]);
 
@@ -25,7 +27,7 @@ export function PoolDisplay({ amount, status = 'neutral' }: PoolDisplayProps) {
 }
 
 type PoolDisplayProps = {
-  status?: 'participated' | 'not_participated' | 'neutral';
+  status?: 'participated' | 'open' | 'frozen' | 'neutral';
   amount: number;
   minimum: number;
 };

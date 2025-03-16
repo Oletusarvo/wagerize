@@ -7,13 +7,15 @@ import { Modal } from '@/components/ui/Modal';
 import { useList } from '@/hooks/useList';
 import { useStatus } from '@/hooks/useStatus';
 import { MoreHoriz } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
+import { IconButton, Switch } from '@mui/material';
 import { useState } from 'react';
 import { endBetAction } from '../actions/endBetAction';
 import toast from 'react-hot-toast';
 import { Form } from '@/components/feature/Form';
 import { useRouter } from 'next/navigation';
 import { useUserContext } from '@/features/users/contexts/UserProvider';
+import { freezeBetAction } from '../actions/freezeBetAction';
+import { Spinner } from '@/components/ui/Spinner';
 
 export function ManageBetModal({ bet, outcomes }) {
   const [selectedOutcome, setSelectedOutcome] = useState(null);
@@ -61,25 +63,56 @@ export function ManageBetModal({ bet, outcomes }) {
     setStatus(currentStatus);
   };
 
+  const freeze = async () => {
+    if (status === 'loading') {
+      return;
+    }
+    setStatus('loading');
+    await freezeBetAction(bet.id, !bet.data.is_frozen);
+    setStatus('idle');
+  };
+
+  const isExpired = Date.now() >= new Date(bet.expires_at).getTime();
+
   return (
-    <Modal title='End bet on outcome'>
+    <Modal title='Manage Challenge'>
       <Form onSubmit={onSubmit}>
-        <div className='flex flex-col w-full gap-2'>
-          <p>{bet.data.description || 'No Description.'}</p>
-          {content}
-          <Button
-            fullWidth
-            type='submit'
-            loading={status === 'loading'}
-            disabled={
-              status === 'loading' ||
-              status === 'done' ||
-              selectedOutcome === null ||
-              selectedOutcome === undefined
-            }>
-            End Bet
-          </Button>
-        </div>
+        <p>{bet.data.description || 'No Description.'}</p>
+
+        {isExpired ? (
+          <Fieldset>
+            <legend>End Challenge</legend>
+            {content}
+            <Button
+              fullWidth
+              type='submit'
+              loading={status === 'loading'}
+              disabled={
+                status === 'loading' ||
+                status === 'done' ||
+                selectedOutcome === null ||
+                selectedOutcome === undefined
+              }>
+              End
+            </Button>
+          </Fieldset>
+        ) : (
+          <Fieldset>
+            <legend>Settings</legend>
+            <div className='flex w-full items-center justify-between'>
+              <label>Freeze</label>
+              {status === 'loading' ? (
+                <Spinner />
+              ) : (
+                <input
+                  type='checkbox'
+                  onChange={freeze}
+                  checked={bet.data.is_frozen}
+                />
+              )}
+            </div>
+          </Fieldset>
+        )}
       </Form>
     </Modal>
   );
@@ -100,5 +133,13 @@ export function ManageBetButton({ bet, outcomes }) {
         />
       </ToggleProvider.Target>
     </ToggleProvider>
+  );
+}
+
+function Fieldset({ children }) {
+  return (
+    <fieldset className='flex flex-col w-full gap-2 border-border border px-2 py-4 rounded-md'>
+      {children}
+    </fieldset>
   );
 }

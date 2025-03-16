@@ -1,3 +1,15 @@
+## [2.6.0] - 17-03-2025
+
+### Added
+
+- Ability to freeze bets.
+
+## [2.5.3] - 16-03-2025
+
+### Changed
+
+- Wrapped the usePlaceBidForm onSubmit-function inside a React useCallback.
+
 ## [2.5.2] - 16-03-2025
 
 ### Added

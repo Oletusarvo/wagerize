@@ -16,7 +16,7 @@ export default async function ManageBetsPage() {
   }).orderBy('expires_at', 'desc');
 
   await Promise.all(bets.map(async b => Bets.joinOutcomes(b)));
-  console.log(bets);
+
   const expired = bets.filter(
     b => b.expires_at === null || (b.expires_at && b.expires_at.getTime() - Date.now() <= 0)
   );
@@ -43,13 +43,11 @@ export default async function ManageBetsPage() {
           <div className='flex flex-col gap-2'>
             <h2 className='font-semibold'>In progress</h2>
             {rest.map((b, i) => (
-              <Link href={`/auth/bets/${b.id}`}>
-                <Listing
-                  key={`m-b-${i}`}
-                  bet={b}
-                  expired={false}
-                />
-              </Link>
+              <Listing
+                key={`m-b-${i}`}
+                bet={b}
+                expired={false}
+              />
             ))}
           </div>
         ) : null}
@@ -63,12 +61,11 @@ const Listing = ({ bet, expired }) => {
     <Container>
       <div className='flex w-full justify-between items-center h-[60px]'>
         <h1 className='text-nowrap overflow-hidden text-ellipsis w-[90%]'>{bet.data.title}</h1>
-        {expired && (
-          <ManageBetButton
-            bet={bet}
-            outcomes={bet.outcomes}
-          />
-        )}
+
+        <ManageBetButton
+          bet={bet}
+          outcomes={bet.outcomes}
+        />
       </div>
     </Container>
   );

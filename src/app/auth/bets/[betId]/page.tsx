@@ -1,6 +1,7 @@
 import { Chip } from '@/components/ui/Chip';
 import { FormHeading } from '@/components/ui/FormHeading';
 import { Icon } from '@/components/ui/Icon';
+import { Helper } from '@/components/ui/InputHelper';
 import { Main } from '@/components/ui/Main';
 import { BetHeader } from '@/features/bets/components/BetHeader';
 import { PlaceBidButton } from '@/features/bets/components/PlaceBidButton';
@@ -30,25 +31,35 @@ export default async function BetPage({ params }) {
 
       <section className='flex w-full flex-1 items-center flex-col gap-2 justify-center py-2'>
         <PoolDisplay
-          status={bet.bid ? 'participated' : 'not_participated'}
+          status={bet.data.is_frozen ? 'frozen' : bet.bid ? 'participated' : 'open'}
           amount={bet.pool}
           minimum={bet.data.min_bid}
         />
       </section>
       <section className='w-full flex justify-center py-2'>
-        {bet.bid === undefined ? (
-          <PlaceBidButton
-            disabled={
-              bet.bid !== undefined ||
-              (bet.expires_at && bet.expires_at.getTime() - Date.now() <= 0)
-            }
-            minBid={bet.data.min_bid}
-            betId={bet.id}
-            outcomes={outcomes}
-          />
-        ) : (
-          <Chip icon={<Check sx={{ color: 'white', fontSize: '1rem' }} />}>{bet.bid.outcome}</Chip>
-        )}
+        <div className='flex w-full flex-col gap-2'>
+          {bet.bid === undefined ? (
+            <PlaceBidButton
+              disabled={
+                bet.data.is_frozen ||
+                bet.bid !== undefined ||
+                (bet.expires_at && bet.expires_at.getTime() - Date.now() <= 0)
+              }
+              minBid={bet.data.min_bid}
+              betId={bet.id}
+              outcomes={outcomes}
+            />
+          ) : (
+            <Chip icon={<Check sx={{ color: 'white', fontSize: '1rem' }} />}>
+              {bet.bid.outcome}
+            </Chip>
+          )}
+          <span className='w-full flex justify-center text-center'>
+            {bet.data.is_frozen && (
+              <Helper>The challenge has been frozen. You cannot participate at this time.</Helper>
+            )}
+          </span>
+        </div>
       </section>
     </Main>
   );

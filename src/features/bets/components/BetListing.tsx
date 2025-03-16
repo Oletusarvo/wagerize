@@ -6,7 +6,11 @@ import { ArrowDownward, Check, Wallet } from '@mui/icons-material';
 import Link from 'next/link';
 
 export function BetListing({ bet }) {
-  const hasParticipated = bet.bid !== undefined;
+  const bidStatus: BidBadgeProps['status'] = bet.data.is_frozen
+    ? 'frozen'
+    : bet.bid !== undefined
+    ? 'participated'
+    : 'open';
 
   return (
     <Container
@@ -15,7 +19,7 @@ export function BetListing({ bet }) {
       key={`bet-${bet.id}`}>
       <div className='flex w-full justify-between items-center'>
         <h1 className='font-semibold'>{bet.data.title}</h1>
-        <BidBadge hasParticipated={hasParticipated} />
+        <BidBadge status={bidStatus} />
       </div>
 
       <p className='text-gray-600'>{bet.data.description || 'No description.'}</p>
@@ -49,12 +53,18 @@ const Icon = ({ Component, ...props }) => (
   />
 );
 
-const BidBadge = ({ hasParticipated }) => {
+type BidBadgeProps = {
+  status: 'participated' | 'frozen' | 'open';
+};
+
+const BidBadge = ({ status }: BidBadgeProps) => {
+  console.log(status);
   const className = [
+    status === 'frozen' ? 'bg-blue-600' : status === 'participated' ? 'bg-red-600' : 'bg-green-600',
     'w-2 h-2 aspect-square rounded-full',
-    hasParticipated ? 'bg-red-600' : 'bg-green-600',
   ]
     .join(' ')
     .trim();
+  console.log(className);
   return <span className={className} />;
 };

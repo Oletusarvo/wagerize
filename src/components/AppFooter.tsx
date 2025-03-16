@@ -117,15 +117,10 @@ export function AppFooter() {
                 </div>
 
                 <p>
-                  We use cookies to enhance your experience on our website. The necessary cookies we
-                  use are essential for the site's functionality, enabling core features and storing
-                  session information to ensure smooth navigation. By continuing to browse our site,
-                  only these mandatory cookies will be used.
-                  <br />
-                  <br />
-                  However, if you choose "Consent to all", additional cookies, including Google
-                  Analytics, will be enabled to help us analyze site traffic and improve your
-                  experience.
+                  We use essential cookies for site functionality and smooth navigation. By
+                  continuing, only these will be used. Choosing 'Consent to all' enables additional
+                  cookies, including Google Analytics, to help us analyze site traffic and improve
+                  your experience.
                 </p>
 
                 <ToggleProvider.Trigger>
