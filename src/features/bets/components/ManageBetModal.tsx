@@ -71,7 +71,12 @@ export function ManageBetModal({ bet, outcomes }) {
             fullWidth
             type='submit'
             loading={status === 'loading'}
-            disabled={status === 'loading' || status === 'done' || selectedOutcome === null}>
+            disabled={
+              status === 'loading' ||
+              status === 'done' ||
+              selectedOutcome === null ||
+              selectedOutcome === undefined
+            }>
             End Bet
           </Button>
         </div>

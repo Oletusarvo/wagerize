@@ -36,7 +36,12 @@ export function PlaceBidForm({ betId, outcomes, minBid }) {
           type='submit'
           color='accent'
           loading={status === 'loading'}
-          disabled={status === 'loading'}>
+          disabled={
+            status === 'loading' ||
+            status === 'done' ||
+            selectedOutcome === null ||
+            selectedOutcome === undefined
+          }>
           Confirm
         </Button>
       </div>

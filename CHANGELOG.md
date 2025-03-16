@@ -1,4 +1,15 @@
-## [2.5.0] - 15-03-2025
+## [2.5.1] - 16-03-2025
+
+### Fixed
+
+- Incorrect date on the previous changelog-entry from 15-03-2025 to 16-03-2025.
+- The confirm-button not being disabled while placing a bid, and not having selected an outcome or when the submission is done.
+
+### Changed
+
+- The value a RadioButton gets set to when it is deselected, back to undefined instead of null.
+
+## [2.5.0] - 16-03-2025
 
 ### Added
 

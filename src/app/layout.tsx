@@ -46,7 +46,7 @@ export default async function RootLayout({
           href='manifest.json'
         />
         <AnalyticsScript
-          enabled={currentCookies.get('wagerize-analytics-enabled').value === 'true'}
+          enabled={currentCookies.get('wagerize-analytics-enabled')?.value === 'true'}
         />
       </head>
       <body
