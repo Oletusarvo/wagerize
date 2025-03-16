@@ -1,3 +1,13 @@
+## [2.5.0] - 15-03-2025
+
+### Added
+
+- Analytics script
+- Callback url to logins.
+- Server-side check against bidding on an expired bet.
+- Check preventing closing of a bet if no outcome has been selected.
+- Cookies for enabling or disabling google analytics.
+
 ## [2.4.0] - 15-03-2025
 
 ### Added

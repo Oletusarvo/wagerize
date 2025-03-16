@@ -1,16 +1,7 @@
 'use client';
 
 import { useUserContext } from '@/features/users/contexts/UserProvider';
-import {
-  Add,
-  ArrowBack,
-  Casino,
-  Clear,
-  Cookie,
-  Dashboard,
-  Login,
-  Person,
-} from '@mui/icons-material';
+import { Add, ArrowBack, Casino, Clear, Cookie, Person } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -22,15 +13,23 @@ import { set } from 'zod';
 import { FormHeading } from './ui/FormHeading';
 import { Button } from './feature/Button';
 import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
+import { useCookies } from 'react-cookie';
+import { useAppCookies } from '@/hooks/useAppCookies';
 
 export function AppFooter() {
   const { status: sessionStatus } = useUserContext();
   const pathname = usePathname();
-  const currentPath = usePathname().split('/').at(-1);
 
   const router = useRouter();
   const footerRef = useRef<HTMLElement | null>(null);
-  const [cookieNoticeOpen, setCookieNoticeOpen] = useState(false);
+  const { showCookieNotice, enableAnalytics } = useAppCookies();
+  const [cookieNoticeOpen, setCookieNoticeOpen] = useState<boolean>(() => {
+    if (showCookieNotice) {
+      return showCookieNotice === 'true' ? true : false;
+    } else {
+      return true;
+    }
+  });
 
   const getNavContent = () => {
     if (sessionStatus === 'authenticated') {
@@ -90,7 +89,9 @@ export function AppFooter() {
         );
       } else {
         return (
-          <ToggleProvider onChange={state => setCookieNoticeOpen(state)}>
+          <ToggleProvider
+            initialState={cookieNoticeOpen}
+            onChange={state => setCookieNoticeOpen(state)}>
             <ToggleProvider.Trigger>
               {/**Must be wrapped within a button, because the IconButton ignores class names. The Trigger passes a mandatory class name to its children. */}
               <button>
@@ -123,13 +124,26 @@ export function AppFooter() {
                   <br /> By continuing to browse our site, you agree to our use of these mandatory
                   cookies.
                 </p>
+
                 <ToggleProvider.Trigger>
                   <Button
                     fullWidth
                     color='accent'
                     type='button'
-                    onClick={() => setCookieNoticeOpen(false)}>
-                    Got it
+                    onClick={() => enableAnalytics('true')}>
+                    Consent to all
+                  </Button>
+                </ToggleProvider.Trigger>
+                <ToggleProvider.Trigger>
+                  <Button
+                    fullWidth
+                    variant='outlined'
+                    color='accent'
+                    onClick={() => {
+                      console.log('disabling analytics');
+                      enableAnalytics('false');
+                    }}>
+                    Only necessary
                   </Button>
                 </ToggleProvider.Trigger>
               </div>

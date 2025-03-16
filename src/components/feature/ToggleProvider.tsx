@@ -42,7 +42,9 @@ ToggleProvider.Trigger = function ({ children, ...props }) {
     <PassProps
       {...props}
       className={`${triggerClassName}-${id}`}
-      onClick={() => toggleState()}>
+      onClick={e => {
+        toggleState();
+      }}>
       {children}
     </PassProps>
   );

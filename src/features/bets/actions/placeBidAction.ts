@@ -14,11 +14,21 @@ export async function placeBidAction(payload: any) {
     /*Include the user's wallet id with the required currency, and insert the bid.
      * Currently only supports the default DICE currency.
      */
-    const [currencyId] = await trx('bets.bet').where({ id: payload.bet_id }).pluck('currency_id');
+    const [bet] = await trx('bets.bet')
+      .where({ id: payload.bet_id })
+      .select('currency_id', 'expires_at');
+    const { currency_id, expires_at } = bet;
+
+    //Prevent bidding if the bet is expired.
+    const now = Date.now();
+    if (expires_at && now >= new Date(expires_at).getTime()) {
+      throw new Error(BetError.EXPIRED);
+    }
+
     const [walletId] = await trx('users.wallet')
       .where({
         user_id: session.user.id,
-        currency_id: currencyId,
+        currency_id,
       })
       .pluck('id');
 
@@ -38,7 +48,7 @@ export async function placeBidAction(payload: any) {
   } catch (err) {
     await trx.rollback();
     const msg = err.message;
-    if (msg === BetError.MAX_BIDS) {
+    if (msg === BetError.MAX_BIDS || msg === BetError.EXPIRED) {
       result.code = msg;
     } else {
       console.log(err.message);

@@ -5,4 +5,5 @@ export enum WError {
 export enum BetError {
   MAX_OUTCOMES = 'max_outcomes',
   MAX_BIDS = 'max_bids',
+  EXPIRED = 'expired',
 }

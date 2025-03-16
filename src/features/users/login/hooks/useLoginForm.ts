@@ -1,13 +1,14 @@
 import { useRecord } from '@/hooks/useRecord';
 import { useStatus } from '@/hooks/useStatus';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 import toast from 'react-hot-toast';
 import { loginCredentialsSchema } from '../schemas/loginCredentialsSchema';
 
 export function useLoginForm() {
   const [status, setStatus] = useStatus(['invalid_credentials']);
+  const searchParams = useSearchParams();
   const { record: credentials, updateOnChange: updateCredentials } = useRecord({
     email: '',
     password: '',
@@ -33,7 +34,8 @@ export function useLoginForm() {
           } else {
             currentStatus = 'done';
             toast.success('Login success!');
-            router.replace('/auth/dashboard');
+            const callbackUrl = searchParams.get('callback') || '/auth/dashboard';
+            router.replace(callbackUrl);
           }
         }
       } catch (err) {

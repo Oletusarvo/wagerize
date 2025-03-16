@@ -145,4 +145,37 @@ describe('Testing bid placement', () => {
     });
     expect(result.code).toEqual(BetError.MAX_BIDS);
   });
+
+  it('Prevents bidding on an expired bet', async () => {
+    const expiredBetId = v4();
+    const now = new Date();
+    const expiredDate = new Date(now.getTime() - 1000); // Set expiration to 1 second in the past
+
+    // Create an expired bet
+    await db('bets.bet').insert({
+      id: expiredBetId,
+      author_id: userId,
+      data: {
+        title: 'Expired Bet',
+      },
+      expires_at: expiredDate.toISOString(),
+    });
+
+    // Add outcomes
+    const [{ id: outcomeId }] = await db('bets.outcome')
+      .insert({
+        label: 'a',
+        bet_id: expiredBetId,
+      })
+      .returning('id');
+
+    // Attempt to place a bid on the expired bet
+    const result = await placeBidAction({
+      bet_id: expiredBetId,
+      amount: 10,
+      outcome_id: outcomeId,
+    });
+
+    expect(result.code).toEqual(BetError.EXPIRED);
+  });
 });

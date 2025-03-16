@@ -34,6 +34,8 @@ export default async function middleware(req: NextRequestWithAuth) {
   } else {
     //Redirect to the login page if trying to access protected areas while not logged in.
     if (url.startsWith('/auth')) {
+      const callbackUrl = req.nextUrl.toString();
+      req.nextUrl.searchParams.set('callback', callbackUrl);
       return redirectTo('/login', req);
     }
   }

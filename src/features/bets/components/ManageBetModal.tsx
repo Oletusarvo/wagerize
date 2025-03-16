@@ -39,6 +39,11 @@ export function ManageBetModal({ bet, outcomes }) {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (selectedOutcome === null) {
+      toast.error('Must select outcome!');
+      return;
+    }
+
     let currentStatus: typeof status = 'loading';
     setStatus(currentStatus);
 
@@ -66,7 +71,7 @@ export function ManageBetModal({ bet, outcomes }) {
             fullWidth
             type='submit'
             loading={status === 'loading'}
-            disabled={status === 'loading' || status === 'done'}>
+            disabled={status === 'loading' || status === 'done' || selectedOutcome === null}>
             End Bet
           </Button>
         </div>

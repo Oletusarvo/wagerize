@@ -31,6 +31,9 @@ export function usePlaceBidForm(betId: string, minBid: number) {
           'You have hit the limit of bids you can place! Please wait until some of the challenges you have bid on, are closed.'
         );
         currentStatus = 'error';
+      } else if (result.code === BetError.EXPIRED) {
+        toast.error('Cannot participate in an expired challenge!');
+        currentStatus = 'error';
       } else {
         toast.error('An unknown error occured!');
         currentStatus = 'error';
