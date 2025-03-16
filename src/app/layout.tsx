@@ -50,7 +50,7 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col w-full h-screen flex-1`}>
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col w-full h-screen`}>
         <CookiesWrapper>
           <AuthProvider>
             <UserProvider>
