@@ -1,3 +1,9 @@
+## [2.5.2] - 16-03-2025
+
+### Added
+
+- Mention of Google Analytics into the cookie notice.
+
 ## [2.5.1] - 16-03-2025
 
 ### Fixed
