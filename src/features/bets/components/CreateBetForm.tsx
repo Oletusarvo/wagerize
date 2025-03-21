@@ -5,7 +5,7 @@ import { useCreateBetForm } from '../hooks/useCreateBetForm';
 import { InputGroup } from '@/components/ui/InputGroup';
 import { FormHeading } from '@/components/ui/FormHeading';
 import { Button } from '@/components/feature/Button';
-import { Add } from '@mui/icons-material';
+import { Add, ArrowDownward, CalendarMonth, Check, Title } from '@mui/icons-material';
 
 import { useBatch } from '@/hooks/useBatch';
 import { Chip } from '@/components/ui/Chip';
@@ -13,6 +13,7 @@ import { useMemo, useRef } from 'react';
 import { IconButton } from '@mui/material';
 import { Icon } from '@/components/ui/Icon';
 import { Drawer } from '@/components/feature/Drawer';
+import { Input } from '@/components/ui/Input';
 
 export function CreateBetForm() {
   const { bet, updateBet, status, onSubmit, options, addOption, deleteOpt } = useCreateBetForm();
@@ -28,7 +29,8 @@ export function CreateBetForm() {
       <FormHeading>Create Challenge</FormHeading>
       <InputGroup>
         <label>Title</label>
-        <input
+        <Input
+          icon={<Title />}
           name='data.title'
           placeholder='Type a title...'
           max={32}
@@ -51,7 +53,8 @@ export function CreateBetForm() {
       </InputGroup>
       <InputGroup>
         <label>Minimum bid</label>
-        <input
+        <Input
+          icon={<ArrowDownward />}
           min={1}
           type='number'
           name='data.min_bid'
@@ -63,7 +66,8 @@ export function CreateBetForm() {
       </InputGroup>
       <InputGroup>
         <label>Expiry date</label>
-        <input
+        <Input
+          icon={<CalendarMonth />}
           min={minimumDate.toISOString().split('T').at(0)}
           className='w-full'
           type='date'
@@ -78,7 +82,8 @@ export function CreateBetForm() {
       <InputGroup>
         <label>Outcomes</label>
         <div className='flex gap-2 w-full'>
-          <input
+          <Input
+            icon={<Check />}
             ref={ref}
             className='w-full'
             placeholder='Type the label for an outcome...'

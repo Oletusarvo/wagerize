@@ -44,7 +44,7 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #fafafa;
+  background-color: linear-gradient(to bottom, #fafafa, #e3b9e0);
 }
 
 a {
@@ -61,14 +61,12 @@ nav a {
   font-weight: var(--font-weight-semibold);
 }
 
-input,
 button,
 textarea {
   padding: 0.5rem 1rem 0.5rem 1rem;
   border-radius: var(--radius-inputs);
 }
 
-input,
 textarea {
   background-color: white;
   outline: none;
@@ -89,7 +87,8 @@ button:disabled {
 }
 
 input[type='checkbox'] {
-  border-radius: 1px;
+  border-radius: 2px;
+  border: 1px solid var(--color-accent);
   padding: 0.5rem;
   width: 1.5rem;
   height: 1.5rem;
@@ -107,7 +106,7 @@ input[type='checkbox']:checked::after {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 12px;
+  font-size: 14px;
   color: white;
 }
 

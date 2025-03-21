@@ -33,6 +33,7 @@ export function useRegisterForm() {
     'password_mismatch',
     'password_too_long',
     'password_too_short',
+    'invalid_password_format',
     'user_exists',
     'underage',
   ]);
@@ -47,6 +48,7 @@ export function useRegisterForm() {
         const parseResult = registerCredentialsSchema.safeParse(credentials);
         if (parseResult.error) {
           const error = parseResult.error.errors.at(0);
+          console.log(error);
           currentStatus = error.message as typeof status;
         } else {
           const result = await registerUserAction(credentials);
@@ -62,6 +64,8 @@ export function useRegisterForm() {
               currentStatus = 'error';
             } else if (result.code === RegisterError.DUPLICATE_USER) {
               currentStatus = 'user_exists';
+            } else if (result.code === RegisterError.INVALID_PASSWORD_FORMAT) {
+              currentStatus = 'invalid_password_format';
             } else {
               currentStatus = 'error';
             }

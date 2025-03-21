@@ -1,6 +1,7 @@
 import db from 'betting_app/dbconfig';
 import { registerUserAction } from '../registerUserAction';
 import { transport } from 'betting_app/nodemailer.config';
+import { RegisterError } from '../../types/RegisterError';
 require('dotenv').config({
   path: './.env.test',
 });
@@ -9,8 +10,8 @@ jest.mock('betting_app/nodemailer.config');
 
 const credentials = {
   email: 'test@email.com',
-  password1: '12345678',
-  password2: '12345678',
+  password1: 'P@ssw0rd123!',
+  password2: 'P@ssw0rd123!',
   dateOfBirth: new Date('09-29-1991').toISOString().split('T')[0],
 };
 
@@ -88,4 +89,25 @@ describe('Testing user registration', () => {
     //Reset the maximum number of users.
     process.env.MAX_USERS = undefined;
   }, 20000);
+
+  it('Does not allow registration with a password that does not meet the required criteria', async () => {
+    // Define invalid passwords to test.
+    const invalidPassword = '12345678';
+
+    const invalidCredentials = {
+      ...credentials,
+      password1: invalidPassword,
+      password2: invalidPassword,
+    };
+
+    const result = await registerUserAction(invalidCredentials);
+    expect(result.code).toBe(RegisterError.INVALID_PASSWORD_FORMAT);
+
+    // Ensure no user was created in the database.
+    const user = await db('users.user').where({ email: invalidCredentials.email }).first();
+    expect(user).toBeUndefined();
+
+    // Ensure no email was sent.
+    expect(transport.sendMail).not.toHaveBeenCalled();
+  }, 30000);
 });

@@ -13,20 +13,27 @@ export async function registerUserAction(credentials: any) {
     code: 0,
   };
 
+  const maxUsers = process.env.MAX_USERS ? parseInt(process.env.MAX_USERS) : null;
+  if (maxUsers && maxUsers > 0) {
+    //Limit the number of users allowed to register. A maxUsers setting of zero means no limit.
+    const [{ count }] = await db('users.user').count('* as count');
+    const userCount = typeof count === 'string' ? parseInt(count) : count;
+    if (userCount >= maxUsers) {
+      result.code = RegisterError.USER_COUNT;
+      return result;
+    }
+  }
+
+  //Parse the credentials and insert the user into the database.
+  const parsedPayload = registerCredentialsSchema.safeParse(credentials);
+  if (!parsedPayload.success) {
+    const error = parsedPayload.error.issues[0];
+    result.code = error.message;
+    return result;
+  }
+
   const trx = await db.transaction();
   try {
-    const maxUsers = process.env.MAX_USERS ? parseInt(process.env.MAX_USERS) : null;
-    if (maxUsers && maxUsers > 0) {
-      //Limit the number of users allowed to register. A maxUsers setting of zero means no limit.
-      const [{ count }] = await trx('users.user').count('* as count');
-      const userCount = typeof count === 'string' ? parseInt(count) : count;
-      if (userCount >= maxUsers) {
-        throw new Error(RegisterError.USER_COUNT);
-      }
-    }
-
-    //Parse the credentials and insert the user into the database.
-    registerCredentialsSchema.parse(credentials);
     const { email, password1: password } = credentials;
     const encyrptedPassword = await bcrypt.hash(password, 15);
     const [{ id: user_id }] = await trx('users.user')
@@ -36,19 +43,17 @@ export async function registerUserAction(credentials: any) {
         date_of_birth: credentials.dateOfBirth,
       })
       .returning('id');
-
     //Send a verification email to the new user
     await sendActivationEmailAction(user_id, email);
     await trx.commit();
   } catch (err) {
-    await trx.rollback();
+    trx.rollback();
     const msg = err.message;
-    console.log(err.message);
+
     if (msg.toLowerCase().includes('duplicate')) {
       result.code = RegisterError.DUPLICATE_USER;
-    } else if (msg === RegisterError.USER_COUNT) {
-      result.code = RegisterError.USER_COUNT;
     } else {
+      console.log(err.message);
       result.code = -1;
     }
   }

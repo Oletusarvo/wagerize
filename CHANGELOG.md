@@ -1,3 +1,18 @@
+## [3.0.0] - 21-03-2025
+
+### Unreleased
+
+- Addition of terms_accepted and terms_accepted_on columns to users.
+
+### Added
+
+- The Input-component.
+- Checks to make sure passwords have letters, numbers and special characters, when registering.
+
+### Changed
+
+- The background-color of the body.
+
 ## [2.6.0] - 17-03-2025
 
 ### Added

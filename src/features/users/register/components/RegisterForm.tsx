@@ -8,6 +8,8 @@ import { Form } from '@/components/feature/Form';
 import { FormHeading } from '@/components/ui/FormHeading';
 import { ErrorHelper, Helper } from '@/components/ui/InputHelper';
 import { createContextWithHook } from '@/utils/createContextWithHook';
+import { Input } from '@/components/ui/Input';
+import { CalendarMonth, Email, Password } from '@mui/icons-material';
 
 export function RegisterForm() {
   const { credentials, updateCredentials, onSubmit, status, registerButtonDisabled } =
@@ -18,7 +20,8 @@ export function RegisterForm() {
       <FormHeading>Register</FormHeading>
       <InputGroup>
         <label>Date Of Birth</label>
-        <input
+        <Input
+          icon={<CalendarMonth />}
           className='w-full'
           name='dateOfBirth'
           type='date'
@@ -30,7 +33,8 @@ export function RegisterForm() {
       </InputGroup>
       <InputGroup>
         <label>Email</label>
-        <input
+        <Input
+          icon={<Email />}
           name='email'
           type='email'
           placeholder='Type your email...'
@@ -44,7 +48,8 @@ export function RegisterForm() {
       </InputGroup>
       <InputGroup>
         <label>Password</label>
-        <input
+        <Input
+          icon={<Password />}
           name='password1'
           type='password'
           autoComplete='none'
@@ -56,7 +61,8 @@ export function RegisterForm() {
       </InputGroup>
       <InputGroup>
         <label>Re-type password</label>
-        <input
+        <Input
+          icon={<Password />}
           name='password2'
           type='password'
           autoComplete='none'
@@ -71,30 +77,38 @@ export function RegisterForm() {
           <ErrorHelper>A password can only have 16 characters!</ErrorHelper>
         ) : status === 'password_too_short' ? (
           <ErrorHelper>A password must be at least 8 characters long!</ErrorHelper>
+        ) : status === 'invalid_password_format' ? (
+          <ErrorHelper>
+            A password must contain letters, numbers and special characters!
+          </ErrorHelper>
         ) : null}
       </InputGroup>
-      <div className='flex w-full justify-between items-center'>
-        <span>
-          I have read the{' '}
-          <Link
-            className='font-semibold'
-            href='/tos'
-            target='_blank'>
-            Terms Of Service,
-          </Link>{' '}
-          and{' '}
-          <Link
-            className='font-semibold'
-            href='/privacy'
-            target='_blank'>
-            Privacy Policy
-          </Link>
-        </span>
-        <input
-          type='checkbox'
-          required
-        />
-      </div>
+      <InputGroup>
+        {' '}
+        <div className='flex w-full justify-between items-center'>
+          <span>
+            I have read the{' '}
+            <Link
+              className='font-semibold'
+              href='/tos'
+              target='_blank'>
+              Terms Of Service,
+            </Link>{' '}
+            and{' '}
+            <Link
+              className='font-semibold'
+              href='/privacy'
+              target='_blank'>
+              Privacy Policy
+            </Link>
+          </span>
+          <input
+            type='checkbox'
+            required
+          />
+        </div>
+      </InputGroup>
+
       <div className='flex flex-col gap-4 w-full items-center'>
         <Button
           fullWidth

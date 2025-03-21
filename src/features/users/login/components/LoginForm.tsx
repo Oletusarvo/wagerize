@@ -7,6 +7,8 @@ import { Button } from '@/components/feature/Button';
 import { FormHeading } from '@/components/ui/FormHeading';
 import Link from 'next/link';
 import { ErrorHelper } from '@/components/ui/InputHelper';
+import { Input } from '@/components/ui/Input';
+import { Email, Password } from '@mui/icons-material';
 
 export function LoginForm() {
   const { credentials, updateCredentials, onSubmit, status } = useLoginForm();
@@ -15,7 +17,8 @@ export function LoginForm() {
       <FormHeading>Login</FormHeading>
       <InputGroup>
         <label>Email</label>
-        <input
+        <Input
+          icon={<Email />}
           placeholder='Type your email...'
           name='email'
           type='email'
@@ -26,7 +29,8 @@ export function LoginForm() {
       </InputGroup>
       <InputGroup>
         <label>Password</label>
-        <input
+        <Input
+          icon={<Password />}
           placeholder='Type your password...'
           name='password'
           type='password'

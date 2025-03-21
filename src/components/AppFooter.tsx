@@ -102,7 +102,7 @@ export function AppFooter() {
             </ToggleProvider.Trigger>
             <ToggleProvider.Target hideOnClickOutside>
               <div
-                className='border-t border-border absolute xs:left-0 lg:left-[40%] lg:translate-x-[-30%] bg-white z-10 xs:w-full lg:w-[50%] animate-slide-up flex flex-col gap-4 py-8 px-4'
+                className='xs:border-t xs:border-border lg:shadow-md absolute xs:left-0 xs:bottom-0 lg:left-50 lg:bottom-4 bg-white z-10 xs:w-full lg:w-[50%] animate-slide-up flex flex-col gap-4 py-8 px-4'
                 style={{ bottom: footerRef.current?.offsetHeight || 0 }}>
                 <div className='flex items-center justify-between border-b border-border pb-4'>
                   <FormHeading>Cookies</FormHeading>
