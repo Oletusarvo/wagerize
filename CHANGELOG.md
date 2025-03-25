@@ -1,4 +1,29 @@
+## [4.0.0] - 25-03-2025
+
+### Unreleased
+
+- Addition of terms_accepted and terms_accepted_on columns to users.
+
+### Fixed
+
+- The cookie notice not being centered on large screens.
+- The previous version changelog entry not having the unreleased section.
+- The inputs not being styled on the bet list page, and the email reset pages.
+
+### Changed
+
+- The Start Now-button on the landing page to say "Register For Free".
+- The text in the sign up-link from "register" to "sign up".
+- The appearance of the sign up button in the header.
+- The main-tag background-color.
+- useSearch now returns an array containing the updateSearch-function, and the status of the search.
+- The way useSearch updates the search.
+
 ## [3.0.1] - 25-03-2025
+
+### Unreleased
+
+- Addition of terms_accepted and terms_accepted_on columns to users.
 
 ### Fixed
 

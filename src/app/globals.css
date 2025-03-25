@@ -5,7 +5,7 @@
   --font-mono: var(--font-geist-mono);
   --color-accent: #6f3b6a;
   --color-accent-light: #9f6b99;
-  --color-accent-disabled: #f9f5f9;
+  --color-accent-disabled: #d1a9d1;
   --color-border: var(--color-slate-300);
   --spacing-default: 16rem;
   --radius-inputs: 12px;
@@ -59,7 +59,10 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: linear-gradient(to bottom, #fafafa, #e3b9e0);
+}
+
+main {
+  background: linear-gradient(to bottom, #ffffff, #f7f2f7);
 }
 
 a {

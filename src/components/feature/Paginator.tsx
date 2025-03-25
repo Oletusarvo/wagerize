@@ -8,7 +8,7 @@ type PaginatorProps = {
   paramName: string;
 };
 export function Paginator({ currentPage, numPages, paramName }: PaginatorProps) {
-  const updateSearch = useSearch(paramName);
+  const [updateSearch] = useSearch(paramName);
 
   return (
     <div className='flex gap-4 w-full justify-end'>

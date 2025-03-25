@@ -33,7 +33,7 @@ export default async function Home() {
                 fullWidth
                 type='button'
                 color='accent'>
-                Start Today
+                Register For Free
               </Button>
             </Link>
           </div>

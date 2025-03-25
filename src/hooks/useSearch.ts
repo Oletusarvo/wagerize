@@ -1,20 +1,33 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useStatus } from './useStatus';
 
 export function useSearch(paramName: string) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
+  const [currentSearch, setCurrentSearch] = useState(null);
+  const [status, setStatus] = useStatus();
 
   const updateSearch = useCallback(
     (newSearch: string | number) => {
-      console.log('Updating search...');
-      const newParams = new URLSearchParams(searchParams);
-      newParams.set(paramName, typeof newSearch === 'number' ? newSearch.toString() : newSearch);
-      router.replace(`${pathname}?${newParams.toString()}`);
+      setStatus('loading');
+      setCurrentSearch(typeof newSearch === 'string' ? parseInt(newSearch) : newSearch);
     },
-    [paramName, router, searchParams]
+    [paramName, router, searchParams, setStatus]
   );
 
-  return updateSearch;
+  useEffect(() => {
+    const t = setTimeout(() => {
+      if (currentSearch !== null) {
+        const newParams = new URLSearchParams(searchParams);
+        newParams.set(paramName, currentSearch);
+        router.replace(`${pathname}?${newParams.toString()}`);
+        setStatus('idle');
+      }
+    }, 500);
+    return () => clearTimeout(t);
+  }, [currentSearch]);
+
+  return [updateSearch, status] as const;
 }

@@ -9,6 +9,8 @@ import { createContextWithHook } from '@/utils/createContextWithHook';
 import { useResetPasswordForm } from '../hooks/useResetPasswordForm';
 import { Suspense } from 'react';
 import { Spinner } from '@/components/ui/Spinner';
+import { Input } from '@/components/ui/Input';
+import { Email, Password } from '@mui/icons-material';
 
 export function ResetPasswordForm() {
   const { newCredentials, updateNewCredentials, onSubmit, token, status, buttonDisabled } =
@@ -35,7 +37,8 @@ function SendResetEmail() {
   return (
     <InputGroup>
       <label>Email</label>
-      <input
+      <Input
+        icon={<Email />}
         required
         name='email'
         type='email'
@@ -54,7 +57,8 @@ function ResetPasword() {
     <>
       <InputGroup>
         <label>New Password</label>
-        <input
+        <Input
+          icon={<Password />}
           minLength={8}
           value={newCredentials.password1}
           onChange={updateNewCredentials}
@@ -66,7 +70,8 @@ function ResetPasword() {
       </InputGroup>
       <InputGroup>
         <label>Repeat New Password</label>
-        <input
+        <Input
+          icon={<Password />}
           value={newCredentials.password2}
           onChange={updateNewCredentials}
           type='password'

@@ -27,8 +27,12 @@ export function AppHeader() {
     } else {
       return (
         <>
-          <Link href='/register'>Register</Link>
           <Link href='/login'>Login</Link>
+          <Link
+            href='/register'
+            className='xs:p-0 xs:rounded-none lg:py-2 lg:px-4 lg:rounded-[100px] lg:border-1 border-accent text-accent'>
+            Sign Up
+          </Link>
         </>
       );
     }
@@ -50,7 +54,9 @@ export function AppHeader() {
               <small className='ml-8'>{pkg.version}</small>
             </div>
 
-            <nav className='gap-8 xs:hidden lg:flex'>{getLinks()}</nav>
+            <nav className='gap-8 xs:hidden lg:flex lg:items-center xk:items-none'>
+              {getLinks()}
+            </nav>
             <div className='lg:hidden xs:block'>
               <ToggleProvider.Trigger>
                 <IconButton>
