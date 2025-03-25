@@ -10,7 +10,6 @@ export function useAppCookies() {
     typeof window !== 'undefined' ? localStorage.getItem(showCookieNoticeKey) : true;
 
   const enableAnalytics = (state: string = 'false') => {
-    console.log('Setting analytics to ', state);
     setCookie('wagerize-analytics-enabled', state);
     localStorage.setItem(showCookieNoticeKey, 'false');
     router.refresh();

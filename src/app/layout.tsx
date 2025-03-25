@@ -8,7 +8,6 @@ import { AppFooter } from '@/components/AppFooter';
 import { cookies } from 'next/headers';
 import { AnalyticsScript } from '@/components/AnalyticsScript';
 import { CookiesWrapper } from './CookiesWrapper';
-import { RequestPushPermission } from '@/components/RequestPushPermission';
 
 export const metadata: Metadata = {
   title: 'Wagerize',
