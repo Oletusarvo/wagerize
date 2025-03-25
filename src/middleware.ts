@@ -12,12 +12,12 @@ const rateLimiter = new RateLimiter({
 
 export default async function middleware(req: NextRequestWithAuth) {
   const token = await getToken({ req });
-  const url = req.nextUrl.pathname;
+  const url = req.nextUrl;
 
   if (
-    (req.method === 'POST' && url === '/register') ||
-    url === '/api/public/users/resend_verification_email' ||
-    url === '/api/public/users/verify'
+    (req.method === 'POST' && url.pathname === '/register') ||
+    url.pathname === '/api/public/users/resend_verification_email' ||
+    url.pathname === '/api/public/users/verify'
   ) {
     //Limit the number of times a user is allowed to hit these endpoints.
     const res = await rateLimiter.limit(req);
@@ -28,25 +28,26 @@ export default async function middleware(req: NextRequestWithAuth) {
 
   if (token) {
     //Disallow access to the front- login- or register pages once logged in.
-    if (url === '/' || url.includes('/login') || url.includes('/register')) {
-      return redirectTo('/auth/dashboard', req);
+    if (
+      url.pathname === '/' ||
+      url.pathname.includes('/login') ||
+      url.pathname.includes('/register')
+    ) {
+      const newUrl = url.clone();
+      newUrl.pathname = '/auth/dashboard';
+      return NextResponse.redirect(newUrl);
     }
   } else {
     //Redirect to the login page if trying to access protected areas while not logged in.
-    if (url.startsWith('/auth')) {
-      const callbackUrl = req.nextUrl.toString();
-      req.nextUrl.searchParams.set('callback', callbackUrl);
-      return redirectTo('/login', req);
+    if (url.pathname.startsWith('/auth')) {
+      const newUrl = url.clone();
+      newUrl.pathname = '/login';
+      newUrl.searchParams.set('callback', url.pathname);
+      return NextResponse.redirect(newUrl);
     }
   }
 
   return NextResponse.next();
-}
-
-function redirectTo(url: string, req: NextRequestWithAuth) {
-  const newUrl = req.nextUrl.clone();
-  newUrl.pathname = url;
-  return NextResponse.redirect(newUrl);
 }
 
 export const config = {

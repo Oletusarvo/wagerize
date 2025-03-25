@@ -9,7 +9,7 @@ export default async function Home() {
   return (
     <main className='pt-8 flex flex-col flex-1 gap-16 overflow-y-scroll h-full'>
       <section className='flex xs:flex-col-reverse lg:flex-row gap-8 w-full xs:px-4 lg:px-default items-center'>
-        <div className='flex flex-col w-full gap-4'>
+        <div className='flex flex-col w-full gap-4 animate-slide-right'>
           <Heading>{pkg.name} - A poker inspired challenge app.</Heading>
           <p className='text-lg'>
             Welcome to <strong>{pkg.name}</strong> — the ultimate challenge app where friendly

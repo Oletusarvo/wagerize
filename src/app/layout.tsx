@@ -17,18 +17,8 @@ import { AnalyticsScript } from '@/components/AnalyticsScript';
 import { CookiesProvider } from 'react-cookie';
 import { CookiesWrapper } from './CookiesWrapper';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
-
 export const metadata: Metadata = {
-  title: 'Betting App',
+  title: 'Wagerize',
 };
 
 export default async function RootLayout({
@@ -49,8 +39,7 @@ export default async function RootLayout({
           enabled={currentCookies.get('wagerize-analytics-enabled')?.value === 'true'}
         />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col w-full h-screen`}>
+      <body className={`antialiased flex flex-col w-full h-screen`}>
         <CookiesWrapper>
           <AuthProvider>
             <UserProvider>

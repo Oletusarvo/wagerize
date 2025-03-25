@@ -35,6 +35,7 @@ export function AppHeader() {
   };
 
   const MenuIcon = menuOpen ? Clear : Menu;
+
   return (
     <ToggleProvider onChange={state => setMenuOpen(state)}>
       <div className='flex flex-col w-full relative'>

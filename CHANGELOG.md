@@ -1,3 +1,13 @@
+## [3.0.1] - 25-03-2025
+
+### Fixed
+
+- The middleware bypass exploit by upgrading next.js
+
+### Added
+
+- A slide-animation to the hero text.
+
 ## [3.0.0] - 21-03-2025
 
 ### Unreleased
