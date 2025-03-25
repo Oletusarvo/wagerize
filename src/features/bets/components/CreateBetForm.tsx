@@ -24,6 +24,16 @@ export function CreateBetForm() {
     return min;
   }, []);
 
+  const submitDisabled = useMemo(() => {
+    return (
+      status === 'loading' ||
+      status === 'done' ||
+      !bet.data.title ||
+      !bet.data.min_bid ||
+      options.length == 0
+    );
+  }, [status, bet.data, options]);
+
   return (
     <Form onSubmit={onSubmit}>
       <FormHeading>Create Challenge</FormHeading>
@@ -130,7 +140,7 @@ export function CreateBetForm() {
           color='accent'
           type='submit'
           loading={status === 'loading'}
-          disabled={status === 'loading' || status === 'done'}
+          disabled={submitDisabled}
           fullWidth>
           Create
         </Button>

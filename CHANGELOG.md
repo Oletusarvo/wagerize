@@ -1,3 +1,21 @@
+## [4.0.1] - 25-03-2025
+
+### Unreleased
+
+- Addition of terms_accepted and terms_accepted_on columns to users.
+- Requesting of permission to display push notifications to the client.
+
+### Fixed
+
+- Paginator showing the next button when on the last page.
+- The pages getting set to NaN on the bets page when clicking on next.
+- The localStorage not defined error in the useAppCookies-hook.
+
+### Added
+
+- Check disabling the submit button on the create bet form, when no title or minimum bid is defined, or the status is set to "loading" or "done".
+- The cookies as one of the returned fields by useAppCookies.
+
 ## [4.0.0] - 25-03-2025
 
 ### Unreleased

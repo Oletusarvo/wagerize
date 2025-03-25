@@ -31,7 +31,7 @@ export default async function BetsPage({ searchParams }) {
       <BetList bets={bets} />
       <Paginator
         paramName={'page'}
-        currentPage={parseInt(page)}
+        currentPage={page ? parseInt(page) : 0}
         numPages={numPages - 1}
       />
     </main>

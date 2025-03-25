@@ -22,7 +22,7 @@ export function Paginator({ currentPage, numPages, paramName }: PaginatorProps) 
         </Button>
       )}
 
-      {numPages > 1 && (
+      {numPages > 1 && currentPage < numPages && (
         <Button
           disabled={currentPage >= numPages}
           onClick={() => {
@@ -38,7 +38,7 @@ export function Paginator({ currentPage, numPages, paramName }: PaginatorProps) 
 
 const Button = ({ children, disabled = false, onClick, ...props }) => {
   const className = [
-    'font-semibold text-gray-500 cursor-pointer',
+    'font-semibold text-accent cursor-pointer',
     disabled ? 'text-gray-100' : 'text-gray-500',
   ]
     .join(' ')

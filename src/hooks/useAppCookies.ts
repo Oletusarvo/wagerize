@@ -6,12 +6,15 @@ const showCookieNoticeKey = 'wagerize-show-cookie-notice';
 export function useAppCookies() {
   const [cookies, setCookie] = useCookies();
   const router = useRouter();
-  const showCookieNotice = localStorage.getItem(showCookieNoticeKey);
+  const showCookieNotice =
+    typeof window !== 'undefined' ? localStorage.getItem(showCookieNoticeKey) : true;
+
   const enableAnalytics = (state: string = 'false') => {
     console.log('Setting analytics to ', state);
     setCookie('wagerize-analytics-enabled', state);
     localStorage.setItem(showCookieNoticeKey, 'false');
     router.refresh();
   };
-  return { showCookieNotice, enableAnalytics };
+
+  return { cookies, showCookieNotice, enableAnalytics };
 }
