@@ -136,7 +136,3 @@ input[type='checkbox']:checked {
 .app-footer {
   border-top: 1px solid var(--color-slate-200);
 }
-
-p {
-  color: black;
-}

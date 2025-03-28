@@ -22,21 +22,23 @@ export default async function BetPage({ params }) {
   const outcomes = await db('bets.outcome').where({ bet_id: betId }).select('id', 'label');
 
   return (
-    <Main>
-      <section className='flex flex-col gap-2 py-2'>
-        <FormHeading>{bet.data.title}</FormHeading>
-        <p className='mb-4'>{bet.data.description || 'No description.'}</p>
+    <main className='flex flex-col w-full h-full'>
+      <section className='flex flex-col gap-2 py-2 bg-accent text-white xs:px-4'>
+        <FormHeading>
+          <span className='text-white'>{bet.data.title}</span>
+        </FormHeading>
+        <p className='mb-4 text-white'>{bet.data.description || 'No description.'}</p>
         <BetHeader bet={bet} />
       </section>
 
-      <section className='flex w-full flex-1 items-center flex-col gap-2 justify-center py-2'>
+      <section className='flex w-full flex-1 items-center flex-col gap-2 justify-center py-2 xs:px4'>
         <PoolDisplay
           status={bet.data.is_frozen ? 'frozen' : bet.bid ? 'participated' : 'open'}
           amount={bet.pool}
           minimum={bet.data.min_bid}
         />
       </section>
-      <section className='w-full flex justify-center py-2'>
+      <section className='w-full flex justify-center py-2 xs:px-4'>
         <div className='flex w-full flex-col gap-2'>
           {bet.bid === undefined ? (
             <PlaceBidButton
@@ -61,6 +63,6 @@ export default async function BetPage({ params }) {
           </span>
         </div>
       </section>
-    </Main>
+    </main>
   );
 }

@@ -16,19 +16,24 @@ export function BetHeader({ bet }) {
   };
 
   return (
-    <div className='flex w-full justify-between'>
+    <div className='flex w-full justify-between items-center text-white'>
       <div className='flex gap-2'>
         <DataPoint
           IconComponent={ArrowDownward}
+          color='white'
           content={<>{bet.data.min_bid}D</>}
         />
         <IconButton onClick={copyLinkToClipboard}>
-          <Icon Component={Share} />
+          <Icon
+            Component={Share}
+            color='white'
+          />
         </IconButton>
       </div>
 
       <DataPoint
         IconComponent={LockClock}
+        color='white'
         content={
           timeLeft
             ? timeLeft <= 0

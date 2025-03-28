@@ -1,3 +1,14 @@
+## [4.0.3] - 28-03-2025
+
+### Unreleased
+
+- Addition of a terms_accepted_on columns to users.
+- Requesting of permission to display push notifications to the client.
+
+### Changed
+
+- The appearance of the header while viewing a bet.
+
 ## [4.0.2] - 28-03-2025
 
 ### Unreleased
