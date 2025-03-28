@@ -1,3 +1,24 @@
+## [4.0.2] - 28-03-2025
+
+### Unreleased
+
+- Addition of a terms_accepted_on columns to users.
+- Requesting of permission to display push notifications to the client.
+
+### Fixed
+
+- A bug in the ending of bets, where winners did not get their share, even though the test for it seemed to pass.
+
+### Changed
+
+- The font size of the links in the header, on desktop screens.
+- Redirecting back to the bets/manage page instead of the dashboard, when a bet is closed.
+- The color of the headings on the listings on the bets/manage page.
+
+### Added
+
+- The title of the bet onto the modal when closing the bet.
+
 ## [4.0.1] - 25-03-2025
 
 ### Unreleased

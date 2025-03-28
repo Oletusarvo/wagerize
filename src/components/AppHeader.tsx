@@ -54,7 +54,7 @@ export function AppHeader() {
               <small className='ml-8'>{pkg.version}</small>
             </div>
 
-            <nav className='gap-8 xs:hidden lg:flex lg:items-center xk:items-none'>
+            <nav className='gap-8 xs:hidden lg:flex lg:items-center xs:items-none lg:text-sm'>
               {getLinks()}
             </nav>
             <div className='lg:hidden xs:block'>

@@ -13,10 +13,7 @@ export async function endBetAction(betId: string, outcomeId: string) {
     //Get the winning participant wallets.
     const winningWallets = await trx('users.wallet as wallet')
       .leftJoin(db.raw('bets.bid as bid on bid.bet_id = ?', [betId]))
-      .whereRaw(
-        'bid.outcome_id = ? AND CASE WHEN bid.user_id IS NOT NULL THEN bid.user_id = wallet.user_id ELSE FALSE END',
-        [outcomeId]
-      )
+      .whereRaw('bid.outcome_id = ? AND bid.wallet_id = wallet.id', [outcomeId])
       .select('wallet.id', 'wallet.user_id')
       .groupBy('wallet.id');
 
@@ -39,21 +36,16 @@ export async function endBetAction(betId: string, outcomeId: string) {
     //Update the wallets of each winner.
     const promises = winningWallets.map(
       async wallet =>
-        new Promise<void>(async (resolve, reject) => {
-          try {
-            await trx('users.wallet').where({ id: wallet.id }).increment('balance', winnerShare);
-            
-            resolve();
-          } catch (err) {
-            reject(err);
-          }
-        })
+        await trx('users.wallet').where({ id: wallet.id }).increment('balance', winnerShare)
     );
     await Promise.all(promises);
 
     //Give the creator their share.
-    const bet = await trx('bets.bet').where({ id: betId }).select('author_id').first();
-    await trx('users.wallet').where({ user_id: bet.author_id }).increment('balance', creatorShare);
+    const [author_id] = await trx('bets.bet')
+      .where({ id: betId })
+      .select('author_id')
+      .pluck('author_id');
+    await trx('users.wallet').where({ user_id: author_id }).increment('balance', creatorShare);
 
     //All done. Delete the bet.
     await trx('bets.bet').where({ id: betId }).del();

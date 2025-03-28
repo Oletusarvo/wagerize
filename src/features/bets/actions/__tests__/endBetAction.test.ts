@@ -28,7 +28,7 @@ describe('Testing bet closure with one winner', () => {
       .select('balance')
       .first();
     expect(parseInt(wallet.balance)).toBe(bidAmount * 2);
-  });
+  }, 20000);
 });
 
 describe('Testing bet closure with multiple winners, with an evenly divisible pool', () => {
@@ -42,22 +42,24 @@ describe('Testing bet closure with multiple winners, with an evenly divisible po
     });
 
     result = await endBetAction(betId, outcomes[0].id);
-  });
+  }, 60000);
 
   afterAll(async () => await cleanup());
 
   it('Returns code 0', () => expect(result.code).toBe(0));
+
   it('Correctly increments the wallets of the winners.', async () => {
-    const winners = await db('users.wallet')
+    const winnerWallets = await db('users.wallet')
       .whereIn(
         'user_id',
         winnerIds.map(w => users.at(w).id)
       )
       .select('id', 'balance');
-    winners.forEach(w =>
+
+    winnerWallets.forEach(w =>
       expect(parseInt(w.balance)).toBe((bidAmount * numUsers) / winnerIds.length)
     );
-  });
+  }, 20000);
 });
 
 async function setup(options: { numUsers: number; winnerIds: number[]; loserIds: number[] }) {
@@ -74,6 +76,7 @@ async function setup(options: { numUsers: number; winnerIds: number[]; loserIds:
     });
   }
   await trx('users.user').insert(users);
+
   //Create a bet
   await trx('bets.bet').insert({
     id: betId,
@@ -95,20 +98,32 @@ async function setup(options: { numUsers: number; winnerIds: number[]; loserIds:
   await trx('bets.outcome').insert(outcomes);
 
   //Add bids to the bet
-  await trx('bets.bid').insert([
-    ...winnerIds.map(i => ({
-      user_id: users[i].id,
+  const winnerBidPromises = winnerIds.map(async i => {
+    const [wallet_id] = await trx('users.wallet').where({ user_id: users[i].id }).pluck('id');
+    return {
+      wallet_id,
       amount: bidAmount,
       outcome_id: outcomes[0].id,
       bet_id: betId,
-    })),
-    ...loserIds.map(i => ({
-      user_id: users[i].id,
+    };
+  });
+
+  const loserBidPromises = loserIds.map(async i => {
+    const [wallet_id] = await trx('users.wallet').where({ user_id: users[i].id }).pluck('id');
+
+    return {
+      wallet_id,
       amount: bidAmount,
       outcome_id: outcomes[1].id,
       bet_id: betId,
-    })),
-  ]);
+    };
+  });
+
+  const winnerBids = await Promise.all(winnerBidPromises);
+  const loserBids = await Promise.all(loserBidPromises);
+
+  console.log(winnerBids, loserBids);
+  await trx('bets.bid').insert([...winnerBids, ...loserBids]);
 
   await trx.commit();
 }

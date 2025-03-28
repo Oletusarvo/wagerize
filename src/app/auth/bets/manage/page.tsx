@@ -60,7 +60,9 @@ const Listing = ({ bet, expired }) => {
   return (
     <Container>
       <div className='flex w-full justify-between items-center h-[60px]'>
-        <h1 className='text-nowrap overflow-hidden text-ellipsis w-[90%]'>{bet.data.title}</h1>
+        <h1 className='text-nowrap overflow-hidden text-ellipsis w-[90%] font-semibold text-accent'>
+          {bet.data.title}
+        </h1>
 
         <ManageBetButton
           bet={bet}

@@ -54,7 +54,7 @@ export function ManageBetModal({ bet, outcomes }) {
       toast.success('Bet closed!');
       updateSession();
       currentStatus = 'done';
-      router.replace('/auth/dashboard');
+      router.replace('/auth/bets/manage');
     } else {
       currentStatus = 'error';
       toast.error('An unexpected error occured!');
@@ -77,7 +77,10 @@ export function ManageBetModal({ bet, outcomes }) {
   return (
     <Modal title='Manage Challenge'>
       <Form onSubmit={onSubmit}>
-        <p>{bet.data.description || 'No Description.'}</p>
+        <div className='flex flex-col'>
+          <h1 className='text-accent font-semibold text-lg'>{bet.data.title}</h1>
+          <p>{bet.data.description || 'No Description.'}</p>
+        </div>
 
         {isExpired ? (
           <Fieldset>
