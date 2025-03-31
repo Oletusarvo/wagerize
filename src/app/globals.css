@@ -5,6 +5,7 @@
   --font-mono: var(--font-geist-mono);
   --color-accent: #6f3b6a;
   --color-accent-light: #9f6b99;
+  --color-accent-extra-light: #cfa1c8;
   --color-accent-disabled: #d1a9d1;
   --color-border: var(--color-slate-300);
   --spacing-default: 16rem;
@@ -58,7 +59,7 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Inter', 'Courier New', Courier, monospace;
 }
 
 main {

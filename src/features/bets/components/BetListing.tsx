@@ -17,7 +17,7 @@ export function BetListing({ bet }) {
       as={Link}
       href={`/auth/bets/${bet.id}`}
       key={`bet-${bet.id}`}>
-      <div className='flex w-full justify-between items-center'>
+      <div className='flex w-full justify-between items-baseline'>
         <h1 className='font-semibold'>{bet.data.title}</h1>
         <BidBadge status={bidStatus} />
       </div>

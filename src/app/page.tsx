@@ -38,6 +38,7 @@ export default async function Home() {
             </Link>
           </div>
         </div>
+
         <img
           width='300'
           height='300'
@@ -51,30 +52,33 @@ export default async function Home() {
         <ul className='grid xs:grid-cols-1 lg:grid-cols-3 gap-2'>
           <Container as='li'>
             <ContainerBody>
+              <ContainerLabel>1</ContainerLabel>
               <ContainerHeading>Virtual Currency</ContainerHeading>
-              <p>
+              <ContainerParagraph>
                 Use <strong>Dice</strong>—our virtual currency—to take on fun challenges! There’s no
                 limit to how many you can join, and even if your balance goes negative, it’s all
                 just for fun. No real money is involved—just friendly competition!
-              </p>
+              </ContainerParagraph>
             </ContainerBody>
           </Container>
           <Container as='li'>
             <ContainerBody>
+              <ContainerLabel>2</ContainerLabel>
               <ContainerHeading>Expiry Dates</ContainerHeading>
-              <p>
+              <ContainerParagraph>
                 Some challenges are a race against time! You can set an expiry date on them, so they
                 stay open until the clock runs out. No rush—let the tension build!
-              </p>
+              </ContainerParagraph>
             </ContainerBody>
           </Container>
           <Container as='li'>
             <ContainerBody>
+              <ContainerLabel>3</ContainerLabel>
               <ContainerHeading>Fixed bid to enter</ContainerHeading>
-              <p>
+              <ContainerParagraph>
                 Every challenge has a set entry cost in <strong>Dice</strong>, so you’ll always know
                 what it takes to join. No surprises—just jump in and enjoy the fun!
-              </p>
+              </ContainerParagraph>
             </ContainerBody>
           </Container>
         </ul>
@@ -86,41 +90,41 @@ export default async function Home() {
           <Container as='li'>
             <ContainerBody>
               <ContainerHeading>Challenge raising and folding</ContainerHeading>
-              <p>
+              <ContainerParagraph>
                 Get ready to take the competition up a notch! Soon, you’ll be able to raise your
                 challenge after someone else has placed theirs. Think you can outlast your friends?
                 Prove it!
-              </p>
+              </ContainerParagraph>
             </ContainerBody>
           </Container>
           <Container as='li'>
             <ContainerBody>
               <ContainerHeading>A jury for closing challenges</ContainerHeading>
-              <p>
+              <ContainerParagraph>
                 Right now, the creator of a challenge has the final say in closing it. But we’re
                 working on a feature that’ll let trusted users vote on the outcome, making things
                 more exciting and fair.
-              </p>
+              </ContainerParagraph>
             </ContainerBody>
           </Container>
           <Container as='li'>
             <ContainerBody>
               <ContainerHeading>A reputation score</ContainerHeading>
-              <p>
+              <ContainerParagraph>
                 Let your track record speak for itself! We’re planning to introduce a reputation
                 score that reflects your skills and your contribution as a jury member or creator.
                 The more trusted you are, the higher your score!
-              </p>
+              </ContainerParagraph>
             </ContainerBody>
           </Container>
           <Container as='li'>
             <ContainerBody>
               <ContainerHeading>Custom Currencies</ContainerHeading>{' '}
-              <p>
+              <ContainerParagraph>
                 Why stop at Dice? Soon, you’ll be able to create your own custom currencies for even
                 more fun! Want to play with “Gems,” “Coins,” or something totally unique? The choice
                 is yours. Make the game feel truly yours!
-              </p>
+              </ContainerParagraph>
             </ContainerBody>
           </Container>
         </ul>
@@ -179,12 +183,24 @@ export default async function Home() {
   );
 }
 
+function ContainerLabel({ children }) {
+  return (
+    <div className='mb-4 rounded-md w-8 h-8 flex items-center justify-center bg-accent-light text-white font-semibold text-lg'>
+      {children}
+    </div>
+  );
+}
+
 function Heading({ as = 'h1', children, ...props }) {
   return <h1 className='text-2xl font-semibold text-accent'>{children}</h1>;
 }
 
 function ContainerHeading({ children }) {
-  return <h1 className='text-accent font-semibold'>{children}</h1>;
+  return <h1 className='text-accent font-semibold text-lg'>{children}</h1>;
+}
+
+function ContainerParagraph({ children }) {
+  return <p className='text-slate-600'>{children}</p>;
 }
 
 function ContainerBody({ children }) {

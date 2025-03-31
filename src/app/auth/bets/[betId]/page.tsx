@@ -32,11 +32,7 @@ export default async function BetPage({ params }) {
       </section>
 
       <section className='flex w-full flex-1 items-center flex-col gap-2 justify-center py-2 xs:px4'>
-        <PoolDisplay
-          status={bet.data.is_frozen ? 'frozen' : bet.bid ? 'participated' : 'open'}
-          amount={bet.pool}
-          minimum={bet.data.min_bid}
-        />
+        <PoolDisplay bet={bet} />
       </section>
       <section className='w-full flex justify-center py-2 xs:px-4'>
         <div className='flex w-full flex-col gap-2'>

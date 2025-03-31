@@ -4,6 +4,7 @@ import { BetError } from '@/utils/error';
 import { getSession } from '@/utils/getSession';
 import db from 'betting_app/dbconfig';
 import { revalidatePath } from 'next/cache';
+import { Bets } from '../DAL/Bets';
 
 export async function placeBidAction(payload: any) {
   let result: { code: number | string } = { code: 0 };
@@ -44,6 +45,15 @@ export async function placeBidAction(payload: any) {
 
     //Commit
     await trx.commit();
+    const [currentBetState] = await Bets.get({
+      query: { 'bet.id': payload.bet_id },
+      select: ['bet.data'],
+      ctx: db,
+    });
+
+    //const room = `bet-${payload.bet_id}`;
+    //(global.io as any).to(room).emit('game_update', currentBetState);
+
     revalidatePath('/auth/bets');
   } catch (err) {
     await trx.rollback();

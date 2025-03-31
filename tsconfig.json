@@ -23,6 +23,13 @@
       "betting_app/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "package.json"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "package.json",
+    "src/socketConfig.mjs"
+  ],
   "exclude": ["node_modules"]
 }

@@ -8,6 +8,7 @@
 ### Changed
 
 - The appearance of the header while viewing a bet.
+- The appearance of the front page.
 
 ## [4.0.2] - 28-03-2025
 

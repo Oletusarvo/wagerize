@@ -3,9 +3,14 @@
 import { useAnimatedNumber } from '@/hooks/useAnimatedNumber';
 import { useClassName } from '@/hooks/useClassName';
 import { Casino } from '@mui/icons-material';
+import { BetType } from '../types/BetType';
+import { Bets } from '../DAL/Bets';
+import { useEffect, useState } from 'react';
 
-export function PoolDisplay({ amount, status = 'neutral' }: PoolDisplayProps) {
-  const currentPool = useAnimatedNumber(amount, 25, true);
+export function PoolDisplay({ bet }: PoolDisplayProps) {
+  //const [currentBet, setCurrentBet] = useState(bet);
+  const status = bet.data.is_frozen ? 'frozen' : bet.bid ? 'participated' : 'open';
+  const currentPool = useAnimatedNumber(bet.pool, 25, true);
 
   const className = useClassName([
     'xs:w-[75%] rounded-full border flex gap-2 items-center justify-center aspect-square text-2xl bg-white',
@@ -18,6 +23,21 @@ export function PoolDisplay({ amount, status = 'neutral' }: PoolDisplayProps) {
       : 'border-gray-600',
   ]);
 
+  /*
+  useEffect(() => {
+    const room = `bet-${currentBet.id}`;
+
+    socket.emit('join_room', room);
+    socket.on('game_update', data => {
+      setCurrentBet(data);
+    });
+
+    return () => {
+      socket.emit('leave_room', room);
+      socket.off('game_update');
+    };
+  }, []);*/
+
   return (
     <div className={className}>
       <Casino sx={{ transform: 'rotate(45deg)' }} />
@@ -27,7 +47,5 @@ export function PoolDisplay({ amount, status = 'neutral' }: PoolDisplayProps) {
 }
 
 type PoolDisplayProps = {
-  status?: 'participated' | 'open' | 'frozen' | 'neutral';
-  amount: number;
-  minimum: number;
+  bet: BetType & { bid: any; pool: number };
 };
