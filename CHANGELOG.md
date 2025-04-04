@@ -1,3 +1,14 @@
+## [4.0.4] - 04-04-2025
+
+### Unreleased
+
+- Addition of a terms_accepted_on columns to users.
+- Requesting of permission to display push notifications to the client.
+
+### Changed
+
+- The numbers on the features cards on the front page are now showing their number as the pips of a die.
+
 ## [4.0.3] - 28-03-2025
 
 ### Unreleased

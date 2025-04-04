@@ -4,6 +4,7 @@ import Link from 'next/link';
 import pkg from 'betting_app/package.json';
 import { Logo } from '@/components/Logo';
 import { GitHub, Support } from '@mui/icons-material';
+import { Die } from '@/components/ui/Die';
 
 export default async function Home() {
   return (
@@ -52,7 +53,10 @@ export default async function Home() {
         <ul className='grid xs:grid-cols-1 lg:grid-cols-3 gap-2'>
           <Container as='li'>
             <ContainerBody>
-              <ContainerLabel>1</ContainerLabel>
+              <ContainerIcon>
+                <Die numPips={1} />
+              </ContainerIcon>
+
               <ContainerHeading>Virtual Currency</ContainerHeading>
               <ContainerParagraph>
                 Use <strong>Dice</strong>—our virtual currency—to take on fun challenges! There’s no
@@ -63,7 +67,10 @@ export default async function Home() {
           </Container>
           <Container as='li'>
             <ContainerBody>
-              <ContainerLabel>2</ContainerLabel>
+              <ContainerIcon>
+                <Die numPips={2} />
+              </ContainerIcon>
+
               <ContainerHeading>Expiry Dates</ContainerHeading>
               <ContainerParagraph>
                 Some challenges are a race against time! You can set an expiry date on them, so they
@@ -73,7 +80,10 @@ export default async function Home() {
           </Container>
           <Container as='li'>
             <ContainerBody>
-              <ContainerLabel>3</ContainerLabel>
+              <ContainerIcon>
+                <Die numPips={3} />
+              </ContainerIcon>
+
               <ContainerHeading>Fixed bid to enter</ContainerHeading>
               <ContainerParagraph>
                 Every challenge has a set entry cost in <strong>Dice</strong>, so you’ll always know
@@ -183,12 +193,8 @@ export default async function Home() {
   );
 }
 
-function ContainerLabel({ children }) {
-  return (
-    <div className='mb-4 rounded-md w-8 h-8 flex items-center justify-center bg-accent-light text-white font-semibold text-lg'>
-      {children}
-    </div>
-  );
+function ContainerIcon({ children }) {
+  return <div className='mb-4'>{children}</div>;
 }
 
 function Heading({ as = 'h1', children, ...props }) {
