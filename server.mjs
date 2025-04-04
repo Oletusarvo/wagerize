@@ -15,7 +15,7 @@ app.prepare().then(() => {
     handle(req, res, parsedUrl);
   }).listen(port);
 
-  //socketConfig(server);
+  global.io = socketConfig(server);
   console.log(
     `> Server listening at http://localhost:${port} as ${
       dev ? 'development' : process.env.NODE_ENV

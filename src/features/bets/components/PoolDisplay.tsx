@@ -6,11 +6,14 @@ import { Casino } from '@mui/icons-material';
 import { BetType } from '../types/BetType';
 import { Bets } from '../DAL/Bets';
 import { useEffect, useState } from 'react';
+import io from 'socket.io-client';
+
+const socket = io();
 
 export function PoolDisplay({ bet }: PoolDisplayProps) {
-  //const [currentBet, setCurrentBet] = useState(bet);
+  const [currentBet, setCurrentBet] = useState(bet);
   const status = bet.data.is_frozen ? 'frozen' : bet.bid ? 'participated' : 'open';
-  const currentPool = useAnimatedNumber(bet.pool, 25, true);
+  const currentPool = useAnimatedNumber(currentBet.pool, 25, true);
 
   const className = useClassName([
     'xs:w-[75%] rounded-full border flex gap-2 items-center justify-center aspect-square text-2xl bg-white',
@@ -23,7 +26,6 @@ export function PoolDisplay({ bet }: PoolDisplayProps) {
       : 'border-gray-600',
   ]);
 
-  /*
   useEffect(() => {
     const room = `bet-${currentBet.id}`;
 
@@ -36,7 +38,7 @@ export function PoolDisplay({ bet }: PoolDisplayProps) {
       socket.emit('leave_room', room);
       socket.off('game_update');
     };
-  }, []);*/
+  }, []);
 
   return (
     <div className={className}>

@@ -1,9 +1,9 @@
 {
   "name": "Wagerize",
-  "version": "4.0.4",
+  "version": "4.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "node server.mjs --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

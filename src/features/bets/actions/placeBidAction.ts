@@ -45,6 +45,17 @@ export async function placeBidAction(payload: any) {
 
     //Commit
     await trx.commit();
+
+    //Send the an update of the game state through socket.io.
+    if (global.io) {
+      const room = `bet-${payload.bet_id}`;
+      const [currentGameData] = await db('bets.bet')
+        .join(db.raw('bets.bid as bid on bid.bet_id = bets.bet.id'))
+        .where({ 'bets.bet.id': payload.bet_id })
+        .select(db.raw('SUM(bid.amount) as pool'));
+
+      (global.io as any).to(room).emit('game_update', currentGameData);
+    }
     revalidatePath('/auth/bets');
   } catch (err) {
     await trx.rollback();

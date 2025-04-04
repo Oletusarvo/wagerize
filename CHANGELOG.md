@@ -1,3 +1,14 @@
+## [4.1.0] - 04-04-2025
+
+### Unreleased
+
+- Addition of a terms_accepted_on columns to users.
+- Requesting of permission to display push notifications to the client.
+
+### Added
+
+- Real-time updating of the pool display when viewing a bet.
+
 ## [4.0.4] - 04-04-2025
 
 ### Unreleased
