@@ -1,3 +1,20 @@
+## [5.0.0] - 05-05-2025
+
+### Unreleased
+
+- Addition of a terms_accepted_on columns to users.
+- Requesting of permission to display push notifications to the client.
+
+### Changed
+
+- Moved AuthProvider and CookiesWrapper under the providers-folder.
+- Changed the heading-tags of each page and component to improve SEO.
+
+### Added
+
+- New metadata.
+- A limit to the number of socket.io clients allowed.
+
 ## [4.1.0] - 04-04-2025
 
 ### Unreleased

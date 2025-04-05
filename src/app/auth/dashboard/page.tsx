@@ -37,7 +37,7 @@ const DashboardItem = ({ icon, title, description, href }) => {
       <div className='w-full flex gap-4 items-center h-24'>
         {icon}
         <div className='flex flex-col gap-1'>
-          <h1 className='font-semibold'>{title}</h1>
+          <h3 className='font-semibold'>{title}</h3>
           <p className='overflow-hidden'>{description}</p>
         </div>
       </div>

@@ -27,7 +27,7 @@ export default async function BetsPage({ searchParams }) {
 
   return (
     <main className='lg:px-default xs:px-4 flex flex-col gap-2 w-full flex-1 overflow-y-scroll py-4'>
-      <h1 className='text-2xl text-gray-500'>Challenges</h1>
+      <h2 className='text-2xl text-gray-500'>Challenges</h2>
       <BetList bets={bets} />
       <Paginator
         paramName={'page'}

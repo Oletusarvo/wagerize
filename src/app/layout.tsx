@@ -3,14 +3,18 @@ import './globals.css';
 import { Toaster } from 'react-hot-toast';
 import { AppHeader } from '@/components/AppHeader';
 import { UserProvider } from '@/features/users/contexts/UserProvider';
-import { AuthProvider } from './AuthProvider';
+import { AuthProvider } from '../providers/AuthProvider';
 import { AppFooter } from '@/components/AppFooter';
 import { cookies } from 'next/headers';
 import { AnalyticsScript } from '@/components/AnalyticsScript';
-import { CookiesWrapper } from './CookiesWrapper';
+import { CookiesWrapper } from '../providers/CookiesWrapper';
 
 export const metadata: Metadata = {
-  title: 'Wagerize',
+  title: 'Wagerize - Casual betting game without the hassle of real money.',
+  description: 'A web-based game for creating bets using a virtual currency.',
+  authors: [{ name: 'oletusarvo', url: 'https://github.com/Oletusarvo' }],
+  keywords:
+    'betting game, gambling game, virtual currency, friendly wagers, social betting, casual gaming, no real money, fun challenges, multiplayer betting, wager app',
 };
 
 export default async function RootLayout({

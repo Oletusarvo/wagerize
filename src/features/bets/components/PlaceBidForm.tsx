@@ -12,7 +12,6 @@ export function PlaceBidForm({ betId, outcomes, minBid }) {
   const radioButtons = useList({
     items: outcomes,
     Component: ({ item }) => {
-      console.log(item);
       return (
         <RadioButton
           name='outcome'

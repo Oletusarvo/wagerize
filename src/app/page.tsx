@@ -49,7 +49,7 @@ export default async function Home() {
       </section>
 
       <Section>
-        <Heading>Features</Heading>
+        <Heading as='h2'>Features</Heading>
         <ul className='grid xs:grid-cols-1 lg:grid-cols-3 gap-2'>
           <Container as='li'>
             <ContainerBody>
@@ -95,7 +95,7 @@ export default async function Home() {
       </Section>
 
       <Section>
-        <Heading>Planned Features</Heading>
+        <Heading as='h2'>Planned Features</Heading>
         <ul className='grid xs:grid-cols-1 lg:grid-cols-2 gap-2'>
           <Container as='li'>
             <ContainerBody>
@@ -202,7 +202,7 @@ function Heading({ as = 'h1', children, ...props }) {
 }
 
 function ContainerHeading({ children }) {
-  return <h1 className='text-accent font-semibold text-lg'>{children}</h1>;
+  return <h3 className='text-accent font-semibold text-lg'>{children}</h3>;
 }
 
 function ContainerParagraph({ children }) {

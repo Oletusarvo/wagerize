@@ -1,6 +1,20 @@
 import { Server } from 'socket.io';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 export function socketConfig(server) {
   const io = new Server(server);
+
+  io.use((socket, next) => {
+    const MAX_CLIENTS = process.env.MAX_CLIENTS;
+
+    if (MAX_CLIENTS && io.engine.clientsCount >= parseInt(MAX_CLIENTS)) {
+      return next(new Error('Server full!'));
+    }
+
+    next();
+  });
 
   io.on('connection', socket => {
     console.log(`New connection! id: ${socket.id}`);

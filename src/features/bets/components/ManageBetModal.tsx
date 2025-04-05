@@ -78,7 +78,7 @@ export function ManageBetModal({ bet, outcomes }) {
     <Modal title='Manage Challenge'>
       <Form onSubmit={onSubmit}>
         <div className='flex flex-col'>
-          <h1 className='text-accent font-semibold text-lg'>{bet.data.title}</h1>
+          <h2 className='text-accent font-semibold text-lg'>{bet.data.title}</h2>
           <p>{bet.data.description || 'No Description.'}</p>
         </div>
 

@@ -18,7 +18,7 @@ export function BetListing({ bet }) {
       href={`/auth/bets/${bet.id}`}
       key={`bet-${bet.id}`}>
       <div className='flex w-full justify-between items-baseline'>
-        <h1 className='font-semibold'>{bet.data.title}</h1>
+        <h3 className='font-semibold'>{bet.data.title}</h3>
         <BidBadge status={bidStatus} />
       </div>
 
@@ -46,25 +46,16 @@ export function BetListing({ bet }) {
   );
 }
 
-const Icon = ({ Component, ...props }) => (
-  <Component
-    {...props}
-    sx={{ color: 'var(--color-gray-300)' }}
-  />
-);
-
 type BidBadgeProps = {
   status: 'participated' | 'frozen' | 'open';
 };
 
 const BidBadge = ({ status }: BidBadgeProps) => {
-  console.log(status);
   const className = [
     status === 'frozen' ? 'bg-blue-600' : status === 'participated' ? 'bg-red-600' : 'bg-green-600',
     'w-2 h-2 aspect-square rounded-full',
   ]
     .join(' ')
     .trim();
-  console.log(className);
   return <span className={className} />;
 };
