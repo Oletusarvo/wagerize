@@ -7,7 +7,7 @@ import { Modal } from '@/components/ui/Modal';
 import { useState } from 'react';
 import { PlaceBidForm } from './PlaceBidForm';
 
-export function PlaceBidButton({ betId, minBid, outcomes, disabled }) {
+export function PlaceBidButton({ bet, outcomes, disabled }) {
   return (
     <ToggleProvider>
       <ToggleProvider.Trigger>
@@ -24,8 +24,7 @@ export function PlaceBidButton({ betId, minBid, outcomes, disabled }) {
       <ToggleProvider.Target>
         <Modal title='Select outcome'>
           <PlaceBidForm
-            minBid={minBid}
-            betId={betId}
+            bet={bet}
             outcomes={outcomes}
           />
         </Modal>

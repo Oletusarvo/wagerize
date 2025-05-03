@@ -16,6 +16,7 @@ export function useCreateBetForm() {
       title: '',
       description: '',
       min_bid: 1,
+      min_raise: '',
     },
   });
 

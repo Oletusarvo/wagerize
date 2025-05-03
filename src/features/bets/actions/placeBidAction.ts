@@ -35,10 +35,25 @@ export async function placeBidAction(payload: any) {
 
     payload.wallet_id = walletId;
 
-    //Prevent bidding if the user already has participated in the maximum allowed number of bets.
-    await checkMaxBids(walletId);
+    //Get the current bid on the bet, if one exists.
+    const [bid] = await trx('bets.bid').where({ wallet_id: walletId, bet_id: payload.bet_id });
 
-    await trx('bets.bid').insert(payload);
+    if (!bid) {
+      //No bid placed yet.
+
+      //Prevent bidding if the user already has participated in the maximum allowed number of bets.
+      await checkMaxBids(walletId);
+
+      await trx('bets.bid').insert(payload);
+    } else {
+      if (bid.is_folded) {
+        throw new Error(BetError.FOLDED);
+      } else if (bet.data.min_raise) {
+        await trx('bets.bid').where({ id: bid.id }).increment('amount', payload.amount);
+      } else {
+        throw new Error(BetError.NO_RAISE);
+      }
+    }
 
     //Decrement the user's wallet balance.
     await trx('users.wallet').where({ id: walletId }).decrement('balance', payload.amount);
@@ -46,7 +61,7 @@ export async function placeBidAction(payload: any) {
     //Commit
     await trx.commit();
 
-    //Send the an update of the game state through socket.io.
+    //Send an update of the game state through socket.io to all users displaying the bet currently.
     if (global.io) {
       const room = `bet-${payload.bet_id}`;
       const [currentGameData] = await db('bets.bet')

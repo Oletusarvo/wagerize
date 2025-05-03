@@ -5,7 +5,7 @@ import { useCreateBetForm } from '../hooks/useCreateBetForm';
 import { InputGroup } from '@/components/ui/InputGroup';
 import { FormHeading } from '@/components/ui/FormHeading';
 import { Button } from '@/components/feature/Button';
-import { Add, ArrowDownward, CalendarMonth, Check, Title } from '@mui/icons-material';
+import { Add, ArrowDownward, ArrowUpward, CalendarMonth, Check, Title } from '@mui/icons-material';
 
 import { useBatch } from '@/hooks/useBatch';
 import { Chip } from '@/components/ui/Chip';
@@ -14,10 +14,12 @@ import { IconButton } from '@mui/material';
 import { Icon } from '@/components/ui/Icon';
 import { Drawer } from '@/components/feature/Drawer';
 import { Input } from '@/components/ui/Input';
+import { Helper } from '@/components/ui/InputHelper';
 
 export function CreateBetForm() {
   const { bet, updateBet, status, onSubmit, options, addOption, deleteOpt } = useCreateBetForm();
   const ref = useRef(null);
+
   const minimumDate = useMemo(() => {
     const min = new Date();
     min.setDate(min.getDate() + 1);
@@ -74,6 +76,21 @@ export function CreateBetForm() {
           required
         />
       </InputGroup>
+      <InputGroup>
+        <label>Minimum Raise</label>
+        <Input
+          icon={<ArrowUpward />}
+          name='data.min_raise'
+          type='number'
+          min={1}
+          step={1}
+          placeholder='Type a minimum raise...'
+          value={bet.data.min_raise}
+          onChange={updateBet}
+        />
+        <Helper>Leave empty for no raising.</Helper>
+      </InputGroup>
+
       <InputGroup>
         <label>Expiry date</label>
         <Input

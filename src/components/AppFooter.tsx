@@ -21,7 +21,7 @@ export function AppFooter() {
   const pathname = usePathname();
 
   const router = useRouter();
-  const footerRef = useRef<HTMLElement | null>(null);
+  const footerRef = useRef<HTMLDivElement | null>(null);
   const { showCookieNotice, enableAnalytics } = useAppCookies();
   const [cookieNoticeOpen, setCookieNoticeOpen] = useState<boolean>(() => {
     if (showCookieNotice) {
@@ -93,12 +93,12 @@ export function AppFooter() {
             initialState={cookieNoticeOpen}
             onChange={state => setCookieNoticeOpen(state)}>
             <ToggleProvider.Trigger>
-              {/**Must be wrapped within a button, because the IconButton ignores class names. The Trigger passes a mandatory class name to its children. */}
-              <button>
+              {/**Must be wrapped within a div, because the IconButton ignores class names. The Trigger passes a mandatory class name to its children. */}
+              <div>
                 <IconButton sx={{ color: 'var(--color-accent)' }}>
                   {!cookieNoticeOpen ? <Cookie /> : <Clear />}
                 </IconButton>
-              </button>
+              </div>
             </ToggleProvider.Trigger>
             <ToggleProvider.Target hideOnClickOutside>
               <div
@@ -108,11 +108,11 @@ export function AppFooter() {
                   <FormHeading>Cookies</FormHeading>
                   <ToggleProvider.Trigger>
                     {/**Ditto */}
-                    <button>
+                    <div>
                       <IconButton sx={{ color: 'var(--color-accent)' }}>
                         <Clear />
                       </IconButton>
-                    </button>
+                    </div>
                   </ToggleProvider.Trigger>
                 </div>
 
@@ -124,25 +124,21 @@ export function AppFooter() {
                 </p>
 
                 <ToggleProvider.Trigger>
-                  <Button
-                    fullWidth
-                    color='accent'
-                    type='button'
+                  <button
+                    className='button contained --accent w-full'
                     onClick={() => enableAnalytics('true')}>
                     Consent to all
-                  </Button>
+                  </button>
                 </ToggleProvider.Trigger>
                 <ToggleProvider.Trigger>
-                  <Button
-                    fullWidth
-                    variant='outlined'
-                    color='accent'
+                  <button
+                    className='button w-full outlined --accent'
                     onClick={() => {
                       console.log('disabling analytics');
                       enableAnalytics('false');
                     }}>
                     Only necessary
-                  </Button>
+                  </button>
                 </ToggleProvider.Trigger>
               </div>
             </ToggleProvider.Target>
@@ -155,10 +151,10 @@ export function AppFooter() {
   };
 
   return (
-    <footer
+    <div
       ref={footerRef}
       className='relative lg:px-default xs:px-4 py-4 z-30 app-footer flex gap-8 items-center justify-center bg-white h-[70px]'>
       {getNavContent()}
-    </footer>
+    </div>
   );
 }

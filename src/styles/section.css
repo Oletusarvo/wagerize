@@ -1,0 +1,16 @@
+section {
+  display: flex;
+  gap: --spacing(4);
+}
+
+section.--row {
+  flex-flow: row;
+}
+
+section.--col {
+  flex-flow: column;
+}
+
+section.--accent {
+  background-color: var(--color-accent-background);
+}

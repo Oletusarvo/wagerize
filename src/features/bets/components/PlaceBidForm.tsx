@@ -7,7 +7,11 @@ import { usePlaceBidForm } from '../hooks/usePlaceBidForm';
 import { useList } from '@/hooks/useList';
 import { RadioButton } from '@/components/feature/RadioButton';
 
-export function PlaceBidForm({ betId, outcomes, minBid }) {
+export function PlaceBidForm({ bet, outcomes }) {
+  const {
+    id: betId,
+    data: { min_raise: minRaise, min_bid: minBid },
+  } = bet;
   const { onSubmit, setSelectedOutcome, selectedOutcome, status } = usePlaceBidForm(betId, minBid);
   const radioButtons = useList({
     items: outcomes,
@@ -30,19 +34,21 @@ export function PlaceBidForm({ betId, outcomes, minBid }) {
       <div className='flex w-full flex-col gap-2'>
         {radioButtons}
 
-        <Button
-          fullWidth
-          type='submit'
-          color='accent'
-          loading={status === 'loading'}
-          disabled={
-            status === 'loading' ||
-            status === 'done' ||
-            selectedOutcome === null ||
-            selectedOutcome === undefined
-          }>
-          Confirm
-        </Button>
+        <div className='flex gap-2 w-full'>
+          <Button
+            fullWidth
+            type='submit'
+            color='accent'
+            loading={status === 'loading'}
+            disabled={
+              status === 'loading' ||
+              status === 'done' ||
+              selectedOutcome === null ||
+              selectedOutcome === undefined
+            }>
+            Confirm
+          </Button>
+        </div>
       </div>
     </Form>
   );

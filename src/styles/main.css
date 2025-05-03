@@ -1,0 +1,10 @@
+.contained.--accent {
+  background-color: var(--color-accent);
+  color: white;
+}
+
+.outlined.--accent {
+  --color: var(--color-accent);
+  border: 1px solid var(--color);
+  color: var(--color);
+}

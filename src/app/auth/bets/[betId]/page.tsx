@@ -1,13 +1,11 @@
 import { Chip } from '@/components/ui/Chip';
 import { FormHeading } from '@/components/ui/FormHeading';
-import { Icon } from '@/components/ui/Icon';
 import { Helper } from '@/components/ui/InputHelper';
-import { Main } from '@/components/ui/Main';
 import { BetHeader } from '@/features/bets/components/BetHeader';
 import { PlaceBidButton } from '@/features/bets/components/PlaceBidButton';
 import { PoolDisplay } from '@/features/bets/components/PoolDisplay';
 import { Bets } from '@/features/bets/DAL/Bets';
-import { Check, Share } from '@mui/icons-material';
+import { Check } from '@mui/icons-material';
 import db from 'betting_app/dbconfig';
 
 export default async function BetPage({ params }) {
@@ -23,7 +21,7 @@ export default async function BetPage({ params }) {
 
   return (
     <main className='flex flex-col w-full h-full'>
-      <section className='flex flex-col gap-2 py-2 bg-accent text-white xs:px-4'>
+      <section className='flex flex-col gap-2 py-2 bg-accent text-white px-default'>
         <FormHeading>
           <span className='text-white'>{bet.data.title}</span>
         </FormHeading>
@@ -31,10 +29,10 @@ export default async function BetPage({ params }) {
         <BetHeader bet={bet} />
       </section>
 
-      <section className='flex w-full flex-1 items-center flex-col gap-2 justify-center py-2 xs:px4'>
+      <section className='flex w-full flex-1 items-center flex-col gap-2 justify-center py-2 px-default'>
         <PoolDisplay bet={bet} />
       </section>
-      <section className='w-full flex justify-center py-2 xs:px-4'>
+      <section className='w-full flex justify-center py-2 px-default'>
         <div className='flex w-full flex-col gap-2'>
           {bet.bid === undefined ? (
             <PlaceBidButton
@@ -43,8 +41,7 @@ export default async function BetPage({ params }) {
                 bet.bid !== undefined ||
                 (bet.expires_at && bet.expires_at.getTime() - Date.now() <= 0)
               }
-              minBid={bet.data.min_bid}
-              betId={bet.id}
+              bet={bet}
               outcomes={outcomes}
             />
           ) : (

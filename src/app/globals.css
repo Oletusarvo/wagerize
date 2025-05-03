@@ -1,3 +1,7 @@
+@import '../styles/main.css';
+@import '../styles/section.css';
+@import '../styles/components/button.css';
+@import '../styles/components/chip.css';
 @import 'tailwindcss';
 
 @theme {
@@ -6,10 +10,11 @@
   --color-accent: #6f3b6a;
   --color-accent-light: #9f6b99;
   --color-accent-extra-light: #cfa1c8;
+  --color-accent-background: #f7eaf4; /* Written by Github Copilot */
   --color-accent-disabled: #d1a9d1;
   --color-border: var(--color-slate-300);
-  --spacing-default: 16rem;
-  --radius-inputs: 12px;
+  --spacing-default: 1rem;
+  --radius-inputs: 4px;
   --breakpoint-xs: 360px;
   --animate-slide-down: SlideDown 0.2s ease-out;
   --animate-slide-up: SlideUp 0.2s ease-out;
@@ -58,12 +63,50 @@
   }
 }
 
+:root {
+  --default-px-amount: --spacing(4);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --default-px-amount: --spacing(10);
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --default-px-amount: --spacing(16);
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --default-px-amount: --spacing(32);
+  }
+}
+
+@media (min-width: 1536px) {
+  :root {
+    --default-px-amount: --spacing(64);
+  }
+}
+
+.px-default {
+  padding-left: var(--default-px-amount);
+  padding-right: var(--default-px-amount);
+}
+
+.py-default {
+  padding-top: --spacing(24);
+  padding-bottom: --spacing(24);
+}
+
 body {
-  font-family: 'Inter', 'Courier New', Courier, monospace;
+  font-family: 'Inter', 'Sagoe UI', 'Courier New', Courier, monospace;
 }
 
 main {
-  background: linear-gradient(to bottom, #ffffff, #f7f2f7);
+  background: whitesmoke;
 }
 
 a {
@@ -80,7 +123,6 @@ nav a {
   font-weight: var(--font-weight-semibold);
 }
 
-button,
 textarea {
   padding: 0.5rem 1rem 0.5rem 1rem;
   border-radius: var(--radius-inputs);
@@ -94,11 +136,6 @@ textarea {
 
 textarea {
   resize: none;
-}
-
-button {
-  cursor: pointer;
-  transition: background-color 0.3s ease-out;
 }
 
 input[type='checkbox'] {

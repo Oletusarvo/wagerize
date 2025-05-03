@@ -75,7 +75,7 @@ export function ManageBetModal({ bet, outcomes }) {
   const isExpired = Date.now() >= new Date(bet.expires_at).getTime();
 
   return (
-    <Modal title='Manage Challenge'>
+    <Modal title='Manage Bet'>
       <Form onSubmit={onSubmit}>
         <div className='flex flex-col'>
           <h2 className='text-accent font-semibold text-lg'>{bet.data.title}</h2>
@@ -84,7 +84,7 @@ export function ManageBetModal({ bet, outcomes }) {
 
         {isExpired ? (
           <Fieldset>
-            <legend>End Challenge</legend>
+            <legend>End Bet</legend>
             {content}
             <Button
               fullWidth

@@ -2,7 +2,7 @@ import { DataPoint } from '@/components/DataPoint';
 import { Chip } from '@/components/ui/Chip';
 import { Container } from '@/components/ui/Container';
 import { CurrencyIcon } from '@/components/ui/CurrencyIcon';
-import { ArrowDownward, Check, Wallet } from '@mui/icons-material';
+import { ArrowDownward, ArrowUpward, Check, Wallet } from '@mui/icons-material';
 import Link from 'next/link';
 
 export function BetListing({ bet }) {
@@ -29,6 +29,13 @@ export function BetListing({ bet }) {
             IconComponent={ArrowDownward}
             content={bet.data.min_bid}
           />
+
+          {bet.data.min_raise && (
+            <DataPoint
+              IconComponent={ArrowUpward}
+              content={<>{bet.data.min_raise}</>}
+            />
+          )}
 
           <DataPoint
             IconComponent={Wallet}

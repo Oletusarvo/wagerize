@@ -1,11 +1,14 @@
+import { useClassName } from '@/hooks/useClassName';
 import { Clear } from '@mui/icons-material';
 import { ReactNode } from 'react';
 
-export function Chip({ children, icon, onDelete }: ChipProps) {
+export function Chip({ children, icon, onDelete, variant = 'contained' }: ChipProps) {
+  const className = useClassName(['chip', variant, '--accent']);
+
   return (
-    <div className='flex gap-2 py-2 px-4 rounded-[100px] bg-accent min-w-[4rem] justify-center text-white items-center text-sm'>
+    <div className={className}>
       {icon}
-      <span className='font-semibold'>{children}</span>
+      <span>{children}</span>
       {onDelete && (
         <Clear
           sx={{ fontSize: '1rem' }}
@@ -17,6 +20,7 @@ export function Chip({ children, icon, onDelete }: ChipProps) {
 }
 
 type ChipProps = React.PropsWithChildren & {
+  variant?: 'outlined' | 'contained';
   onDelete?: () => void;
   icon?: ReactNode;
 };

@@ -1,4 +1,23 @@
-## [5.0.0] - 05-05-2025
+## [5.1.0] - 03-05-2025
+
+### Unreleased
+
+- Addition of a terms_accepted_on columns to users.
+- Requesting of permission to display push notifications to the client.
+
+### Fixed
+
+- Invalid month on the previous changelog.
+
+### Added
+
+- Separate css-files containing classes representing pure ui-components.
+
+### Changed
+
+- Some styles.
+
+## [5.0.0] - 05-04-2025
 
 ### Unreleased
 

@@ -2,7 +2,7 @@
 
 import { DataPoint } from '@/components/DataPoint';
 import { Icon } from '@/components/ui/Icon';
-import { LockClock, Share, TimeToLeave } from '@mui/icons-material';
+import { ArrowUpward, LockClock, Share, TimeToLeave } from '@mui/icons-material';
 import ArrowDownward from '@mui/icons-material/ArrowDownward';
 import { IconButton } from '@mui/material';
 import toast from 'react-hot-toast';
@@ -21,8 +21,15 @@ export function BetHeader({ bet }) {
         <DataPoint
           IconComponent={ArrowDownward}
           color='white'
-          content={<>{bet.data.min_bid}D</>}
+          content={<>{bet.data.min_bid}</>}
         />
+        {bet.data.min_raise && (
+          <DataPoint
+            IconComponent={ArrowUpward}
+            color='white'
+            content={<>{bet.data.min_raise}</>}
+          />
+        )}
         <IconButton onClick={copyLinkToClipboard}>
           <Icon
             Component={Share}
