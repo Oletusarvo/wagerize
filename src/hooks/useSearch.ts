@@ -10,10 +10,10 @@ export function useSearch(paramName: string) {
   const [status, setStatus] = useStatus();
 
   const updateSearch = useCallback(
-    (newSearch: string) => {
+    (newSearch: string | number) => {
       setStatus('loading');
-      //const searchAsInt = parseInt(newSearch);
-      setCurrentSearch(newSearch);
+      const asString = String(newSearch);
+      setCurrentSearch(asString);
     },
     [paramName, router, searchParams, setStatus]
   );
