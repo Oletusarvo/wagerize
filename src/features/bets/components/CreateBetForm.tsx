@@ -76,20 +76,6 @@ export function CreateBetForm() {
           required
         />
       </InputGroup>
-      <InputGroup>
-        <label>Minimum Raise</label>
-        <Input
-          icon={<ArrowUpward />}
-          name='data.min_raise'
-          type='number'
-          min={1}
-          step={1}
-          placeholder='Type a minimum raise...'
-          value={bet.data.min_raise}
-          onChange={updateBet}
-        />
-        <Helper>Leave empty for no raising.</Helper>
-      </InputGroup>
 
       <InputGroup>
         <label>Expiry date</label>

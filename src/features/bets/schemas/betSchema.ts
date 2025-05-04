@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const betDataSchemaVersion = 2;
+const betDataSchemaVersion = 3; //This should be incremented by one each time new fields are added to the betDataSchema.
 
 const betDataSchema = z
   .object({
@@ -9,6 +9,7 @@ const betDataSchema = z
     min_bid: z.number().int().positive(),
     min_raise: z.number().optional(),
     is_frozen: z.boolean().optional(),
+    status: z.number().int().optional(),
     _schemaVersion: z.number().int().optional(),
   })
   .strict()

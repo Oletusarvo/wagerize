@@ -16,7 +16,6 @@ export function useCreateBetForm() {
       title: '',
       description: '',
       min_bid: 1,
-      min_raise: '',
     },
   });
 
@@ -35,15 +34,13 @@ export function useCreateBetForm() {
           if (result.code === -1) {
             toast.error('An unexpected error occured!');
           } else if (result.code === WError.QUOTA_FULL) {
-            toast.error(
-              'You have created the maximum amount of challenges allowed for a user! Please close some of them and try again.'
-            );
+            toast.error('You cannot create more bets! Please close some of them and try again.');
           } else if (result.code === BetError.MAX_OUTCOMES) {
             toast.error('Your bet has too many outcomes!');
           }
           currentStatus = 'error';
         } else {
-          toast.success('Challenge created successfully!');
+          toast.success('Bet created successfully!');
           currentStatus = 'done';
           router.replace('/auth/bets');
         }

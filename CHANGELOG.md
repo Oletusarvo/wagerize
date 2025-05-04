@@ -1,9 +1,19 @@
-## [5.1.0] - 03-05-2025
+## [5.1.1] - 04-05-2025
 
 ### Unreleased
 
-- Addition of a terms_accepted_on columns to users.
 - Requesting of permission to display push notifications to the client.
+
+### Changed
+
+- Set a fixed height for inputs.
+
+### Fixed
+
+- A problem with search bars setting the q-value to "NaN".
+- Buttons being stretched to 100% of the available space.
+
+## [5.1.0] - 03-05-2025
 
 ### Fixed
 
