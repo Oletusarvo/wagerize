@@ -20,7 +20,7 @@ export default async function BetPage({ params }) {
   const outcomes = await db('bets.outcome').where({ bet_id: betId }).select('id', 'label');
 
   return (
-    <main className='flex flex-col w-full h-full'>
+    <div className='flex flex-col w-full h-full'>
       <section className='flex flex-col gap-2 py-2 bg-accent text-white px-default'>
         <FormHeading>
           <span className='text-white'>{bet.data.title}</span>
@@ -56,6 +56,6 @@ export default async function BetPage({ params }) {
           </span>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

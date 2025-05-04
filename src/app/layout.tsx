@@ -52,7 +52,7 @@ export default async function RootLayout({
           <AuthProvider>
             <UserProvider>
               <AppHeader />
-              {children}
+              <main className='flex flex-col w-full flex-1 overflow-y-scroll'>{children}</main>
               <AppFooter />
             </UserProvider>
           </AuthProvider>

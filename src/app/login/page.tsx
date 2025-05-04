@@ -5,10 +5,10 @@ import { Suspense } from 'react';
 
 export default async function Login() {
   return (
-    <Main centered>
+    <div className='flex flex-col items-center justify-center w-full h-full px-default'>
       <Suspense fallback={<Spinner />}>
         <LoginForm />
       </Suspense>
-    </Main>
+    </div>
   );
 }

@@ -17,11 +17,11 @@ export default function Logout() {
   }, []);
 
   return (
-    <main className='flex w-full flex-1 items-center justify-center'>
+    <div className='flex w-full h-full items-center justify-center px-default'>
       <div className='flex gap-4 items-center'>
         <Spinner />
         <span>Loggin out...</span>
       </div>
-    </main>
+    </div>
   );
 }

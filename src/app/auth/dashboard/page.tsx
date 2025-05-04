@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 export default async function Dashboard() {
   return (
-    <Main>
+    <div className='px-default py-4'>
       <FormHeading>Welcome!</FormHeading>
       <div className='grid lg:grid-cols-2 xs:grid-cols-1 w-full lg:gap-4 xs:gap-2 py-4'>
         <DashboardItem
@@ -25,7 +25,7 @@ export default async function Dashboard() {
           description={'Manage your account.'}
         />
       </div>
-    </Main>
+    </div>
   );
 }
 

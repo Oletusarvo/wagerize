@@ -23,7 +23,7 @@ export default async function ManageBetsPage() {
   const rest = bets.filter(b => !expired.includes(b));
 
   return (
-    <Main>
+    <div className='py-4 px-default'>
       <div className='flex flex-col gap-4 w-full'>
         <FormHeading>Your challenges</FormHeading>
 
@@ -52,7 +52,7 @@ export default async function ManageBetsPage() {
           </div>
         ) : null}
       </div>
-    </Main>
+    </div>
   );
 }
 

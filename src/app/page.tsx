@@ -8,7 +8,7 @@ import { Die } from '@/components/ui/Die';
 
 export default async function Home() {
   return (
-    <main className='flex flex-col flex-1 overflow-y-scroll h-full'>
+    <>
       <section className='flex xs:flex-col-reverse lg:flex-row gap-8 w-full items-center px-default bg-white flex-1 py-default'>
         <div className='flex flex-col w-full gap-4 animate-slide-right xs:items-center lg:items-start'>
           <Heading>{pkg.name} - A poker inspired betting app.</Heading>
@@ -173,7 +173,7 @@ export default async function Home() {
           </div>
         </div>
       </footer>
-    </main>
+    </>
   );
 }
 

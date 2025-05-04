@@ -1,3 +1,13 @@
+## [5.2.0] - 04-05-2025
+
+### Unreleased
+
+- Requesting of permission to display push notifications to the client.
+
+### Changed
+
+- Wrapped the children of the main layout within a main-tag.
+
 ## [5.1.1] - 04-05-2025
 
 ### Unreleased

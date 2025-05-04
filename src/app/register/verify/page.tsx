@@ -6,7 +6,7 @@ export default async function RegisterSuccessPage({ searchParams }) {
   const { email } = await searchParams;
 
   return (
-    <main className='flex flex-col gap-4 w-full xs:px-4 py-4 lg:px-default flex-1'>
+    <div className='flex flex-col gap-4 w-full py-4 px-default h-full'>
       <FormHeading>Verify your email</FormHeading>
       <p>
         A verification email has been sent to <strong>{email}</strong>. Check your inbox for the
@@ -18,6 +18,6 @@ export default async function RegisterSuccessPage({ searchParams }) {
         className='bold'>
         Resend verification email
       </Link>
-    </main>
+    </div>
   );
 }

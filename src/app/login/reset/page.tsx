@@ -4,10 +4,10 @@ import { Suspense } from 'react';
 
 export default async function ResetPasswordPage() {
   return (
-    <main className='flex flex-col items-center justify-center flex-1 w-full lg:px-default xs:px-4'>
+    <div className='flex flex-col items-center justify-center flex-1 w-full px-default'>
       <Suspense fallback={<Spinner />}>
         <ResetPasswordForm />
       </Suspense>
-    </main>
+    </div>
   );
 }

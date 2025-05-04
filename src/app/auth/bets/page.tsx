@@ -26,7 +26,7 @@ export default async function BetsPage({ searchParams }) {
   await Promise.all(bidPromises);
 
   return (
-    <main className='lg:px-default xs:px-4 flex flex-col gap-2 w-full flex-1 overflow-y-scroll py-4'>
+    <div className='px-default flex flex-col gap-2 w-full h-full py-4'>
       <h2 className='text-2xl text-gray-500'>Challenges</h2>
       <BetList bets={bets} />
       <Paginator
@@ -34,6 +34,6 @@ export default async function BetsPage({ searchParams }) {
         currentPage={page ? parseInt(page) : 0}
         numPages={numPages - 1}
       />
-    </main>
+    </div>
   );
 }
