@@ -11,7 +11,7 @@ export function usePlaceBidForm(betId: string, minBid: number) {
   const { user, updateSession } = useUserContext();
 
   const onSubmit = useCallback(
-    async (e: React.FormEvent) => {
+    async (e: any) => {
       e.preventDefault();
       let currentStatus: typeof status = 'loading';
       setStatus(currentStatus);
@@ -19,7 +19,7 @@ export function usePlaceBidForm(betId: string, minBid: number) {
         const result = await placeBidAction({
           bet_id: betId,
           outcome_id: selectedOutcome,
-          amount: minBid,
+          amount: e.target.amount.valueAsNumber,
         });
 
         if (result.code === 0) {

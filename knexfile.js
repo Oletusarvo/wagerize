@@ -23,7 +23,7 @@ module.exports = {
     client: 'pg',
     connection: {
       host: 'localhost',
-      database: 'wagerize_test_db',
+      database: 'betting_app_test_db',
       user: 'dev_user',
       password: process.env.DB_PASSWORD,
     },

@@ -5,16 +5,12 @@ import { useCreateBetForm } from '../hooks/useCreateBetForm';
 import { InputGroup } from '@/components/ui/InputGroup';
 import { FormHeading } from '@/components/ui/FormHeading';
 import { Button } from '@/components/feature/Button';
-import { Add, ArrowDownward, ArrowUpward, CalendarMonth, Check, Title } from '@mui/icons-material';
 
-import { useBatch } from '@/hooks/useBatch';
 import { Chip } from '@/components/ui/Chip';
 import { useMemo, useRef } from 'react';
-import { IconButton } from '@mui/material';
 import { Icon } from '@/components/ui/Icon';
-import { Drawer } from '@/components/feature/Drawer';
 import { Input } from '@/components/ui/Input';
-import { Helper } from '@/components/ui/InputHelper';
+import { ArrowDown, Calendar, Check, Heading, Plus } from 'lucide-react';
 
 export function CreateBetForm() {
   const { bet, updateBet, status, onSubmit, options, addOption, deleteOpt } = useCreateBetForm();
@@ -42,7 +38,7 @@ export function CreateBetForm() {
       <InputGroup>
         <label>Title</label>
         <Input
-          icon={<Title />}
+          icon={<Heading />}
           name='data.title'
           placeholder='Type a title...'
           max={32}
@@ -66,7 +62,7 @@ export function CreateBetForm() {
       <InputGroup>
         <label>Minimum bid</label>
         <Input
-          icon={<ArrowDownward />}
+          icon={<ArrowDown />}
           min={1}
           type='number'
           name='data.min_bid'
@@ -80,7 +76,7 @@ export function CreateBetForm() {
       <InputGroup>
         <label>Expiry date</label>
         <Input
-          icon={<CalendarMonth />}
+          icon={<Calendar />}
           min={minimumDate.toISOString().split('T').at(0)}
           className='w-full'
           type='date'
@@ -104,7 +100,8 @@ export function CreateBetForm() {
             minLength={1}
             maxLength={32}
           />
-          <IconButton
+          <button
+            className='button --rounded --ghost'
             type='button'
             onClick={() => {
               const optInput = ref.current;
@@ -117,10 +114,10 @@ export function CreateBetForm() {
               }
             }}>
             <Icon
-              Component={Add}
+              Component={Plus}
               size='large'
             />
-          </IconButton>
+          </button>
         </div>
         {options.length > 0 && (
           <div className='flex gap-2 w-full flex-wrap'>

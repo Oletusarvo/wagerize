@@ -47,18 +47,16 @@ export default async function RootLayout({
           enabled={currentCookies.get('wagerize-analytics-enabled')?.value === 'true'}
         />
       </head>
-      <body className={`antialiased flex flex-col w-full h-screen`}>
-        <CookiesWrapper>
-          <AuthProvider>
-            <UserProvider>
-              <AppHeader />
-              <main className='flex flex-col w-full flex-1 overflow-y-scroll'>{children}</main>
-              <AppFooter />
-            </UserProvider>
-          </AuthProvider>
-        </CookiesWrapper>
-        <Toaster position='top-center' />
-      </body>
+      <CookiesWrapper>
+        <AuthProvider>
+          <body className='antialiased flex flex-col w-full h-screen'>
+            <AppHeader />
+            {children}
+            <AppFooter />
+            <Toaster position='top-center' />
+          </body>
+        </AuthProvider>
+      </CookiesWrapper>
     </html>
   );
 }

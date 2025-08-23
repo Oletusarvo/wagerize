@@ -4,6 +4,7 @@ import { placeBidAction } from '../placeBidAction';
 import { getSession } from '@/utils/getSession';
 import { createBetAction } from '../createBetAction';
 import { BetError } from '@/utils/error';
+import { BetStatus } from '../../constants/betStatus';
 
 jest.mock('@/utils/getSession');
 const userId = v4();
@@ -36,6 +37,7 @@ describe('Testing bid placement', () => {
       data: {
         title: 'Test',
         min_bid: 10,
+        status: BetStatus.ACTIVE,
       },
     });
 
@@ -100,6 +102,7 @@ describe('Testing bid placement', () => {
         author_id: userId,
         data: {
           title: `Test bet ${i}`,
+          status: BetStatus.ACTIVE,
         },
       });
 
@@ -126,6 +129,7 @@ describe('Testing bid placement', () => {
       author_id: userId,
       data: {
         title: `Test bet`,
+        status: BetStatus.ACTIVE,
       },
     });
 
@@ -157,6 +161,7 @@ describe('Testing bid placement', () => {
       author_id: userId,
       data: {
         title: 'Expired Bet',
+        status: BetStatus.ACTIVE,
       },
       expires_at: expiredDate.toISOString(),
     });
@@ -170,6 +175,7 @@ describe('Testing bid placement', () => {
       .returning('id');
 
     // Attempt to place a bid on the expired bet
+    process.env.MAX_BIDS = undefined;
     const result = await placeBidAction({
       bet_id: expiredBetId,
       amount: 10,

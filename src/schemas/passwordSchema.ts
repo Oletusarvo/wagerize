@@ -1,4 +1,4 @@
-import { RegisterError } from '@/features/users/register/types/RegisterError';
+import { RegisterError } from '@/features/register/types/RegisterError';
 import { z } from 'zod';
 
 export const passwordSchema = z

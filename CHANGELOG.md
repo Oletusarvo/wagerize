@@ -1,3 +1,32 @@
+## [7.0.0] - 23-08-2025
+
+### Removed
+
+- Material UI
+
+### Added
+
+- Lucide React icons
+
+### Changed
+
+- Color theme
+- How the UserProvider works; it now receives the user from the layout.
+- Moved the app-side under the app-folder, and the index-side under the (index)-folder.
+
+## [6.0.0] - 23-05-2025
+
+### Changed
+
+- Moved bet logic within the Bet-class.
+- Moved user logic within the User-class.
+
+### Added
+
+- Support for raising a bid.
+- Support for folding a bid.
+- An object containing constants for each database table name, so they can be referenced and changed more easily.
+
 ## [5.2.0] - 04-05-2025
 
 ### Unreleased

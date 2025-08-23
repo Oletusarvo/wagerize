@@ -1,25 +1,25 @@
 'use client';
 
+import { createContextWithHook } from '@/utils/createContextWithHook';
 import { useSession } from 'next-auth/react';
-import { createContext, useContext } from 'react';
+import { useState } from 'react';
 
-const UserContext = createContext<any>(null);
+const [UserContext, useUserContext] = createContextWithHook<{
+  user: any;
+  status: ReturnType<typeof useSession>['status'];
+  updateSession: ReturnType<typeof useSession>['update'];
+}>('UserContext');
 
-function UserProvider({ children }: React.PropsWithChildren) {
-  const { data: session, status, update: updateSession } = useSession();
+type UserProviderProps = React.PropsWithChildren & {
+  initialUser: any;
+};
+
+export function UserProvider({ children, initialUser }: UserProviderProps) {
+  const [user, setUser] = useState(initialUser);
+  const { status, update: updateSession } = useSession();
   return (
-    <UserContext.Provider value={{ user: session?.user, status, updateSession }}>
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={{ user, status, updateSession }}>{children}</UserContext.Provider>
   );
 }
 
-function useUserContext() {
-  const ctx = useContext(UserContext);
-  if (!ctx) {
-    throw new Error('useUserContext can only be used within the scope of a UserContext!');
-  }
-  return ctx;
-}
-
-export { UserProvider, useUserContext };
+export { useUserContext };

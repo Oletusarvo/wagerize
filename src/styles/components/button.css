@@ -5,10 +5,32 @@
   text-transform: uppercase;
   min-height: 3rem;
   font-weight: var(--font-weight-semibold);
-  padding: 0 --spacing(8) 0 --spacing(8);
+  padding: --spacing(2) --spacing(4);
   transition: background-color 0.3s ease-out;
   border-radius: var(--radius-inputs);
   cursor: pointer;
+}
+
+.button.--full-width {
+  width: 100%;
+}
+
+.button.--round {
+  padding: 0;
+  aspect-ratio: 1/1;
+  border-radius: 100%;
+}
+
+.button.--ghost:hover {
+  background-color: hsl(from var(--secondary) h s l / 0.15);
+}
+
+.button.--ghost:active {
+  background-color: hsl(from var(--secondary) h s l / 0.3);
+}
+
+.button.contained.--accent {
+  color: black;
 }
 
 .button.contained.--accent:enabled:hover {

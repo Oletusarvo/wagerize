@@ -1,7 +1,7 @@
 'use client';
 
 import { useClassName } from '@/hooks/useClassName';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Eye, EyeOff } from 'lucide-react';
 import { ReactNode, useState } from 'react';
 
 type InputProps = React.ComponentProps<'input'> & {
@@ -12,7 +12,7 @@ export function Input({ icon, ...props }: InputProps) {
   const [showPassword, setShowPassword] = useState(false);
   const inputClassName = useClassName([
     icon ? 'pl-12 pr-4' : 'px-4',
-    'bg-none outline-none w-full absolute top-0 left-0 h-full',
+    'bg-none valid:outline-none w-full absolute top-0 left-0 h-full invalid:outline-red-500',
   ]);
 
   const toggleShowPassword = e => {
@@ -31,7 +31,7 @@ export function Input({ icon, ...props }: InputProps) {
         <span
           className='text-gray-400 cursor-pointer absolute right-2'
           onClick={toggleShowPassword}>
-          {showPassword ? <VisibilityOff /> : <Visibility />}
+          {showPassword ? <Eye /> : <EyeOff />}
         </span>
       ) : null}
     </div>

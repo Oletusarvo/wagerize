@@ -1,8 +1,10 @@
 'use server';
 
-import { addNotificationAction } from '@/features/users/notifications/schemas/actions/addNotificationAction';
+import { addNotificationAction } from '@/features/notifications/schemas/actions/addNotificationAction';
 import { getSession } from '@/utils/getSession';
 import db from 'betting_app/dbconfig';
+import { BetStatus } from '../constants/betStatus';
+import { Knex } from 'knex';
 
 export async function endBetAction(betId: string, outcomeId: string) {
   let result: { code: number | string } = {
@@ -45,10 +47,11 @@ export async function endBetAction(betId: string, outcomeId: string) {
       .where({ id: betId })
       .select('author_id')
       .pluck('author_id');
+
     await trx('users.wallet').where({ user_id: author_id }).increment('balance', creatorShare);
 
-    //All done. Delete the bet.
-    await trx('bets.bet').where({ id: betId }).del();
+    await resolveBet(betId, outcomeId, trx);
+
     await trx.commit();
 
     result.code = 0;
@@ -59,4 +62,48 @@ export async function endBetAction(betId: string, outcomeId: string) {
   }
 
   return result;
+}
+
+/**Creates a database-entry for the result of a resolved bet. Deletes the oldest result if a MAX_RESULTS env-variable is defined. */
+async function createResult(betId: string, outcomeId: string, ctx: Knex.Transaction) {
+  await ctx('bets.result').insert({
+    bet_id: betId,
+    outcome_id: outcomeId,
+  });
+
+  const MAX_RESULTS = process.env.MAX_RESULTS;
+  if (MAX_RESULTS) {
+    const [{ resultCount }] = await ctx('bets.result').count('* as resultCount');
+    const countAsNumber = typeof resultCount === 'string' ? parseInt(resultCount) : resultCount;
+
+    if (countAsNumber >= parseInt(MAX_RESULTS)) {
+      await ctx('bets.result').orderBy('resolved_at', 'asc').first().del();
+    }
+  }
+}
+
+/**If the deletePermanently-argument is false, Sets the data.status property of a bet to BetStatus.RESOLVED, instead of deleting it, and creates a result-entry on the database.
+ */
+async function resolveBet(
+  betId: string,
+  outcomeId: string,
+  ctx: Knex.Transaction,
+  deletePermanently: boolean = true
+) {
+  if (deletePermanently) {
+    await ctx('bets.bet').where({ id: betId }).del();
+  } else {
+    const [{ currentData }] = await ctx('bets.bet')
+      .where({ id: betId })
+      .select('data as currentData');
+    await ctx('bets.bet')
+      .where({ id: betId })
+      .update({
+        data: {
+          ...currentData,
+          status: BetStatus.RESOLVED,
+        },
+      });
+    await createResult(betId, outcomeId, ctx);
+  }
 }

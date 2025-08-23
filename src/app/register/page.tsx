@@ -1,9 +1,0 @@
-import { RegisterForm } from '@/features/users/register/components/RegisterForm';
-
-export default async function Register() {
-  return (
-    <div className='flex flex-col items-center xs:justify-start lg:justify-center gap-2 w-full py-4 px-default'>
-      <RegisterForm />
-    </div>
-  );
-}

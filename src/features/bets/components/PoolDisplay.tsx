@@ -31,6 +31,7 @@ export function PoolDisplay({ bet }: PoolDisplayProps) {
 
     socket.emit('join_room', room);
     socket.on('game_update', data => {
+      console.log('New game update...', data);
       setCurrentBet(data);
     });
 

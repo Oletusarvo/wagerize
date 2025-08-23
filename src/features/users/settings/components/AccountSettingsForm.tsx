@@ -14,7 +14,7 @@ import { deleteUserAction } from '../actions/deleteUserAction';
 import toast from 'react-hot-toast';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { ResetPasswordForm } from '../../reset_password/components/ResetPasswordForm';
+import { ResetPasswordForm } from '../../../reset_password/components/ResetPasswordForm';
 
 export function AccountSettingsForm() {
   const { user, status: sessionStatus } = useUserContext();

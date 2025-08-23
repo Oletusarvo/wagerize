@@ -8,4 +8,10 @@ export enum BetError {
   EXPIRED = 'expired',
   NO_RAISE = 'no_raise',
   FOLDED = 'folded',
+  FROZEN = 'frozen',
+  BID_TOO_SMALL = 'bid_too_small',
+  RAISE_TOO_SMALL = 'raise_too_small',
+  RAISE_TOO_LARGE = 'raise_too_large',
+  BID_ALREADY_PLACED = 'bid_already_placed',
+  INVALID_CURRENCY = 'invalid_currency',
 }

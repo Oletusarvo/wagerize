@@ -54,7 +54,7 @@ export function ManageBetModal({ bet, outcomes }) {
       toast.success('Bet closed!');
       updateSession();
       currentStatus = 'done';
-      router.replace('/auth/bets/manage');
+      router.refresh();
     } else {
       currentStatus = 'error';
       toast.error('An unexpected error occured!');

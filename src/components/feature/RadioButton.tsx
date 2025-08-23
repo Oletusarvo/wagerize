@@ -1,7 +1,6 @@
 import { Container } from '../ui/Container';
 
 export function RadioButton({ onClick, value, selectedValue, label, name }) {
-  console.log('Radio button value: ', value);
   const changeValue = () => {
     onClick(value !== selectedValue ? value : undefined);
   };

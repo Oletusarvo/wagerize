@@ -9,7 +9,7 @@ export function Die({ numPips }: DieProps) {
   let pips: ReactNode[] = [];
   for (let i = 0; i < numPips; ++i) {
     const className = [
-      'rounded-full w-[5px] h-[5px] bg-white',
+      'rounded-full w-[5px] h-[5px] bg-black',
       numPips == 4
         ? 'nth-2:justify-self-end nth-4:justify-self-end'
         : numPips === 5
@@ -21,11 +21,16 @@ export function Die({ numPips }: DieProps) {
       .join(' ')
       .trim();
 
-    pips.push(<div className={className} />);
+    pips.push(
+      <div
+        className={className}
+        key={`pip-${i}`}
+      />
+    );
   }
 
   return (
-    <div className='rounded-md bg-accent-light flex items-center justify-center w-8 h-8 p-1'>
+    <div className='rounded-md bg-accent flex items-center justify-center w-8 h-8 p-1'>
       <PipContainer>{pips}</PipContainer>
     </div>
   );

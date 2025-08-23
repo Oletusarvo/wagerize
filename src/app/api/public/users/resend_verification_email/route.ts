@@ -1,4 +1,4 @@
-import { sendActivationEmailAction } from '@/features/users/register/actions/registerUserAction';
+import { sendActivationEmailAction } from '@/features/register/actions/registerUserAction';
 import db from 'betting_app/dbconfig';
 import { NextRequest, NextResponse } from 'next/server';
 

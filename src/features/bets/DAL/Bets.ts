@@ -57,6 +57,14 @@ export abstract class Bets {
     bet.bid = bid;
   }
 
+  static async getBetPool(bet_id: string, ctx: Knex | Knex.Transaction) {
+    const [{ pool }] = await ctx('bets.bet')
+      .join(db.raw('bets.bid as bid on bid.bet_id = ?', [bet_id]))
+      .select('bid.amount')
+      .sum('bid.amount as pool');
+    return pool;
+  }
+
   static async joinOutcomes(bet: any) {
     const outcomes = await db('bets.outcome').where({ bet_id: bet.id }).select('id', 'label');
     bet.outcomes = outcomes;
