@@ -5,7 +5,7 @@ export function Icon({ Component, size = 'default', color = 'accent', ...props }
   return (
     <Component
       {...props}
-      sx={{ color: c, fontSize }}
+      size={size}
     />
   );
 }
@@ -13,5 +13,5 @@ export function Icon({ Component, size = 'default', color = 'accent', ...props }
 type IconProps = {
   [x: string]: any;
   Component: React.FC<any>;
-  size?: 'default' | 'large';
+  size?: string;
 };

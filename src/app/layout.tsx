@@ -7,7 +7,8 @@ import { AuthProvider } from '../providers/AuthProvider';
 import { AppFooter } from '@/components/AppFooter';
 import { cookies } from 'next/headers';
 import { AnalyticsScript } from '@/components/AnalyticsScript';
-import { CookiesWrapper } from '../providers/CookiesWrapper';
+import { CookiesWrapper } from '../features/cookies/providers/CookiesWrapper';
+import { loadSession } from '@/utils/getSession';
 
 export const metadata: Metadata = {
   title: 'Wagerize - Casual betting game without the hassle of real money.',
@@ -50,9 +51,7 @@ export default async function RootLayout({
       <CookiesWrapper>
         <AuthProvider>
           <body className='antialiased flex flex-col w-full h-screen'>
-            <AppHeader />
             {children}
-            <AppFooter />
             <Toaster position='top-center' />
           </body>
         </AuthProvider>

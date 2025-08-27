@@ -1,10 +1,24 @@
+@import './components/input.css';
+@import './components/section.css';
+@import './components/button.css';
+@import './components/chip.css';
+@import './components/notice.css';
+
+.outlined {
+  border-width: 2px;
+}
+
+.outlined.--secondary {
+  border-color: var(--color-secondary);
+  color: var(--color-secondary);
+}
+
 .contained.--accent {
   background-color: var(--color-accent);
   color: white;
 }
 
 .outlined.--accent {
-  --color: var(--color-accent);
-  border: 1px solid var(--color);
+  border-color: var(--color-accent);
   color: var(--color);
 }

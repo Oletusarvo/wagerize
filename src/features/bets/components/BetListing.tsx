@@ -1,53 +1,67 @@
-import { DataPoint } from '@/components/DataPoint';
-import { Chip } from '@/components/ui/Chip';
-import { Container } from '@/components/ui/Container';
-import { CurrencyIcon } from '@/components/ui/CurrencyIcon';
-import { ArrowDownward, ArrowUpward, Check, Wallet } from '@mui/icons-material';
-import Link from 'next/link';
+'use client';
 
-export function BetListing({ bet }) {
-  const bidStatus: BidBadgeProps['status'] = bet.data.is_frozen
-    ? 'frozen'
-    : bet.bid !== undefined
-    ? 'participated'
-    : 'open';
+import { DataPoint } from '@/components/DataPoint';
+import { Container } from '@/components/ui/Container';
+import { ArrowDown, ArrowDownCircle, ArrowUp, Check, Dice5, Wallet } from 'lucide-react';
+import Link from 'next/link';
+import { useBetContext } from '../providers/BetProvider';
+import { useBidContext } from '@/features/bids/providers/BidProvider';
+import { useRouter } from 'next/navigation';
+import { createClassName } from '@/utils/createClassName';
+import { PlacedBidIndicator } from '@/features/bids/components/PlacedBidIndicator';
+
+export function BetListing() {
+  const { bet } = useBetContext();
+  const { bid, mustCall } = useBidContext();
+  const router = useRouter();
+  const bidStatus: BidBadgeProps['status'] =
+    bet.status === 'frozen' ? 'frozen' : bid !== undefined ? 'participated' : 'open';
 
   return (
-    <Container
-      as={Link}
-      href={`/auth/bets/${bet.id}`}
-      key={`bet-${bet.id}`}>
-      <div className='flex w-full justify-between items-baseline'>
-        <h3 className='font-semibold'>{bet.data.title}</h3>
-        <BidBadge status={bidStatus} />
-      </div>
+    <Container>
+      <div
+        onClick={() => router.push(`/app/bets/${bet.id}`)}
+        className='flex flex-col gap-8 w-full text-white'>
+        <div className='flex flex-col gap-1'>
+          <div className='flex w-full justify-between items-start'>
+            <h3 className='font-semibold max-w-[70%] overflow-hidden overflow-ellipsis text-nowrap'>
+              {bet.title}
+            </h3>
+            <div className='flex items-center gap-4'>
+              <small>{new Date(bet.created_at).toLocaleDateString('fi')}</small>
+              <BidBadge status={bidStatus} />
+            </div>
+          </div>
 
-      <p className='text-gray-600'>{bet.data.description || 'No description.'}</p>
-      <div className='flex w-full justify-between'>
-        <div className='flex gap-4'>
-          <DataPoint
-            IconComponent={ArrowDownward}
-            content={bet.data.min_bid}
-          />
-
-          {bet.data.min_raise && (
-            <DataPoint
-              IconComponent={ArrowUpward}
-              content={<>{bet.data.min_raise}</>}
-            />
-          )}
-
-          <DataPoint
-            IconComponent={Wallet}
-            content={bet.pool}
-          />
+          <p className='text-white'>{bet.description || 'No description.'}</p>
         </div>
-        {bet.bid !== undefined && (
-          <span className='flex items-center gap-1'>
-            <Check sx={{ fontSize: '1rem' }} />
-            {bet.bid.outcome}
-          </span>
-        )}
+
+        <div className='flex w-full justify-between'>
+          <div className='flex gap-4 p-2 bg-[#fff1] rounded-[100px] px-4'>
+            <DataPoint
+              IconComponent={ArrowDown}
+              content={bet.min_bid}
+            />
+
+            {bet.min_raise && (
+              <DataPoint
+                IconComponent={ArrowUp}
+                content={<>{bet.min_raise}</>}
+              />
+            )}
+
+            <DataPoint
+              IconComponent={props => (
+                <Dice5
+                  {...props}
+                  rotate='45deg'
+                />
+              )}
+              content={bet.pool}
+            />
+          </div>
+          {bid && <PlacedBidIndicator />}
+        </div>
       </div>
     </Container>
   );
@@ -58,11 +72,23 @@ type BidBadgeProps = {
 };
 
 const BidBadge = ({ status }: BidBadgeProps) => {
-  const className = [
+  const baseClassName = 'w-2 h-2 aspect-square rounded-full absolute';
+
+  const className = createClassName(
     status === 'frozen' ? 'bg-blue-600' : status === 'participated' ? 'bg-red-600' : 'bg-green-600',
-    'w-2 h-2 aspect-square rounded-full',
-  ]
-    .join(' ')
-    .trim();
-  return <span className={className} />;
+    baseClassName
+  );
+
+  const glowClassName = createClassName(
+    baseClassName,
+    'blur-xs',
+    status === 'frozen' ? 'bg-blue-200' : status === 'participated' ? 'bg-red-200' : 'bg-green-200'
+  );
+
+  return (
+    <div className='relative flex items-center justify-center'>
+      <div className={glowClassName} />
+      <div className={className} />
+    </div>
+  );
 };

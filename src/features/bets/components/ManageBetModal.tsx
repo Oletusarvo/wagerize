@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/feature/Button';
 import { RadioButton } from '@/components/feature/RadioButton';
-import { ToggleProvider } from '@/components/feature/ToggleProvider';
+import { ToggleProvider } from '@/providers/ToggleProvider';
 import { Modal } from '@/components/ui/Modal';
 import { useList } from '@/hooks/useList';
 import { useStatus } from '@/hooks/useStatus';

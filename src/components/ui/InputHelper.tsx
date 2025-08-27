@@ -1,25 +1,28 @@
-const HelperBase = ({ children }) => <div className='text-sm'>{children}</div>;
+import { createClassName } from '@/utils/createClassName';
+
+const HelperBase = ({ children, variant = 'contained', color = null }) => {
+  const className = createClassName(
+    'notice',
+    variant ? `${variant}` : '',
+    color ? `--${color}` : ''
+  );
+  return <div className={className}>{children}</div>;
+};
 
 export function Helper({ children }) {
-  return (
-    <span className='text-gray-500'>
-      <HelperBase>{children}</HelperBase>
-    </span>
-  );
+  return <HelperBase>{children}</HelperBase>;
 }
 
 export function ErrorHelper({ children }) {
   return (
-    <span className='text-red-600'>
-      <HelperBase>{children}</HelperBase>
-    </span>
+    <HelperBase
+      variant={'contained'}
+      color='error'>
+      {children}
+    </HelperBase>
   );
 }
 
 export function SuccessHelper({ children }) {
-  return (
-    <span className='text-green-600'>
-      <HelperBase>{children}</HelperBase>
-    </span>
-  );
+  return <HelperBase color='success'>{children}</HelperBase>;
 }

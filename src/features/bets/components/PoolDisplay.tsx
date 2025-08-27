@@ -2,53 +2,36 @@
 
 import { useAnimatedNumber } from '@/hooks/useAnimatedNumber';
 import { useClassName } from '@/hooks/useClassName';
-import { Casino } from '@mui/icons-material';
-import { BetType } from '../types/BetType';
-import { Bets } from '../DAL/Bets';
-import { useEffect, useState } from 'react';
-import io from 'socket.io-client';
+import { useBetContext } from '../providers/BetProvider';
+import { useBidContext } from '@/features/bids/providers/BidProvider';
+import { ArrowDownCircle, Dice5 } from 'lucide-react';
 
-const socket = io();
+export function PoolDisplay() {
+  const { bet } = useBetContext();
+  const { bid, mustCall } = useBidContext();
 
-export function PoolDisplay({ bet }: PoolDisplayProps) {
-  const [currentBet, setCurrentBet] = useState(bet);
-  const status = bet.data.is_frozen ? 'frozen' : bet.bid ? 'participated' : 'open';
-  const currentPool = useAnimatedNumber(currentBet.pool, 25, true);
+  const status = bet.status === 'frozen' ? 'frozen' : bid ? 'participated' : 'open';
+  const currentPool = useAnimatedNumber(bet.pool, 25, true);
 
-  const className = useClassName([
-    'xs:w-[75%] rounded-full border flex gap-2 items-center justify-center aspect-square text-2xl bg-white',
-    status === 'participated'
+  const className = useClassName(
+    'xs:w-[75%] rounded-full border-2 flex flex-col gap-2 items-center justify-center aspect-square text-2xl text-white',
+    mustCall
+      ? 'border-accent'
+      : status === 'participated'
       ? 'border-red-600'
       : status === 'open'
       ? 'border-green-600'
       : status === 'frozen'
       ? 'border-blue-600'
-      : 'border-gray-600',
-  ]);
-
-  useEffect(() => {
-    const room = `bet-${currentBet.id}`;
-
-    socket.emit('join_room', room);
-    socket.on('game_update', data => {
-      console.log('New game update...', data);
-      setCurrentBet(data);
-    });
-
-    return () => {
-      socket.emit('leave_room', room);
-      socket.off('game_update');
-    };
-  }, []);
+      : 'border-gray-600'
+  );
 
   return (
     <div className={className}>
-      <Casino sx={{ transform: 'rotate(45deg)' }} />
-      <span>{currentPool}</span>
+      <div className='flex gap-2 items-center'>
+        <Dice5 className='rotate-45' />
+        <div className='max-w-full overflow-hidden text-nowrap text-ellipsis'>{currentPool}</div>
+      </div>
     </div>
   );
 }
-
-type PoolDisplayProps = {
-  bet: BetType & { bid: any; pool: number };
-};

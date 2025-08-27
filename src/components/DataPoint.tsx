@@ -3,10 +3,11 @@ import { Icon } from './ui/Icon';
 
 export function DataPoint({ IconComponent, content, color = 'accent' }: DataPointProps) {
   return (
-    <div className='flex items-center text-base gap-1'>
+    <div className='flex items-center text-sm gap-1'>
       <Icon
         Component={IconComponent}
         color={color}
+        size='16px'
       />
       <span>{content}</span>
     </div>

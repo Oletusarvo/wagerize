@@ -1,5 +1,5 @@
 import { ReactNode, useState } from 'react';
-import { ToggleProvider } from './ToggleProvider';
+import { ToggleProvider } from '../../providers/ToggleProvider';
 import { ArrowDropDown } from '@mui/icons-material';
 
 export function Drawer({ children, title }: DrawerProps) {

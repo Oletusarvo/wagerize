@@ -1,11 +1,8 @@
-import { Server } from 'socket.io';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-export function socketConfig(server) {
-  const io = new Server(server);
-
+export function socketConfig(io) {
   io.use((socket, next) => {
     const MAX_CLIENTS = process.env.MAX_CLIENTS;
 
@@ -21,6 +18,4 @@ export function socketConfig(server) {
     socket.on('join_room', room => socket.join(room));
     socket.on('leave_room', room => socket.leave(room));
   });
-
-  return io;
 }

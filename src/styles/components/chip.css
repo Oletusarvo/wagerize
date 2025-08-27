@@ -5,7 +5,11 @@
   border-radius: 100px;
   min-width: 4rem;
   justify-content: center;
-  color: white;
+  color: 'black';
   align-items: center;
   font-size: var(--text-sm);
+}
+
+.chip.--accent {
+  color: black;
 }

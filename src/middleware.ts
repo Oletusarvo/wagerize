@@ -34,7 +34,7 @@ export default async function middleware(req: NextRequestWithAuth) {
       url.pathname.includes('/register')
     ) {
       const newUrl = url.clone();
-      newUrl.pathname = '/auth/dashboard';
+      newUrl.pathname = '/app/feed';
       return NextResponse.redirect(newUrl);
     }
   } else {

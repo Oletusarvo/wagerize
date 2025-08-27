@@ -1,10 +1,16 @@
-type FormProps = Omit<React.ComponentProps<'form'>, 'className'>;
+import { createClassName } from '@/utils/createClassName';
 
-export function Form({ children, ...props }: FormProps) {
+type FormProps = Omit<React.ComponentProps<'form'>, 'className'> & { centered?: boolean };
+
+export function Form({ children, centered = false, ...props }: FormProps) {
+  const className = createClassName(
+    'flex flex-col gap-4 lg:w-[32%] xs:w-full',
+    centered ? 'flex-1 justify-center h-full' : ''
+  );
   return (
     <form
       {...props}
-      className='flex flex-col gap-8 lg:w-[32%] xs:w-full'>
+      className={className}>
       {children}
     </form>
   );

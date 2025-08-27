@@ -1,52 +1,27 @@
+import { useState } from 'react';
+import { useOnSubmit } from '@/hooks/useOnSubmit';
+import { placeBidAction } from '@/features/bets/actions/placeBidAction';
 import toast from 'react-hot-toast';
-import { placeBidAction } from '../actions/placeBidAction';
-import { useStatus } from '@/hooks/useStatus';
-import { useCallback, useState } from 'react';
-import { useUserContext } from '@/features/users/contexts/UserProvider';
-import { BetError } from '@/utils/error';
+import { useBidContext } from '@/features/bids/providers/BidProvider';
+import { usePlaceBidModalContext } from '@/features/bids/providers/PlaceBidModalProvider';
 
-export function usePlaceBidForm(betId: string, minBid: number) {
+export function usePlaceBidForm() {
+  const { setShowPlaceBidModal } = usePlaceBidModalContext();
   const [selectedOutcome, setSelectedOutcome] = useState(null);
-  const [status, setStatus] = useStatus();
-  const { user, updateSession } = useUserContext();
+  const { bid } = useBidContext();
 
-  const onSubmit = useCallback(
-    async (e: any) => {
-      e.preventDefault();
-      let currentStatus: typeof status = 'loading';
-      setStatus(currentStatus);
-      try {
-        const result = await placeBidAction({
-          bet_id: betId,
-          outcome_id: selectedOutcome,
-          amount: e.target.amount.valueAsNumber,
-        });
-
-        if (result.code === 0) {
-          toast.success('Bid placed successfully!');
-          await updateSession();
-          currentStatus = 'done';
-        } else if (result.code === BetError.MAX_BIDS) {
-          toast.error(
-            'You have hit the limit of bids you can place! Please wait until some of the challenges you have bid on, are closed.'
-          );
-          currentStatus = 'error';
-        } else if (result.code === BetError.EXPIRED) {
-          toast.error('Cannot participate in an expired challenge!');
-          currentStatus = 'error';
-        } else {
-          toast.error('An unknown error occured!');
-          currentStatus = 'error';
-        }
-      } catch (err) {
-        toast.error('An unexpected error occured!');
-        currentStatus = 'error';
-      } finally {
-        setStatus(currentStatus);
+  const [onSubmit, status] = useOnSubmit({
+    action: async payload => {
+      if (!bid) {
+        payload.set('outcome_id', selectedOutcome);
+      } else {
+        payload.set('id', bid.id);
       }
+      return await placeBidAction(payload);
     },
-    [setStatus, placeBidAction, updateSession, selectedOutcome]
-  );
+    onError: res => toast.error(res.error),
+    onSuccess: () => setShowPlaceBidModal(false),
+  });
 
   return { onSubmit, status, selectedOutcome, setSelectedOutcome };
 }

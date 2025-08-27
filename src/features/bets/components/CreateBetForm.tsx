@@ -2,149 +2,99 @@
 
 import { Form } from '@/components/feature/Form';
 import { useCreateBetForm } from '../hooks/useCreateBetForm';
-import { InputGroup } from '@/components/ui/InputGroup';
 import { FormHeading } from '@/components/ui/FormHeading';
-import { Button } from '@/components/feature/Button';
+import { Button, LoaderButton } from '@/components/feature/Button';
 
-import { Chip } from '@/components/ui/Chip';
-import { useMemo, useRef } from 'react';
-import { Icon } from '@/components/ui/Icon';
-import { Input } from '@/components/ui/Input';
-import { ArrowDown, Calendar, Check, Heading, Plus } from 'lucide-react';
+import { useStep } from '@/hooks/useSteps';
+import { StepTrack } from '@/components/StepTrack';
+import { createContextWithHook } from '@/utils/createContextWithHook';
+import { TitleInput } from './CreateBetForm/inputs/TitleInput';
+import { DescriptionInput } from './CreateBetForm/inputs/DescriptionInput';
+import { MinBidInput } from './CreateBetForm/inputs/MinBidInput';
+import { OutcomesInput } from './CreateBetForm/inputs/OutcomesInput';
+import { ExpiryDateInput } from './CreateBetForm/inputs/ExpiryDateInput';
+import { MinRaiseInput } from './CreateBetForm/inputs/MinRaiseInput';
+import { MaxRaiseInput } from './CreateBetForm/inputs/MaxRaiseInput';
+import { useRouter } from 'next/navigation';
+
+const [CreateBetFormContext, useCreateBetFormContext] =
+  createContextWithHook<ReturnType<typeof useCreateBetForm>>('CreateBetFormContext');
+
+export { useCreateBetFormContext };
 
 export function CreateBetForm() {
-  const { bet, updateBet, status, onSubmit, options, addOption, deleteOpt } = useCreateBetForm();
-  const ref = useRef(null);
+  const { current, forward, backward } = useStep();
+  const router = useRouter();
+  const hook = useCreateBetForm();
+  const { onSubmit, status } = hook;
 
-  const minimumDate = useMemo(() => {
-    const min = new Date();
-    min.setDate(min.getDate() + 1);
-    return min;
-  }, []);
-
-  const submitDisabled = useMemo(() => {
-    return (
-      status === 'loading' ||
-      status === 'done' ||
-      !bet.data.title ||
-      !bet.data.min_bid ||
-      options.length == 0
+  const submitButton =
+    current < 1 ? (
+      <Button
+        variant='contained'
+        color='accent'
+        onClick={() => forward()}
+        type='button'
+        fullWidth>
+        Next
+      </Button>
+    ) : (
+      <LoaderButton
+        variant='contained'
+        color='accent'
+        type='submit'
+        loading={status === 'loading'}
+        disabled={status === 'loading' || status === 'success'}
+        fullWidth>
+        Submit
+      </LoaderButton>
     );
-  }, [status, bet.data, options]);
 
   return (
-    <Form onSubmit={onSubmit}>
-      <FormHeading>Create Challenge</FormHeading>
-      <InputGroup>
-        <label>Title</label>
-        <Input
-          icon={<Heading />}
-          name='data.title'
-          placeholder='Type a title...'
-          max={32}
-          min={1}
-          value={bet.data.title}
-          onChange={updateBet}
-          required
+    <CreateBetFormContext.Provider value={hook}>
+      <form
+        className='flex flex-col flex-1 w-full h-full gap-2'
+        onSubmit={onSubmit}>
+        <FormHeading>Create Challenge</FormHeading>
+        <StepTrack
+          currentStep={current}
+          max={2}
         />
-      </InputGroup>
+        {current === 0 ? <StepOne /> : <StepTwo />}
 
-      <InputGroup>
-        <label>Description</label>
-        <textarea
-          spellCheck={false}
-          name='data.description'
-          placeholder='Write a description...'
-          value={bet.data.description}
-          onChange={updateBet}
-        />
-      </InputGroup>
-      <InputGroup>
-        <label>Minimum bid</label>
-        <Input
-          icon={<ArrowDown />}
-          min={1}
-          type='number'
-          name='data.min_bid'
-          placeholder='Type a minimum bid...'
-          value={bet.data.min_bid}
-          onChange={updateBet}
-          required
-        />
-      </InputGroup>
-
-      <InputGroup>
-        <label>Expiry date</label>
-        <Input
-          icon={<Calendar />}
-          min={minimumDate.toISOString().split('T').at(0)}
-          className='w-full'
-          type='date'
-          name='expires_at'
-          value={bet.expires_at !== '' ? bet.expires_at : undefined}
-          onChange={e => {
-            updateBet(e);
-          }}
-        />
-      </InputGroup>
-
-      <InputGroup>
-        <label>Outcomes</label>
-        <div className='flex gap-2 w-full'>
-          <Input
-            icon={<Check />}
-            ref={ref}
-            className='w-full'
-            placeholder='Type the label for an outcome...'
-            type='text'
-            minLength={1}
-            maxLength={32}
-          />
-          <button
-            className='button --rounded --ghost'
-            type='button'
-            onClick={() => {
-              const optInput = ref.current;
-              if (optInput && optInput.value.length > 0) {
-                addOption(optInput.value);
-              }
-
-              if (ref.current) {
-                ref.current.value = '';
-              }
-            }}>
-            <Icon
-              Component={Plus}
-              size='large'
-            />
-          </button>
+        <div className='w-full mt-auto flex gap-2'>
+          <Button
+            color='secondary'
+            variant='outlined'
+            fullWidth
+            onClick={() => (current > 0 ? backward() : router.push('/app/feed'))}
+            type='button'>
+            {current === 0 ? 'Cancel' : 'Back'}
+          </Button>
+          {submitButton}
         </div>
-        {options.length > 0 && (
-          <div className='flex gap-2 w-full flex-wrap'>
-            {options.map((opt, i) => (
-              <Chip
-                key={`bet-opt-${i}`}
-                onDelete={() => {
-                  deleteOpt(opt);
-                }}>
-                {opt}
-              </Chip>
-            ))}
-          </div>
-        )}
-      </InputGroup>
+      </form>
+    </CreateBetFormContext.Provider>
+  );
+}
 
-      <div className='w-full'>
-        <Button
-          variant='contained'
-          color='accent'
-          type='submit'
-          loading={status === 'loading'}
-          disabled={submitDisabled}
-          fullWidth>
-          Create
-        </Button>
-      </div>
-    </Form>
+function StepOne() {
+  return (
+    <>
+      <TitleInput />
+      <ExpiryDateInput />
+      <DescriptionInput />
+    </>
+  );
+}
+
+function StepTwo() {
+  return (
+    <>
+      <MinBidInput />
+      <MinRaiseInput />
+      <MaxRaiseInput />
+      <OutcomesInput />
+    </>
   );
 }

@@ -3,7 +3,7 @@
 import { Form } from '@/components/feature/Form';
 import { useLoginForm } from '../hooks/useLoginForm';
 import { InputGroup } from '@/components/ui/InputGroup';
-import { Button } from '@/components/feature/Button';
+import { Button, LoaderButton } from '@/components/feature/Button';
 import { FormHeading } from '@/components/ui/FormHeading';
 import Link from 'next/link';
 import { ErrorHelper } from '@/components/ui/InputHelper';
@@ -16,10 +16,9 @@ export function LoginForm() {
     <Form onSubmit={onSubmit}>
       <FormHeading>Login</FormHeading>
       <InputGroup>
-        <label>Email</label>
         <Input
           icon={<Mail />}
-          placeholder='Type your email...'
+          placeholder='Email'
           name='email'
           type='email'
           value={credentials.email}
@@ -28,10 +27,9 @@ export function LoginForm() {
         />
       </InputGroup>
       <InputGroup>
-        <label>Password</label>
         <Input
           icon={<Ellipsis />}
-          placeholder='Type your password...'
+          placeholder='Password'
           name='password'
           type='password'
           value={credentials.password}
@@ -41,14 +39,14 @@ export function LoginForm() {
         {status === 'invalid_credentials' && <ErrorHelper>Invalid credentials!</ErrorHelper>}
       </InputGroup>
       <div className='w-full flex flex-col gap-4 items-center'>
-        <Button
+        <LoaderButton
           fullWidth
           variant='contained'
           color='accent'
           loading={status === 'loading'}
-          disabled={status === 'loading' || status === 'done'}>
+          disabled={status === 'loading' || status === 'success'}>
           Login
-        </Button>
+        </LoaderButton>
         <Link
           href='/login/reset'
           className='bold'>

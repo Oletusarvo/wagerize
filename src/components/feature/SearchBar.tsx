@@ -1,10 +1,10 @@
 'use client';
 
 import { useSearch } from '@/hooks/useSearch';
-import { Search } from '@mui/icons-material';
 import { useMemo } from 'react';
 import { Input } from '../ui/Input';
 import { Spinner } from '../ui/Spinner';
+import { Search } from 'lucide-react';
 
 export function SearchBar({ queryName }) {
   const [updateSearch, status] = useSearch(queryName);

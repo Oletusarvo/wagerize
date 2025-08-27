@@ -1,38 +1,36 @@
-'use client';
-
-import { useList } from '@/hooks/useList';
 import { BetListing } from './BetListing';
-import { SearchBar } from '@/components/feature/SearchBar';
-import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
-import { getBets } from '../actions/getBets';
+import { TBet } from '../schemas/betSchema';
+import { BetProvider } from '../providers/BetProvider';
+import { List } from '@/components/feature/List';
+import { loadSession } from '@/utils/getSession';
+import db from 'betting_app/dbconfig';
+import { tablenames } from '@/tablenames';
+import { BidProvider } from '@/features/bids/providers/BidProvider';
+import { getBid } from '@/features/bids/dal/getBid';
 
-export function BetList({ betsOnPage, numPages, search }) {
-  const { data, pageEndTrigger } = useInfiniteScroll({
-    fetchFn: async (currentPage: number, resultsOnPage: number) => {
-      console.log(search);
-      return await getBets(currentPage, resultsOnPage, search);
-    },
-    resultsOnPage: betsOnPage,
-    numPages,
-    page: 0,
-  });
+type BetListProps = {
+  bets: TBet[];
+};
 
-  const content = useList({
-    items: data,
-    Component: ({ item }) => {
-      return <BetListing bet={item} />;
-    },
-    onEmpty: <span>No Bets.</span>,
-    deps: [],
-  });
+export async function BetList({ bets }: BetListProps) {
+  const session = await loadSession();
 
   return (
-    <div className='flex flex-col gap-2 w-full flex-1'>
-      <SearchBar queryName='q' />
-      <div className='grid xs:grid-cols-1 lg:grid-cols-2 xs:gap-2 lg:gap-4'>
-        {content}
-        {pageEndTrigger}
-      </div>
+    <div className='flex flex-col gap-2 w-full'>
+      <List<TBet>
+        data={bets}
+        component={async ({ item }) => {
+          const bid = await getBid(db).where({ bet_id: item.id, user_id: session.user.id }).first();
+
+          return (
+            <BetProvider initialBet={item}>
+              <BidProvider initialBid={bid}>
+                <BetListing />
+              </BidProvider>
+            </BetProvider>
+          );
+        }}
+      />
     </div>
   );
 }

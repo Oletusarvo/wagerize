@@ -1,97 +1,42 @@
-import { useRecord } from '@/hooks/useRecord';
-import { useStatus } from '@/hooks/useStatus';
-import { useCallback, useEffect, useMemo } from 'react';
 import { registerUserAction } from '../actions/registerUserAction';
 import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
-import { RegisterError } from '../types/RegisterError';
+import { useSearchParams } from 'next/navigation';
 import { registerCredentialsSchema } from '../schemas/registerCredentialsSchema';
-import { z } from 'zod';
-
-const dateOfBirthSchema = z
-  .string()
-  .date()
-  .refine(
-    date => {
-      const now = new Date();
-      const dob = new Date(date);
-      const age = now.getFullYear() - dob.getFullYear();
-      return age >= 18;
-    },
-    { message: 'You must be 18 years or older!' }
-  );
+import { AuthError } from '@/features/auth/error/AuthError';
+import { parseFormDataUsingSchema } from '@/utils/parseUsingSchema';
+import { getParseResultErrorMessage } from '@/utils/getParseResultErrorMessage';
+import { sendVerificationEmailAction } from '../actions/sendVerificationEmailAction';
+import { useOnSubmit } from '@/hooks/useOnSubmit';
 
 export function useRegisterForm() {
-  const { record: credentials, updateOnChange: updateCredentials } = useRecord({
-    dateOfBirth: '',
-    email: '',
-    password1: '',
-    password2: '',
-  });
-  const router = useRouter();
-  const [status, setStatus] = useStatus([
-    'password_mismatch',
-    'password_too_long',
-    'password_too_short',
-    'invalid_password_format',
-    'user_exists',
-    'underage',
-  ]);
+  const token = useSearchParams().get('token');
 
-  const onSubmit = useCallback(
-    async (e: React.FormEvent) => {
-      console.log('onSubmit');
-      e.preventDefault();
-      let currentStatus: typeof status = 'loading';
-      setStatus(currentStatus);
-      try {
-        const parseResult = registerCredentialsSchema.safeParse(credentials);
-        if (parseResult.error) {
-          const error = parseResult.error.errors.at(0);
-          console.log(error);
-          currentStatus = error.message as typeof status;
-        } else {
-          const result = await registerUserAction(credentials);
-          if (result.code === 0) {
-            toast.success('Registration succeeded!');
-            router.replace(`/register/verify?email=${credentials.email}`);
-            currentStatus = 'done';
-          } else {
-            if (result.code === RegisterError.USER_COUNT) {
-              toast.error(
-                'Unfortunately, we do not allow registration of any more users at this point.'
-              );
-              currentStatus = 'error';
-            } else if (result.code === RegisterError.DUPLICATE_USER) {
-              currentStatus = 'user_exists';
-            } else if (result.code === RegisterError.INVALID_PASSWORD_FORMAT) {
-              currentStatus = 'invalid_password_format';
-            } else {
-              currentStatus = 'error';
-            }
-          }
-        }
-      } catch (err) {
-        toast.error('An unexpected error occured!');
-        currentStatus = 'error';
-      } finally {
-        setStatus(currentStatus);
+  const [onSubmitCredentials, submitCredentialsStatus] = useOnSubmit({
+    statuses: [...Object.values(AuthError), 'error'],
+    action: async payload => {
+      payload.set('token', token);
+      return await registerUserAction(payload);
+    },
+    onSuccess: () => {
+      toast.success('Registration succeeded!');
+    },
+    onError: res => {
+      if (res.error === AuthError.USER_QUOTA_FULL) {
+        toast.error('Unfortunately, we do not allow registration of any more users at this time.');
       }
     },
-    [setStatus, router, registerUserAction, credentials]
-  );
+    onException: err => toast.error('An unexpected error occured!'),
+    onParse: payload => {
+      const result = parseFormDataUsingSchema(payload, registerCredentialsSchema);
+      return !result.success ? getParseResultErrorMessage(result) : null;
+    },
+  });
 
-  const registerButtonDisabled = useMemo(() => {
-    return status === 'done' || status === 'loading';
-  }, [status]);
+  const [onSubmitEmail, submitEmailStatus] = useOnSubmit({
+    statuses: [AuthError.USER_QUOTA_FULL],
+    action: async payload => await sendVerificationEmailAction(payload),
+  });
 
-  useEffect(() => {
-    if (dateOfBirthSchema.safeParse(credentials.dateOfBirth).success === false) {
-      setStatus('underage');
-    } else {
-      setStatus('idle');
-    }
-  }, [credentials.dateOfBirth, setStatus]);
-
-  return { credentials, updateCredentials, onSubmit, status, registerButtonDisabled };
+  const onSubmit = token ? onSubmitCredentials : onSubmitEmail;
+  return { onSubmit, submitEmailStatus, submitCredentialsStatus, token };
 }

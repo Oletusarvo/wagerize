@@ -1,18 +1,19 @@
 import { useClassName } from '@/hooks/useClassName';
-import { Clear } from '@mui/icons-material';
+import { X } from 'lucide-react';
 import { ReactNode } from 'react';
 
 export function Chip({ children, icon, onDelete, variant = 'contained' }: ChipProps) {
-  const className = useClassName(['chip', variant, '--accent']);
+  const className = useClassName(['chip text-black', variant, '--accent']);
 
   return (
     <div className={className}>
       {icon}
-      <span>{children}</span>
+      <span className='text-black'>{children}</span>
       {onDelete && (
-        <Clear
-          sx={{ fontSize: '1rem' }}
+        <X
           onClick={onDelete}
+          size='16px'
+          color='black'
         />
       )}
     </div>

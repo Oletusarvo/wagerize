@@ -5,54 +5,32 @@ import toast from 'react-hot-toast';
 import { useBatch } from '@/hooks/useBatch';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
-import { BetError, WError } from '@/utils/error';
+import { useFormData } from '@/hooks/useFormData';
+import { useOnSubmit } from '@/hooks/useOnSubmit';
 
 export function useCreateBetForm() {
-  const { record: bet, updateOnChange: updateBet } = useRecord({
-    author_id: '',
-    created_at: null,
-    expires_at: undefined,
-    data: {
-      title: '',
-      description: '',
-      min_bid: 1,
-    },
+  const [payload, updatePayload] = useFormData({
+    title: '',
+    description: '',
+    outcomes: [],
+    min_bid: '',
+    min_raise: '',
+    max_raise: '',
   });
 
   const router = useRouter();
   const { batch: options, add: addOption, del: deleteOpt } = useBatch();
-  const [status, setStatus] = useStatus();
 
-  const onSubmit = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault();
-      let currentStatus: typeof status = 'loading';
-      setStatus(currentStatus);
-      try {
-        const result = await createBetAction(bet, options);
-        if (result.code !== 0) {
-          if (result.code === -1) {
-            toast.error('An unexpected error occured!');
-          } else if (result.code === WError.QUOTA_FULL) {
-            toast.error('You cannot create more bets! Please close some of them and try again.');
-          } else if (result.code === BetError.MAX_OUTCOMES) {
-            toast.error('Your bet has too many outcomes!');
-          }
-          currentStatus = 'error';
-        } else {
-          toast.success('Bet created successfully!');
-          currentStatus = 'done';
-          router.replace('/auth/bets');
-        }
-      } catch (err) {
-        toast.error('An unknown error occured!');
-        currentStatus = 'error';
-      } finally {
-        setStatus(currentStatus);
-      }
+  const [onSubmit, status] = useOnSubmit({
+    payload,
+    action: async payload => {
+      payload.set('outcomes', JSON.stringify(options));
+      return await createBetAction(payload);
     },
-    [setStatus, router, bet, options]
-  );
+    onSuccess: () => {
+      router.push('/app/feed');
+    },
+  });
 
-  return { bet, updateBet, status, onSubmit, options, addOption, deleteOpt };
+  return { payload, updatePayload, status, onSubmit, options, addOption, deleteOpt };
 }

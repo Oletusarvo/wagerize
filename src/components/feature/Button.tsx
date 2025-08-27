@@ -1,32 +1,36 @@
-import { useMemo } from 'react';
-import { Spinner } from '../ui/Spinner';
+import { withLoader } from '@/hoc/withLoader';
+import { useClassName } from '@/hooks/useClassName';
 
 type ButtonProps = React.ComponentProps<'button'> & {
-  loading?: boolean;
   fullWidth?: boolean;
-  variant?: 'contained' | 'outlined';
-  color?: 'accent';
+  round?: boolean;
+  variant?: 'contained' | 'outlined' | 'ghost';
+  color?: 'accent' | 'secondary';
 };
 
 export function Button({
   children,
-  loading = false,
   fullWidth = false,
+  round = false,
   variant = 'contained',
   color = 'accent',
   ...props
 }: ButtonProps) {
-  const className = useMemo(() => {
-    return [props.className, fullWidth ? 'w-full' : 'w-auto', `${variant}`, `--${color}`, 'button']
-      .join(' ')
-      .trim();
-  }, [variant, color, fullWidth, props.className]);
+  const className = useClassName(
+    fullWidth ? 'w-full' : 'w-auto',
+    round ? '--round' : '',
+    `${variant}`,
+    `--${color}`,
+    'button'
+  );
 
   return (
     <button
       {...props}
       className={className}>
-      {loading ? <Spinner /> : children}
+      {children}
     </button>
   );
 }
+
+export const LoaderButton = withLoader(Button);

@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   text-transform: uppercase;
-  min-height: 3rem;
+  min-height: 2.5rem;
   font-weight: var(--font-weight-semibold);
   padding: --spacing(2) --spacing(4);
   transition: background-color 0.3s ease-out;
@@ -21,11 +21,11 @@
   border-radius: 100%;
 }
 
-.button.--ghost:hover {
+.button.ghost:hover {
   background-color: hsl(from var(--secondary) h s l / 0.15);
 }
 
-.button.--ghost:active {
+.button.ghost:active {
   background-color: hsl(from var(--secondary) h s l / 0.3);
 }
 
@@ -34,19 +34,27 @@
 }
 
 .button.contained.--accent:enabled:hover {
-  background-color: var(--color-accent-light);
+  background-color: hsl(from var(--color-accent) h s l);
 }
 
 .button.outlined.--accent:enabled:hover {
-  background-color: var(--color-accent-background);
+  background-color: hsl(from var(--color-accent) h s l / 0.2);
+}
+
+.button.outlined.--secondary {
+  border-color: var(--color-secondary);
+}
+
+.button.outlined.--secondary:hover {
+  background-color: hsl(from var(--color-secondary) h s l / 0.2);
 }
 
 .button.contained:disabled {
-  background-color: var(--color-gray-200);
+  background-color: hsl(from var(--color-gray-200) h s l / 0.2);
 }
 
 .button.outlined:disabled {
-  --color: var(--color-gray-200);
+  --color: hsl(from var(--color-gray-200) h s l / 0.2);
   border-color: var(--color);
   color: var(--color);
 }

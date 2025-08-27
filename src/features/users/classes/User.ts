@@ -4,7 +4,7 @@ import { Knex } from 'knex';
 import { BetType } from '../../bets/types/BetType';
 import { BetError, WError } from '@/utils/error';
 import { betSchema } from '../../bets/schemas/betSchema';
-import { optionsSchema } from '../../bets/schemas/optionsSchema';
+import { optionsSchema } from '../../bets/schemas/outcomesSchema';
 
 export class User {
   private id: string;

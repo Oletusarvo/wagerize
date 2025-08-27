@@ -1,84 +1,66 @@
 'use server';
 
 import db from 'betting_app/dbconfig';
-import { RegisterError } from '../types/RegisterError';
-import bcrypt from 'bcrypt';
 import 'betting_app/loadenv';
-import { transport } from 'betting_app/nodemailer.config';
-import jwt from 'jsonwebtoken';
 import { registerCredentialsSchema } from '../schemas/registerCredentialsSchema';
+import { AuthError, TAuthError } from '@/features/auth/error/AuthError';
+import { parseFormDataUsingSchema } from '@/utils/parseUsingSchema';
+import { getParseResultErrorMessage } from '@/utils/getParseResultErrorMessage';
+import { hashPassword } from '@/utils/hashPassword';
+import { verifyJWT } from '@/utils/JWT';
 
-export async function registerUserAction(credentials: any) {
-  const result: { code: string | number } = {
-    code: 0,
-  };
-
-  const maxUsers = process.env.MAX_USERS ? parseInt(process.env.MAX_USERS) : null;
-  if (maxUsers && maxUsers > 0) {
-    //Limit the number of users allowed to register. A maxUsers setting of zero means no limit.
-    const [{ count }] = await db('users.user').count('* as count');
-    const userCount = typeof count === 'string' ? parseInt(count) : count;
-    if (userCount >= maxUsers) {
-      result.code = RegisterError.USER_COUNT;
-      return result;
-    }
-  }
-
+export async function registerUserAction(
+  payload: FormData
+): Promise<ActionResponse<void, TAuthError | 'error'>> {
   //Parse the credentials and insert the user into the database.
-  const parsedPayload = registerCredentialsSchema.safeParse(credentials);
+  const parsedPayload = parseFormDataUsingSchema(payload, registerCredentialsSchema);
   if (!parsedPayload.success) {
-    const error = parsedPayload.error.issues[0];
-    result.code = error.message;
-    return result;
+    return {
+      success: false,
+      error: getParseResultErrorMessage(parsedPayload),
+    };
   }
 
   const trx = await db.transaction();
   try {
-    const { email, password1: password } = credentials;
-    const encyrptedPassword = await bcrypt.hash(password, 15);
+    const { token, username, password1: password, dateOfBirth } = parsedPayload.data;
+
+    let email: string;
+    try {
+      const decoded = verifyJWT(token) as { email: string };
+      email = decoded.email;
+    } catch {
+      return {
+        success: false,
+        error: AuthError.TOKEN_INVALID,
+      };
+    }
+
     const [{ id: user_id }] = await trx('users.user')
       .insert({
         email,
-        password: encyrptedPassword,
-        date_of_birth: credentials.dateOfBirth,
+        username,
+        password: await hashPassword(password),
+        date_of_birth: dateOfBirth,
       })
       .returning('id');
-    //Send a verification email to the new user
-    await sendActivationEmailAction(user_id, email);
+
     await trx.commit();
+    return { success: true };
   } catch (err) {
     trx.rollback();
     const msg = err.message;
 
     if (msg.toLowerCase().includes('duplicate')) {
-      result.code = RegisterError.DUPLICATE_USER;
+      return {
+        success: false,
+        error: AuthError.DUPLICATE_USER,
+      };
     } else {
-      console.log(err.message);
-      result.code = -1;
+      return {
+        success: false,
+        error: 'error',
+      };
     }
   }
-  return result;
-}
-
-export async function sendActivationEmailAction(user_id: string, email: string) {
-  const activationToken = jwt.sign({ user_id }, process.env.TOKEN_SECRET, {
-    expiresIn: '1d',
-  });
-
-  const message = {
-    from: 'nistikemisti@gmail.com',
-    to: email,
-    subject: 'Please verify your email.',
-    html: `
-      <h1>Verify Your Email</h1>
-      <strong>Hi there!</strong><br/>
-      It seems you have requested to create an account at <strong>Wagerize</strong><br/>
-      If this was not you, you can safely ignore this email.<br/><br/>
-      Otherwise, please click on <a href="${process.env.DOMAIN_URL}/api/public/users/verify?token=${activationToken}">this link</a> to verify your email.<br/><br/>
-    
-      Best regards, the Wagerize team.
-    `,
-  };
-
-  await transport.sendMail(message);
 }

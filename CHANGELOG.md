@@ -1,3 +1,9 @@
+## [0.9.0] - 27-08-2025
+
+## Version Drop
+
+The version had progressed far in unofficial development, to version 7.0.0. Big changes were made to the appearance and how the app works, and an official release is being considered, so a version drop was deemed appropriate.
+
 ## [7.0.0] - 23-08-2025
 
 ### Removed

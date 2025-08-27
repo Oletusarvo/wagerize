@@ -1,0 +1,21 @@
+.notice {
+  padding: --spacing(1);
+  border-radius: var(--radius-md);
+  border-width: 1px;
+  font-size: var(--text-sm);
+  background-color: hsl(from var(--color-slate-500) h s l / 0.2);
+  border-color: hsl(from var(--color-slate-500) h s l / 0.3);
+  color: var(--color-slate-300);
+}
+
+.notice.contained.--error {
+  border-color: hsl(from var(--color-red-500) h s l / 0.3);
+  background-color: hsl(from var(--color-red-500) h s l / 0.2);
+  color: var(--color-red-300);
+}
+
+.notice.contained.--success {
+  border-color: hsl(from var(--color-green-500) h s l / 0.3);
+  background-color: hsl(from var(--color-green-500) h s l / 0.2);
+  color: var(--color-green-300);
+}

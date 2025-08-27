@@ -6,7 +6,7 @@ import { socketConfig } from './src/socketConfig.mjs';
 
 const port = parseInt(process.env.PORT || '3000', 10);
 const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev });
+const app = next({ dev, turbopack: true });
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
@@ -15,7 +15,10 @@ app.prepare().then(() => {
     handle(req, res, parsedUrl);
   }).listen(port);
 
-  global.io = socketConfig(server);
+  const io = new Server(server);
+  global.ioServer = io;
+  socketConfig(io);
+
   console.log(
     `> Server listening at http://localhost:${port} as ${
       dev ? 'development' : process.env.NODE_ENV

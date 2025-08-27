@@ -1,0 +1,41 @@
+input {
+  background: var(--color-container-background);
+}
+
+textarea {
+  padding: --spacing(2) --spacing(4);
+  border-radius: var(--radius-inputs);
+  background-color: var(--color-container-background);
+  outline: none;
+
+  resize: none;
+  color: white;
+}
+
+input[type='checkbox'] {
+  border-radius: 2px;
+  border: 1px solid var(--color-accent);
+  padding: 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  aspect-ratio: 1/1;
+  -webkit-appearance: none; /* Remove default appearance */
+  appearance: none; /* Remove default appearance */
+  position: relative;
+  cursor: pointer;
+}
+
+/* Style the checkmark when checked */
+input[type='checkbox']:checked::after {
+  content: '✔'; /* Add a checkmark */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  color: white;
+}
+
+input[type='checkbox']:checked {
+  background-color: var(--color-accent);
+}
