@@ -10,7 +10,7 @@ import { io } from '@/features/io/lib/io';
 import z from 'zod';
 
 export class Bet {
-  private data: TBet;
+  public data: TBet;
   constructor(data: TBet) {
     this.data = data;
   }
@@ -121,7 +121,6 @@ export class Bet {
     }
 
     const amount = bid.amount + (previousBidRecord?.amount || 0);
-    console.log('amount: ', amount);
     const bidVerifyResult = this.verifyBidAmount(amount);
     if (!bidVerifyResult.success) {
       return {

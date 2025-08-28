@@ -5,11 +5,9 @@ dotenv.config();
 export function socketConfig(io) {
   io.use((socket, next) => {
     const MAX_CLIENTS = process.env.MAX_CLIENTS;
-
     if (MAX_CLIENTS && io.engine.clientsCount >= parseInt(MAX_CLIENTS)) {
       return next(new Error('Server full!'));
     }
-
     next();
   });
 

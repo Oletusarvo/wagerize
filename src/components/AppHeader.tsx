@@ -22,7 +22,7 @@ const [AppHeaderContext, useAppHeaderContext] = createContextWithHook<{
 
 export { useAppHeaderContext };
 
-export function AppHeader() {
+export function AppHeader({ children }: React.PropsWithChildren) {
   const headerRef = useRef<HTMLElement>(null);
 
   return (
@@ -39,8 +39,7 @@ export function AppHeader() {
                 </Link>
               </div>
               <div className='flex gap-1 items-center'>
-                <WalletsModalTrigger />
-                <NotificationsTrigger />
+                {children}
                 <IndexNavMenuTrigger />
               </div>
             </div>

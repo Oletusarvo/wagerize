@@ -46,7 +46,11 @@ ToggleProvider.Trigger = function ({ children, action = null, ...props }) {
       ref={triggerRef}
       onClick={async e => {
         if (action) {
-          await action();
+          try {
+            await action();
+          } catch {
+            return;
+          }
         }
         toggleState();
       }}>

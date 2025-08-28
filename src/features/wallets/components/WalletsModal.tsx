@@ -8,7 +8,7 @@ export function WalletsModal(props) {
   return (
     <Modal
       fullHeight
-      title='Wallets'
+      title='Transactions'
       {...props}
       onClose={() => toggleWalletsModal(false)}></Modal>
   );

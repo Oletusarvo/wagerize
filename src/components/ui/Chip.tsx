@@ -3,7 +3,7 @@ import { X } from 'lucide-react';
 import { ReactNode } from 'react';
 
 export function Chip({ children, icon, onDelete, variant = 'contained' }: ChipProps) {
-  const className = useClassName(['chip text-black', variant, '--accent']);
+  const className = useClassName('chip text-black', variant, '--accent');
 
   return (
     <div className={className}>

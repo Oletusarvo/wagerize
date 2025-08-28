@@ -19,11 +19,14 @@ import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
 import { capitalize } from '@/utils/capitalize';
 import Link from 'next/link';
 import { Button } from '@/components/feature/Button';
+import { BetStatusBadge } from './BetStatusBadge';
+import { useRouter } from 'next/navigation';
+import { BetAuthorBadge } from './BetAuthorBadge';
 
 export function BetHeader() {
   const { bet } = useBetContext();
   const timeLeft = bet.expires_at ? new Date(bet.expires_at).getTime() - Date.now() : null;
-
+  const router = useRouter();
   const copyLinkToClipboard = useCopyToClipboard(window.location.href, () =>
     toast.success('Link copied!')
   );
@@ -32,39 +35,21 @@ export function BetHeader() {
     <div
       id='bet-page-header'
       className='flex flex-col px-default py-4 w-full bg-container-background text-white gap-8'>
-      <div className='flex gap-4 flex-col'>
+      <div className='flex gap-2 flex-col items-start'>
         <div className='flex w-full justify-between items-center'>
           <div className='flex gap-2 items-center'>
-            <Link href='/app/feed'>
-              <button className='outlined --secondary rounded-full text-sm'>
-                <ArrowLeft />
-              </button>
-            </Link>
+            <button
+              className='outlined --secondary rounded-full text-sm'
+              onClick={() => router.push('/app/feed')}>
+              <ArrowLeft />
+            </button>
+
             <BetTitle />
           </div>
-
-          <div
-            className='rounded-[100px] flex py-1 px-2 text-xs'
-            style={{
-              color:
-                bet.status === 'frozen'
-                  ? 'var(--color-blue-400)'
-                  : bet.status === 'pending'
-                  ? 'var(--color-yellow-500)'
-                  : bet.status === 'active'
-                  ? 'var(--color-green-500)'
-                  : 'var(--color-red-500)',
-              backgroundColor:
-                bet.status === 'frozen'
-                  ? 'hsl(from var(--color-blue-500) h s l / 0.2)'
-                  : bet.status === 'pending'
-                  ? 'hsl(from var(--color-yellow-500) h s l / 0.2)'
-                  : bet.status === 'active'
-                  ? 'hsl(from var(--color-green-500) h s l / 0.2)'
-                  : 'hsl(from var(--color-red-500) h s l / 0.2)',
-            }}>
-            {capitalize(bet.status)}
-          </div>
+        </div>
+        <div className='flex items-center gap-2'>
+          <BetAuthorBadge />
+          <BetStatusBadge />
         </div>
 
         <BetDescription />

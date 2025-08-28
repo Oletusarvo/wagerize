@@ -10,7 +10,7 @@ exports.up = function (knex) {
       for await (const bet of stream) {
         await knex('bets.bet_metadata').insert({
           bet_id: bet.id,
-          title: bet.data?.title || 'No title',
+          title: bet.data?.title.slice(0, 32) || 'No title',
           description: bet.data?.description,
           min_bid: bet.data?.min_bid,
           min_raise: bet.data?.min_raise,

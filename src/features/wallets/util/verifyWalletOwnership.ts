@@ -15,7 +15,7 @@ export async function verifyWalletOwnership(
     .select('user_id')
     .first();
 
-  if (!walletRecord.user_id !== session.user.id) {
+  if (walletRecord.user_id !== session.user.id) {
     return false;
   }
 

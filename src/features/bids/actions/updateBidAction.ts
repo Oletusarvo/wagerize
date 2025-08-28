@@ -1,6 +1,7 @@
 'use server';
 
 import { AuthError } from '@/features/auth/error/AuthError';
+import { io } from '@/features/io/lib/io';
 import { verifyWalletOwnership } from '@/features/wallets/util/verifyWalletOwnership';
 import { tablenames } from '@/tablenames';
 import { getParseResultErrorMessage } from '@/utils/getParseResultErrorMessage';
@@ -24,12 +25,14 @@ export async function updateBidAction(payload: FormData): Promise<ActionResponse
     };
   }
   const parsedPayload = parseResult.data;
+  console.log(parsedPayload);
 
   const session = await loadSession();
   const bidRecord = await db(tablenames.bid)
     .where({ id: parsedPayload.id })
     .select('wallet_id')
     .first();
+  console.log(session.user);
   const isWalletOwner = await verifyWalletOwnership(session, bidRecord.wallet_id, db);
   if (!isWalletOwner) {
     return {
@@ -48,5 +51,13 @@ export async function updateBidAction(payload: FormData): Promise<ActionResponse
         .where({ label: parsedPayload.status })
         .limit(1),
     });
+
+  io.dispatch({
+    message: 'bid:update',
+    payload: {
+      id: parsedPayload.id,
+      status: parsedPayload.status,
+    },
+  });
   return { success: true };
 }

@@ -9,61 +9,78 @@ import { useBidContext } from '@/features/bids/providers/BidProvider';
 import { useRouter } from 'next/navigation';
 import { createClassName } from '@/utils/createClassName';
 import { PlacedBidIndicator } from '@/features/bids/components/PlacedBidIndicator';
+import { BetStatusBadge } from './BetStatusBadge';
+import { useClassName } from '@/hooks/useClassName';
+import { BetAuthorBadge } from './BetAuthorBadge';
 
 export function BetListing() {
-  const { bet } = useBetContext();
+  const { bet, isExpired, isFrozen } = useBetContext();
   const { bid, mustCall } = useBidContext();
   const router = useRouter();
   const bidStatus: BidBadgeProps['status'] =
     bet.status === 'frozen' ? 'frozen' : bid !== undefined ? 'participated' : 'open';
 
   return (
-    <Container>
-      <div
-        onClick={() => router.push(`/app/bets/${bet.id}`)}
-        className='flex flex-col gap-8 w-full text-white'>
-        <div className='flex flex-col gap-1'>
-          <div className='flex w-full justify-between items-start'>
+    <div
+      onClick={() => router.push(`/app/bets/${bet.id}`)}
+      className='container flex flex-col gap-8 w-full text-white'
+      style={{
+        backgroundColor: isFrozen
+          ? 'hsl(from var(--color-blue-500) h s l / 0.3)'
+          : isExpired
+          ? 'hsl(from var(--color-red-500) h s l / 0.3)'
+          : mustCall
+          ? 'hsl(from var(--color-yellow-500) h s l / 0.3)'
+          : 'hsl(from var(--color-background-light) h s l / 0.3)',
+      }}>
+      <div className='flex flex-col gap-1'>
+        <div className='flex w-full justify-between items-start'>
+          <div className='flex gap-2 flex-col w-full items-start'>
             <h3 className='font-semibold max-w-[70%] overflow-hidden overflow-ellipsis text-nowrap'>
               {bet.title}
             </h3>
-            <div className='flex items-center gap-4'>
-              <small>{new Date(bet.created_at).toLocaleDateString('fi')}</small>
-              <BidBadge status={bidStatus} />
+            <div className='flex items-center gap-2'>
+              <BetAuthorBadge />
+              <BetStatusBadge />
             </div>
           </div>
 
-          <p className='text-white'>{bet.description || 'No description.'}</p>
+          <div className='flex items-center gap-4'>
+            <small>{new Date(bet.created_at).toLocaleDateString('fi')}</small>
+            <BidBadge status={bidStatus} />
+          </div>
         </div>
 
-        <div className='flex w-full justify-between'>
-          <div className='flex gap-4 p-2 bg-[#fff1] rounded-[100px] px-4'>
-            <DataPoint
-              IconComponent={ArrowDown}
-              content={bet.min_bid}
-            />
+        <p className='text-white'>{bet.description || 'No description.'}</p>
+      </div>
 
-            {bet.min_raise && (
-              <DataPoint
-                IconComponent={ArrowUp}
-                content={<>{bet.min_raise}</>}
+      <div className='flex w-full justify-between'>
+        <div className='flex gap-4 p-2 bg-[#fff1] rounded-[100px] px-4'>
+          <DataPoint
+            IconComponent={ArrowDown}
+            content={bet.min_bid}
+          />
+
+          {bet.min_raise && (
+            <DataPoint
+              IconComponent={ArrowUp}
+              content={<>{bet.min_raise}</>}
+            />
+          )}
+
+          <DataPoint
+            IconComponent={props => (
+              <Dice5
+                {...props}
+                rotate='45deg'
               />
             )}
-
-            <DataPoint
-              IconComponent={props => (
-                <Dice5
-                  {...props}
-                  rotate='45deg'
-                />
-              )}
-              content={bet.pool}
-            />
-          </div>
-          {bid && <PlacedBidIndicator />}
+            content={bet.pool}
+          />
         </div>
+        {bid && <PlacedBidIndicator />}
       </div>
-    </Container>
+    </div>
   );
 }
 

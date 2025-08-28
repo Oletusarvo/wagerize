@@ -4,16 +4,19 @@ type MessageT = { to?: string } & (
   | {
       message: 'bet:update';
       payload: {
-        pool: number;
+        pool?: number;
         id: string;
-        min_bid: number;
+        min_bid?: number;
+        title?: string;
+        description?: string;
       };
     }
   | {
       message: 'bid:update';
       payload: {
-        amount: number;
+        amount?: number;
         id: string;
+        status?: string;
       };
     }
   | {
@@ -22,6 +25,13 @@ type MessageT = { to?: string } & (
         user_id: string;
         bet_id: string;
         amount: string;
+      };
+    }
+  | {
+      message: 'wallet:update';
+      payload: {
+        id: string;
+        balance: number;
       };
     }
 );

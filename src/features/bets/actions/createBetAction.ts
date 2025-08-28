@@ -38,6 +38,11 @@ export async function createBetAction(payload: FormData): Promise<ActionResponse
         expires_at: data.expires_at,
         currency_id: db.select('id').from(tablenames.currency).where({ symbol: 'dice' }).limit(1),
         author_id: session.user.id,
+        bet_status_id: db
+          .select('id')
+          .from(tablenames.bet_status)
+          .where({ label: 'active' })
+          .limit(1),
       },
       'id'
     );

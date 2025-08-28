@@ -1,5 +1,4 @@
 import { tablenames } from '@/tablenames';
-import db from 'betting_app/dbconfig';
 import { Knex } from 'knex';
 
 export function getBet(ctx: Knex | Knex.Transaction, search?: string) {
@@ -7,9 +6,18 @@ export function getBet(ctx: Knex | Knex.Transaction, search?: string) {
     .join(ctx(tablenames.bet_metadata).as('metadata'), 'metadata.bet_id', 'bet.id')
     .join(
       ctx
+        .select('user.username', 'user.id as user_id')
+        .from(tablenames.user)
+        .groupBy('user.username', 'user.id')
+        .as('user'),
+      'user.user_id',
+      'bet.author_id'
+    )
+    .join(
+      ctx
         .select(
           'bet_id',
-          db.raw("ARRAY_AGG(JSON_BUILD_OBJECT('label', label, 'id', id)) as outcomes")
+          ctx.raw("ARRAY_AGG(JSON_BUILD_OBJECT('label', label, 'id', id)) as outcomes")
         )
         .from(tablenames.bet_option)
         .groupBy('outcome.bet_id')
@@ -27,7 +35,7 @@ export function getBet(ctx: Knex | Knex.Transaction, search?: string) {
     )
     .leftJoin(
       ctx
-        .select('bet_id', db.raw('SUM(amount)::int as pool'))
+        .select('bet_id', ctx.raw('SUM(amount)::int as pool'))
         .from(tablenames.bid)
         .groupBy('bet_id')
         .as('bid'),
@@ -40,9 +48,11 @@ export function getBet(ctx: Knex | Knex.Transaction, search?: string) {
       'bet.expires_at',
       'bet.created_at',
       'bet.currency_id',
+      'bet.author_id',
       'bet_status.status_label as status',
       'outcome.outcomes',
-      db.raw('CAST(COALESCE(bid.pool, 0) as INTEGER) as pool')
+      'user.username as author',
+      ctx.raw('CAST(COALESCE(bid.pool, 0) as INTEGER) as pool')
       //db.raw("ARRAY_AGG(JSON_BUILD_OBJECT('label', outcome.label, 'id', outcome.id)) as outcomes")
     );
 

@@ -5,5 +5,6 @@ export const walletSchema = z.object({
 });
 
 export type TWallet = z.infer<typeof walletSchema> & {
-  current_balance: number;
+  id: string;
+  balance: number;
 };

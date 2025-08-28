@@ -10,6 +10,10 @@ import { BetError } from '@/features/bets/error/BetError';
 import { TWalletError } from '@/features/wallets/error/walletError';
 import { dispatchBetUpdate } from '../../bids/actions/util/dispatchBetUpdate';
 import { Bet } from '@/features/bets/lib/Bet';
+import { dispatchBidUpdate } from '@/features/bids/actions/util/dispatchBidUpdate';
+import { dispatchWalletUpdate } from '@/features/wallets/util/dispatchWalletUpdate';
+import { getWallet } from '@/features/wallets/dal/getWallet';
+import { tablenames } from '@/tablenames';
 
 export async function placeBidAction(
   payload: FormData
@@ -41,8 +45,20 @@ export async function placeBidAction(
         error: result.error,
       };
     }
+
+    const [wallet] = await trx(tablenames.wallet)
+      .where({ user_id: session.user.id, currency_id: bet.data.currency_id })
+      .decrement('balance', bid.amount)
+      .returning('id');
+
     await trx.commit();
-    await dispatchBetUpdate(session.user.id, bid.bet_id);
+
+    await Promise.all([
+      dispatchBetUpdate(bid.bet_id),
+      dispatchBidUpdate(session.user.id, bid.bet_id),
+      dispatchWalletUpdate(wallet.id),
+    ]);
+
     return {
       success: true,
     };

@@ -14,7 +14,7 @@ export function PoolDisplay() {
   const currentPool = useAnimatedNumber(bet.pool, 25, true);
 
   const className = useClassName(
-    'xs:w-[75%] rounded-full border-2 flex flex-col gap-2 items-center justify-center aspect-square text-2xl text-white',
+    'xs:w-[65%] rounded-full border-2 flex flex-col gap-2 items-center justify-center aspect-square text-2xl text-white',
     mustCall
       ? 'border-accent'
       : status === 'participated'

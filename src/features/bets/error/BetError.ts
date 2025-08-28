@@ -6,6 +6,7 @@ export const BetError = {
   MAX_OUTCOMES: error('max_outcomes'),
   MAX_BIDS: error('max_bids'),
   EXPIRED: error('expired'),
+  ACTIVE: error('active'),
   NO_RAISE: error('no_raise'),
   FOLDED: error('folded'),
   FROZEN: error('frozen'),

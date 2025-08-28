@@ -92,7 +92,7 @@
 
 @media (min-width: 1536px) {
   :root {
-    --default-px-amount: --spacing(64);
+    --default-px-amount: --spacing(128);
   }
 }
 

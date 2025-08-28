@@ -40,6 +40,8 @@ const t = betSchema.omit({ outcomes: true });
 
 export type TBet = z.infer<typeof t> & {
   id: string;
+  author_id: string;
+  author: string;
   bet_status_id: number;
   status: string;
   pool: number;
