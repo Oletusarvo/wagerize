@@ -1,6 +1,6 @@
 'use server';
 
-import { getSession } from '@/utils/getSession';
+import { loadSession } from '@/utils/getSession';
 import db from 'betting_app/dbconfig';
 
 export async function deleteUserAction() {
@@ -8,7 +8,7 @@ export async function deleteUserAction() {
     code: 0,
   };
   try {
-    const session = await getSession();
+    const session = await loadSession();
     await db('users.user').where({ id: session.user.id }).del();
   } catch (err) {
     console.log(err.message);

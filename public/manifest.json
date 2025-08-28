@@ -3,8 +3,8 @@
   "name": "Casual Betting App With Virtual Money | Wagerize",
   "display": "standalone",
   "start_url": "/",
-  "background_color": "#ffffff",
-  "theme_color": "#6f3b6a",
+  "background_color": "#0b2547",
+  "theme_color": "#0b2547",
   "orientation": "portrait",
 
   "icons": [

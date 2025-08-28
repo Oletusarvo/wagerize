@@ -32,7 +32,7 @@ export function useLoginForm() {
               currentStatus = 'error';
             }
           } else {
-            currentStatus = 'done';
+            currentStatus = 'success';
             toast.success('Login success!');
             const callbackUrl = searchParams.get('callback') || '/app/feed';
             router.replace(callbackUrl);

@@ -1,16 +1,14 @@
 'use client';
 
-import { Button } from '@/components/feature/Button';
+import { LoaderButton } from '@/components/feature/Button';
 import { Form } from '@/components/feature/Form';
 import { FormHeading } from '@/components/ui/FormHeading';
 import { InputGroup } from '@/components/ui/InputGroup';
 import { Helper } from '@/components/ui/InputHelper';
 import { createContextWithHook } from '@/utils/createContextWithHook';
 import { useResetPasswordForm } from '../hooks/useResetPasswordForm';
-import { Suspense } from 'react';
-import { Spinner } from '@/components/ui/Spinner';
 import { Input } from '@/components/ui/Input';
-import { Email, Password } from '@mui/icons-material';
+import { Ellipsis, Mail } from 'lucide-react';
 
 export function ResetPasswordForm() {
   const { newCredentials, updateNewCredentials, onSubmit, token, status, buttonDisabled } =
@@ -21,12 +19,12 @@ export function ResetPasswordForm() {
       <Form onSubmit={onSubmit}>
         <FormHeading>Reset Password</FormHeading>
         {token ? <ResetPasword /> : <SendResetEmail />}
-        <Button
+        <LoaderButton
           type='submit'
           loading={status === 'loading'}
           disabled={buttonDisabled || status === 'loading' || status === 'done'}>
           Send
-        </Button>
+        </LoaderButton>
       </Form>
     </ResetPasswordContext.Provider>
   );
@@ -38,7 +36,7 @@ function SendResetEmail() {
     <InputGroup>
       <label>Email</label>
       <Input
-        icon={<Email />}
+        icon={<Mail />}
         required
         name='email'
         type='email'
@@ -58,7 +56,7 @@ function ResetPasword() {
       <InputGroup>
         <label>New Password</label>
         <Input
-          icon={<Password />}
+          icon={<Ellipsis />}
           minLength={8}
           value={newCredentials.password1}
           onChange={updateNewCredentials}
@@ -71,7 +69,7 @@ function ResetPasword() {
       <InputGroup>
         <label>Repeat New Password</label>
         <Input
-          icon={<Password />}
+          icon={<Ellipsis />}
           value={newCredentials.password2}
           onChange={updateNewCredentials}
           type='password'

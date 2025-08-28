@@ -3,10 +3,10 @@
 import { useClassName } from '@/hooks/useClassName';
 
 export function Spinner({ size = 'default' }: SpinnerProps) {
-  const className = useClassName([
+  const className = useClassName(
     'w-4 h-4 aspect-square rounded-full border-2 border-white border-t-accent animate-spin border-t-4',
-    size === 'large' ? 'w-[1.5rem] h-[1.5rem]' : 'w-4 h-4',
-  ]);
+    size === 'large' ? 'w-[1.5rem] h-[1.5rem]' : 'w-4 h-4'
+  );
 
   return <div className={className} />;
 }

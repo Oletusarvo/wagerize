@@ -9,6 +9,7 @@ import { cookies } from 'next/headers';
 import { AnalyticsScript } from '@/components/AnalyticsScript';
 import { CookiesWrapper } from '../features/cookies/providers/CookiesWrapper';
 import { loadSession } from '@/utils/getSession';
+import { WindowResizeManager } from '@/managers/WindowResizeManager';
 
 export const metadata: Metadata = {
   title: 'Wagerize - Casual betting game without the hassle of real money.',
@@ -51,6 +52,7 @@ export default async function RootLayout({
       <CookiesWrapper>
         <AuthProvider>
           <body className='antialiased flex flex-col w-full h-screen'>
+            <WindowResizeManager />
             {children}
             <Toaster position='top-center' />
           </body>
