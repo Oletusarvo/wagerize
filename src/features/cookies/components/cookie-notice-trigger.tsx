@@ -3,7 +3,7 @@
 import { Cookie, X } from 'lucide-react';
 import { ToggleProvider } from '../../../providers/toggle-provider';
 import { useCookieNoticeContext } from '@/features/cookies/providers/cookie-notice-provider';
-import { Button } from '@/components/feature/button';
+import { Button } from '@/components/feature/button-temp';
 
 export function CookieNoticeTrigger() {
   const { cookieNoticeOpen } = useCookieNoticeContext();

@@ -1,7 +1,7 @@
 'use server';
 import { AuthError } from '@/features/auth/error/auth-error';
 import { userService } from '@/features/users/services/user-service';
-import { createJWT } from '@/utils/jwt';
+import { createJWT } from '@/utils/jwt-temp';
 import { parseFormDataUsingSchema } from '@/utils/parse-form-data-using-schema';
 import db from 'betting_app/dbconfig';
 import { transport } from 'betting_app/nodemailer.config';

@@ -1,10 +1,10 @@
-import { Input } from '@/components/ui/input';
+import { Input } from '@/components/ui/input-temp';
 import { InputGroup } from '@/components/ui/input-group';
 import { useCreateBetForm } from '@/features/bets/hooks/use-create-bet-form';
 import { Check, Plus } from 'lucide-react';
 import { useRef } from 'react';
 import { useCreateBetFormContext } from '../../create-bet-form';
-import { Icon } from '@/components/ui/icon';
+import { Icon } from '@/components/ui/icon-temp';
 import { Chip } from '@/components/ui/chip-temp';
 
 export function OutcomesInput() {

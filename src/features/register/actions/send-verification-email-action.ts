@@ -1,6 +1,6 @@
 'use server';
 
-import { createJWT } from '@/utils/jwt';
+import { createJWT } from '@/utils/jwt-temp';
 import { parseFormDataUsingSchema } from '@/utils/parse-form-data-using-schema';
 import { sendHTMLEmail } from '@/utils/send-email';
 import { registerEmailSchema } from '../schemas/register-credentials-schema';

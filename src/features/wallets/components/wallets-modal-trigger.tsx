@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/feature/button';
+import { Button } from '@/components/feature/button-temp';
 import { Wallet } from 'lucide-react';
 import { useWalletContext } from '../providers/wallet-provider';
 

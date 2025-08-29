@@ -1,5 +1,5 @@
 import { AppFooter } from '@/components/app-footer';
-import { Button } from '@/components/feature/button';
+import { Button } from '@/components/feature/button-temp';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
 

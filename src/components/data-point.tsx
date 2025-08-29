@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { Icon } from './ui/icon';
+import { Icon } from './ui/icon-temp';
 
 export function DataPoint({ IconComponent, content, color = 'accent' }: DataPointProps) {
   return (

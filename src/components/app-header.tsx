@@ -1,12 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { Header } from './ui/header';
+import { Header } from './ui/header-temp';
 import { RefObject, useRef } from 'react';
 import { createContextWithHook } from '@/utils/create-context-with-hook';
 import { IndexNavMenuTrigger } from '../features/main-menu/components/index-nav-menu-trigger';
 import { MainMenuProvider } from '@/features/main-menu/providers/main-menu-provider';
-import { Logo } from './logo';
+import { Logo } from './logo-temp';
 
 const [AppHeaderContext, useAppHeaderContext] = createContextWithHook<{
   headerRef: RefObject<HTMLElement | null>;

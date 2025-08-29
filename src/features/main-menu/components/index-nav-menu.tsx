@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useAppHeaderContext } from '../../../components/app-header';
 import { useUserContext } from '@/features/users/contexts/user-provider';
-import { Spinner } from '../../../components/ui/spinner';
+import { Spinner } from '../../../components/ui/spinner-temp';
 import { useSession } from 'next-auth/react';
 
 export function IndexNavMenu({ ref = null }) {

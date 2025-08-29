@@ -1,6 +1,6 @@
 'use client';
 
-import { Modal } from '@/components/ui/modal';
+import { Modal } from '@/components/ui/modal-temp';
 import { useWalletContext } from '../providers/wallet-provider';
 
 export function WalletsModal(props) {

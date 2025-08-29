@@ -5,7 +5,7 @@ import { ToggleProvider } from '../../../providers/toggle-provider';
 import { FormHeading } from '../../../components/ui/form-heading';
 import { X } from 'lucide-react';
 import { useAppFooterContext } from '../../../components/app-footer';
-import { Button } from '@/components/feature/button';
+import { Button } from '@/components/feature/button-temp';
 
 export function CookieNotice(props) {
   const { footerRef } = useAppFooterContext();

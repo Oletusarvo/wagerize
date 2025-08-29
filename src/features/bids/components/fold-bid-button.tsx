@@ -1,4 +1,4 @@
-import { Button } from '@/components/feature/button';
+import { Button } from '@/components/feature/button-temp';
 import { useBidContext } from '../providers/bid-provider';
 import { ToggleProvider } from '@/providers/toggle-provider';
 import { ConfirmModal } from '../../../components/confirm-modal';

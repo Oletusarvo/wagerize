@@ -3,7 +3,7 @@
 import { ToggleProvider } from '@/providers/toggle-provider';
 import { useBetContext } from '../providers/bet-provider';
 import { ConfirmModal } from '@/components/confirm-modal';
-import { Button } from '@/components/feature/button';
+import { Button } from '@/components/feature/button-temp';
 
 export function EndBetButton() {
   const { end, setShowEndBetModal } = useBetContext();

@@ -1,9 +1,9 @@
 'use client';
 
-import { Button, LoaderButton } from '@/components/feature/button';
-import { Form } from '@/components/feature/form';
+import { Button, LoaderButton } from '@/components/feature/button-temp';
+import { Form } from '@/components/feature/form-temp';
 import { FormHeading } from '@/components/ui/form-heading';
-import { Input } from '@/components/ui/input';
+import { Input } from '@/components/ui/input-temp';
 import { InputGroup } from '@/components/ui/input-group';
 import { ErrorHelper } from '@/components/ui/input-helper';
 import { AuthError } from '@/features/auth/error/auth-error';

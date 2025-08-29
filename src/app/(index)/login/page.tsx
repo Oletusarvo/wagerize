@@ -1,5 +1,5 @@
-import { Main } from '@/components/ui/main';
-import { Spinner } from '@/components/ui/spinner';
+import { Main } from '@/components/ui/main-temp';
+import { Spinner } from '@/components/ui/spinner-temp';
 import { LoginForm } from '@/features/login/components/login-form';
 import { Suspense } from 'react';
 

@@ -1,7 +1,7 @@
 import { BetListing } from './bet-listing';
 import { TBet } from '../schemas/bet-schema';
 import { BetProvider } from '../providers/bet-provider';
-import { List } from '@/components/feature/list';
+import { List } from '@/components/feature/list-temp';
 import { loadSession } from '@/utils/load-session';
 import db from 'betting_app/dbconfig';
 import { tablenames } from '@/tablenames';

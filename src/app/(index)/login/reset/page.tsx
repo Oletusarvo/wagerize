@@ -1,4 +1,4 @@
-import { Spinner } from '@/components/ui/spinner';
+import { Spinner } from '@/components/ui/spinner-temp';
 import { ResetPasswordForm } from '@/features/reset-password/components/reset-password-form';
 import { Suspense } from 'react';
 

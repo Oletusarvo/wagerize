@@ -1,5 +1,5 @@
 'use client';
-import { Button } from '@/components/feature/button';
+import { Button } from '@/components/feature/button-temp';
 import { ToggleProvider } from '@/providers/toggle-provider';
 import { useBetContext } from '../../bets/providers/bet-provider';
 import { useBidContext } from '@/features/bids/providers/bid-provider';

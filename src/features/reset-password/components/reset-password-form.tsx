@@ -1,13 +1,13 @@
 'use client';
 
-import { LoaderButton } from '@/components/feature/button';
-import { Form } from '@/components/feature/form';
+import { LoaderButton } from '@/components/feature/button-temp';
+import { Form } from '@/components/feature/form-temp';
 import { FormHeading } from '@/components/ui/form-heading';
 import { InputGroup } from '@/components/ui/input-group';
 import { ErrorHelper, Helper } from '@/components/ui/input-helper';
 import { createContextWithHook } from '@/utils/create-context-with-hook';
 import { useResetPasswordForm } from '../hooks/use-reset-password-form';
-import { Input } from '@/components/ui/input';
+import { Input } from '@/components/ui/input-temp';
 import { Ellipsis, Mail } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 

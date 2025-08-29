@@ -4,7 +4,7 @@ import { ArrowDownCircle, ArrowUpCircle, ArrowUpToLine } from 'lucide-react';
 import { useBidContext } from '../providers/bid-provider';
 import { useState } from 'react';
 import { useBetContext } from '@/features/bets/providers/bet-provider';
-import { Input } from '@/components/ui/input';
+import { Input } from '@/components/ui/input-temp';
 
 export function BidAmountInput() {
   const { bet } = useBetContext();

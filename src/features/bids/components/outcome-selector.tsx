@@ -1,6 +1,6 @@
 'use client';
 
-import { List } from '@/components/feature/list';
+import { List } from '@/components/feature/list-temp';
 import { RadioButton } from '@/components/feature/radio-button';
 
 export function OutcomeSelector({ selectedValue, values, onChange }) {

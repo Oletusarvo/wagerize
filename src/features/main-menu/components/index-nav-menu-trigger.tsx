@@ -2,7 +2,7 @@
 
 import { Menu, X } from 'lucide-react';
 import { ToggleProvider } from '../../../providers/toggle-provider';
-import { Button } from '../../../components/feature/button';
+import { Button } from '../../../components/feature/button-temp';
 import { useMainMenuContext } from '../providers/main-menu-provider';
 
 export function IndexNavMenuTrigger() {

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useStatus } from './use-status';
-import { Spinner } from '@/components/ui/spinner';
+import { Spinner } from '@/components/ui/spinner-temp';
 
 export function useInfiniteScroll({
   fetchFn,

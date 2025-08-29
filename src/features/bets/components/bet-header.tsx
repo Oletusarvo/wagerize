@@ -1,7 +1,7 @@
 'use client';
 
 import { DataPoint } from '@/components/data-point';
-import { Icon } from '@/components/ui/icon';
+import { Icon } from '@/components/ui/icon-temp';
 
 import toast from 'react-hot-toast';
 import { useBetContext } from '../providers/bet-provider';
@@ -18,7 +18,7 @@ import {
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
 import { capitalize } from '@/utils/capitalize';
 import Link from 'next/link';
-import { Button } from '@/components/feature/button';
+import { Button } from '@/components/feature/button-temp';
 import { BetStatusBadge } from './bet-status-badge';
 import { useRouter } from 'next/navigation';
 import { BetAuthorBadge } from './bet-author-badge';

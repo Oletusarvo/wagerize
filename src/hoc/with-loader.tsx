@@ -1,4 +1,4 @@
-import { Spinner } from '@/components/ui/spinner';
+import { Spinner } from '@/components/ui/spinner-temp';
 import { withAlternate } from './with-alterante';
 
 export function withLoader<PropsT extends React.PropsWithChildren>(Component: React.FC<PropsT>) {

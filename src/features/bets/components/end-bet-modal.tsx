@@ -1,11 +1,11 @@
-import { Form } from '@/components/feature/form';
-import { Modal } from '@/components/ui/modal';
+import { Form } from '@/components/feature/form-temp';
+import { Modal } from '@/components/ui/modal-temp';
 import { useBetContext } from '../providers/bet-provider';
 import { OutcomeSelector } from '@/features/bids/components/outcome-selector';
 import { useState } from 'react';
 import { useOnSubmit } from '@/hooks/use-on-submit';
 import { endBetAction } from '../actions/end-bet-action';
-import { Button, LoaderButton } from '@/components/feature/button';
+import { Button, LoaderButton } from '@/components/feature/button-temp';
 import { ToggleProvider } from '@/providers/toggle-provider';
 import { useRouter } from 'next/navigation';
 import { AuthError } from '@/features/auth/error/auth-error';

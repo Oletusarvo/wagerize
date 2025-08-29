@@ -1,4 +1,4 @@
-import { Button } from '@/components/feature/button';
+import { Button } from '@/components/feature/button-temp';
 import { BetFooter } from '@/features/bets/components/bet-footer';
 import { BetHeader } from '@/features/bets/components/bet-header';
 import { PlaceBidButton } from '@/features/bids/components/place-bid-button';

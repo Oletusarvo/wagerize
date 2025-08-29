@@ -6,7 +6,7 @@ import { registerCredentialsSchema } from '../schemas/register-credentials-schem
 import { AuthError, TAuthError } from '@/features/auth/error/auth-error';
 import { parseFormDataUsingSchema } from '@/utils/parse-form-data-using-schema';
 import { hashPassword } from '@/utils/hash-password';
-import { verifyJWT } from '@/utils/jwt';
+import { verifyJWT } from '@/utils/jwt-temp';
 
 export async function registerUserAction(
   payload: FormData

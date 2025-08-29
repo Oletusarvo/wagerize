@@ -1,7 +1,7 @@
 'use client';
 
 import { DataPoint } from '@/components/data-point';
-import { Container } from '@/components/ui/container';
+import { Container } from '@/components/ui/container-temp';
 import {
   ArrowDown,
   ArrowDownCircle,

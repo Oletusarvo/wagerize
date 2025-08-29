@@ -1,7 +1,7 @@
 'use client';
 
 import { ConfirmModal } from '@/components/confirm-modal';
-import { Button } from '@/components/feature/button';
+import { Button } from '@/components/feature/button-temp';
 import { ToggleProvider } from '@/providers/toggle-provider';
 import { useBetContext } from '../providers/bet-provider';
 

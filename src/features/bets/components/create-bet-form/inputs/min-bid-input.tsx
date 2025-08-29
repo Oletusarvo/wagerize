@@ -1,4 +1,4 @@
-import { Input } from '@/components/ui/input';
+import { Input } from '@/components/ui/input-temp';
 import { InputGroup } from '@/components/ui/input-group';
 import { ArrowDown, ArrowDownCircle } from 'lucide-react';
 import { useCreateBetFormContext } from '../../create-bet-form';

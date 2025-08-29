@@ -1,6 +1,6 @@
 'use server';
 import db from 'betting_app/dbconfig';
-import { verifyJWT } from '@/utils/jwt';
+import { verifyJWT } from '@/utils/jwt-temp';
 import { userService } from '@/features/users/services/user-service';
 import { parseFormDataUsingSchema } from '@/utils/parse-form-data-using-schema';
 import { passwordResetSchema } from '../schemas/password-reset-schema';

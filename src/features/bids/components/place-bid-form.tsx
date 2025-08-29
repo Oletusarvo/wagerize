@@ -1,14 +1,14 @@
 'use client';
 
-import { Button, LoaderButton } from '@/components/feature/button';
-import { Form } from '@/components/feature/form';
+import { Button, LoaderButton } from '@/components/feature/button-temp';
+import { Form } from '@/components/feature/form-temp';
 import { usePlaceBidForm } from '../../bets/hooks/use-place-bid-form';
 import { useBetContext } from '../../bets/providers/bet-provider';
 import { ToggleProvider } from '@/providers/toggle-provider';
 import { useBidContext } from '@/features/bids/providers/bid-provider';
 import { OutcomeSelector } from './outcome-selector';
 import { BidAmountInput } from './bid-amount-input';
-import { Modal } from '@/components/ui/modal';
+import { Modal } from '@/components/ui/modal-temp';
 
 export function PlaceBidForm(props: React.ComponentProps<'form'>) {
   const { bet } = useBetContext();

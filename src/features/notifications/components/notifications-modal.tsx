@@ -1,6 +1,6 @@
 'use client';
 
-import { Modal } from '@/components/ui/modal';
+import { Modal } from '@/components/ui/modal-temp';
 import { useNotificationsContext } from '../providers/notifications-provider';
 
 export function NotificationsModal(props) {

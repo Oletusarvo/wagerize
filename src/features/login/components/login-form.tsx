@@ -1,15 +1,15 @@
 'use client';
 
-import { Form } from '@/components/feature/form';
+import { Form } from '@/components/feature/form-temp';
 import { useLoginForm } from '../hooks/use-login-form';
 import { InputGroup } from '@/components/ui/input-group';
-import { Button, LoaderButton } from '@/components/feature/button';
+import { Button, LoaderButton } from '@/components/feature/button-temp';
 import { FormHeading } from '@/components/ui/form-heading';
 import Link from 'next/link';
 import { ErrorHelper } from '@/components/ui/input-helper';
 
 import { Ellipsis, Mail } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { Input } from '@/components/ui/input-temp';
 
 export function LoginForm() {
   const { credentials, updateCredentials, onSubmit, status } = useLoginForm();

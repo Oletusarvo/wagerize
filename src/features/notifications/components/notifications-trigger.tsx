@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/feature/button';
+import { Button } from '@/components/feature/button-temp';
 import { ToggleProvider } from '@/providers/toggle-provider';
 import { Bell } from 'lucide-react';
 import { NotificationsModal } from './notifications-modal';

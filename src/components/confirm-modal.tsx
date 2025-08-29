@@ -1,7 +1,7 @@
 'use client';
 
-import { Button, LoaderButton } from '@/components/feature/button';
-import { Modal } from '@/components/ui/modal';
+import { Button, LoaderButton } from '@/components/feature/button-temp';
+import { Modal } from '@/components/ui/modal-temp';
 import { ToggleProvider } from '@/providers/toggle-provider';
 import React, { useRef } from 'react';
 import { useState } from 'react';

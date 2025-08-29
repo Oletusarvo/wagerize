@@ -1,4 +1,4 @@
-import { Main } from '@/components/ui/main';
+import { Main } from '@/components/ui/main-temp';
 import { CreateBetForm } from '@/features/bets/components/create-bet-form';
 
 export default async function CreateBetPage() {

@@ -3,7 +3,7 @@
 import { useRef } from 'react';
 import { ToggleProvider } from '../../providers/toggle-provider';
 import { X } from 'lucide-react';
-import { Button } from '../feature/button';
+import { Button } from '../feature/button-temp';
 import { useClassName } from '@/hooks/use-class-name';
 
 export function Modal({ children, onClose = null, fullHeight = false, title }) {
