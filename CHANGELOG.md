@@ -1,3 +1,9 @@
+## [0.10.0-alpha.2] - 29-08-2025
+
+### Fixed
+
+- Incorrect filename imports
+
 ## [0.10.0-alpha.1] - 29-08-2025
 
 ### Fixed

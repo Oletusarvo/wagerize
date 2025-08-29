@@ -2,9 +2,10 @@
 
 import { useSearch } from '@/hooks/use-search';
 import { useMemo } from 'react';
-import { Input } from '../ui/input';
+
 import { Spinner } from '../ui/spinner';
 import { Search } from 'lucide-react';
+import { Input } from '../ui/input';
 
 export function SearchBar({ queryName }) {
   const [updateSearch, status] = useSearch(queryName);

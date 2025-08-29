@@ -3,13 +3,8 @@
 import { Button, LoaderButton } from '@/components/feature/button';
 import { Form } from '@/components/feature/form';
 import { usePlaceBidForm } from '../../bets/hooks/use-place-bid-form';
-import { useList } from '@/hooks/use-list';
-import { RadioButton } from '@/components/feature/radio-button';
-import { Input } from '@/components/ui/input';
-import { ArrowDownCircle, ArrowUpCircle, ArrowUpToLine } from 'lucide-react';
 import { useBetContext } from '../../bets/providers/bet-provider';
 import { ToggleProvider } from '@/providers/toggle-provider';
-import { useState } from 'react';
 import { useBidContext } from '@/features/bids/providers/bid-provider';
 import { OutcomeSelector } from './outcome-selector';
 import { BidAmountInput } from './bid-amount-input';

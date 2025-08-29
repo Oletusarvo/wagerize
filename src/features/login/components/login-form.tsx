@@ -7,8 +7,9 @@ import { Button, LoaderButton } from '@/components/feature/button';
 import { FormHeading } from '@/components/ui/form-heading';
 import Link from 'next/link';
 import { ErrorHelper } from '@/components/ui/input-helper';
-import { Input } from '@/components/ui/input';
+
 import { Ellipsis, Mail } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 
 export function LoginForm() {
   const { credentials, updateCredentials, onSubmit, status } = useLoginForm();
