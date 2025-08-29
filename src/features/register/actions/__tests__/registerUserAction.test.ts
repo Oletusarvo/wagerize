@@ -1,7 +1,7 @@
 import db from 'betting_app/dbconfig';
-import { registerUserAction } from '../registerUserAction';
+import { registerUserAction } from '../register-user-action';
 import { transport } from 'betting_app/nodemailer.config';
-import { RegisterError } from '../../types/RegisterError';
+import { RegisterError } from '../../types/register-error';
 require('dotenv').config({
   path: './.env.test',
 });

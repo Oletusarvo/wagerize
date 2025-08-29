@@ -1,6 +1,6 @@
-import { Main } from '@/components/ui/Main';
-import { Spinner } from '@/components/ui/Spinner';
-import { LoginForm } from '@/features/login/components/LoginForm';
+import { Main } from '@/components/ui/main';
+import { Spinner } from '@/components/ui/spinner';
+import { LoginForm } from '@/features/login/components/login-form';
 import { Suspense } from 'react';
 
 export default async function Login() {

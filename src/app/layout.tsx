@@ -1,15 +1,15 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from 'react-hot-toast';
-import { AppHeader } from '@/components/AppHeader';
-import { UserProvider } from '@/features/users/contexts/UserProvider';
-import { AuthProvider } from '../providers/AuthProvider';
-import { AppFooter } from '@/components/AppFooter';
+import { AppHeader } from '@/components/app-header';
+import { UserProvider } from '@/features/users/contexts/user-provider';
+import { AuthProvider } from '../providers/auth-provider';
+import { AppFooter } from '@/components/app-footer';
 import { cookies } from 'next/headers';
-import { AnalyticsScript } from '@/components/AnalyticsScript';
-import { CookiesWrapper } from '../features/cookies/providers/CookiesWrapper';
-import { loadSession } from '@/utils/getSession';
-import { WindowResizeManager } from '@/managers/WindowResizeManager';
+import { AnalyticsScript } from '@/components/analytics-script';
+import { CookiesWrapper } from '../features/cookies/providers/cookies-wrapper';
+import { loadSession } from '@/utils/load-session';
+import { WindowResizeManager } from '@/managers/window-resize-manager';
 
 export const metadata: Metadata = {
   title: 'Wagerize - Casual betting game without the hassle of real money.',

@@ -1,6 +1,6 @@
 'use client';
 
-import { useSearch } from '@/hooks/useSearch';
+import { useSearch } from '@/hooks/use-search';
 
 type PaginatorProps = {
   currentPage: number;

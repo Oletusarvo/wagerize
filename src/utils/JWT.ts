@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-export function createJWT(payload: any, options?: any) {
+export function createJWT(payload: any, options?: jwt.SignOptions) {
   return jwt.sign(payload, process.env.JWT_SECRET, options);
 }
 

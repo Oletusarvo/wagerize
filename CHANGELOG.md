@@ -1,3 +1,20 @@
+## [0.10.0-alpha.1] - 29-08-2025
+
+### Fixed
+
+- Prevented users from tapping next until the title and description are valid in the bet creation form.
+
+### Changed
+
+- Renamed all files as kebab-case.
+- The icons for bid amounts in the bet listing component to have circles around them.
+- parseFormDataUsingSchema now uses .parse instead of .safeParse.
+
+### Added
+
+- Repositories and services for handling persistance and business-logic.
+- Warnings of invalid input on the bet creation form.
+
 ## [0.9.0] - 27-08-2025
 
 ## Version Drop

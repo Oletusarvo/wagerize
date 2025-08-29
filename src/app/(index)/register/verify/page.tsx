@@ -1,4 +1,4 @@
-import { FormHeading } from '@/components/ui/FormHeading';
+import { FormHeading } from '@/components/ui/form-heading';
 import Link from 'next/link';
 import React from 'react';
 

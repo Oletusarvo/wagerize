@@ -1,6 +1,6 @@
-import { getSession } from '@/utils/getSession';
+import { getSession } from '@/utils/load-session';
 import db from 'betting_app/dbconfig';
-import { createBetAction } from '../createBetAction';
+import { createBetAction } from '../create-bet-action';
 import { v4 } from 'uuid';
 import { revalidatePath } from 'next/cache';
 

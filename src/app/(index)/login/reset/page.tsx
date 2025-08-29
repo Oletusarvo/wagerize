@@ -1,5 +1,5 @@
-import { Spinner } from '@/components/ui/Spinner';
-import { ResetPasswordForm } from '@/features/reset_password/components/ResetPasswordForm';
+import { Spinner } from '@/components/ui/spinner';
+import { ResetPasswordForm } from '@/features/reset-password/components/reset-password-form';
 import { Suspense } from 'react';
 
 export default async function ResetPasswordPage() {

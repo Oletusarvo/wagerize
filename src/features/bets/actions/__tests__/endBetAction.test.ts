@@ -1,6 +1,6 @@
 import db from 'betting_app/dbconfig';
 import { v4 } from 'uuid';
-import { endBetAction } from '../endBetAction';
+import { endBetAction } from '../end-bet-action';
 
 let users = [];
 const outcomes = [];

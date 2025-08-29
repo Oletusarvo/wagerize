@@ -1,5 +1,5 @@
-import { withLoader } from '@/hoc/withLoader';
-import { useClassName } from '@/hooks/useClassName';
+import { withLoader } from '@/hoc/with-loader';
+import { useClassName } from '@/hooks/use-class-name';
 
 type ButtonProps = React.ComponentProps<'button'> & {
   fullWidth?: boolean;

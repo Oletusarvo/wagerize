@@ -1,6 +1,6 @@
 'use server';
 
-import { loadSession } from '@/utils/getSession';
+import { loadSession } from '@/utils/load-session';
 import db from 'betting_app/dbconfig';
 
 export async function deleteUserAction() {

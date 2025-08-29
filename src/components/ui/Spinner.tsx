@@ -1,6 +1,6 @@
 'use client';
 
-import { useClassName } from '@/hooks/useClassName';
+import { useClassName } from '@/hooks/use-class-name';
 
 export function Spinner({ size = 'default' }: SpinnerProps) {
   const className = useClassName(

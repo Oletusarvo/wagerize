@@ -29,7 +29,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "package.json",
-    "src/socketConfig.mjs"
+    "src/socket-config.mjs"
   ],
   "exclude": ["node_modules"]
 }

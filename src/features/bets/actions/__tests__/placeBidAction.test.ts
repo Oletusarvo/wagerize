@@ -1,10 +1,10 @@
 import db from 'betting_app/dbconfig';
 import { v4 } from 'uuid';
-import { placeBidAction } from '../placeBidAction';
-import { getSession } from '@/utils/getSession';
-import { createBetAction } from '../createBetAction';
+import { placeBidAction } from '../place-bid-action';
+import { getSession } from '@/utils/load-session';
+import { createBetAction } from '../create-bet-action';
 import { BetError } from '@/utils/error';
-import { BetStatus } from '../../constants/betStatus';
+import { BetStatus } from '../../constants/bet-status';
 
 jest.mock('@/utils/getSession');
 const userId = v4();

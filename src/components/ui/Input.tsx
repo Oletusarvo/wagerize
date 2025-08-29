@@ -1,6 +1,6 @@
 'use client';
 
-import { useClassName } from '@/hooks/useClassName';
+import { useClassName } from '@/hooks/use-class-name';
 import { Eye, EyeOff } from 'lucide-react';
 import { ReactNode, useState } from 'react';
 

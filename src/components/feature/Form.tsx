@@ -1,4 +1,4 @@
-import { createClassName } from '@/utils/createClassName';
+import { createClassName } from '@/utils/create-class-name';
 
 type FormProps = Omit<React.ComponentProps<'form'>, 'className'> & { centered?: boolean };
 

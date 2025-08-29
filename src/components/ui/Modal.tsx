@@ -1,10 +1,10 @@
 'use client';
 
 import { useRef } from 'react';
-import { ToggleProvider } from '../../providers/ToggleProvider';
+import { ToggleProvider } from '../../providers/toggle-provider';
 import { X } from 'lucide-react';
-import { Button } from '../feature/Button';
-import { useClassName } from '@/hooks/useClassName';
+import { Button } from '../feature/button';
+import { useClassName } from '@/hooks/use-class-name';
 
 export function Modal({ children, onClose = null, fullHeight = false, title }) {
   const ref = useRef(null);

@@ -1,4 +1,4 @@
-import { useClassName } from '@/hooks/useClassName';
+import { useClassName } from '@/hooks/use-class-name';
 import { X } from 'lucide-react';
 import { ReactNode } from 'react';
 

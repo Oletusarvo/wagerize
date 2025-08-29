@@ -1,7 +1,7 @@
 import { getToken } from 'next-auth/jwt';
 import { NextRequestWithAuth } from 'next-auth/middleware';
 import { NextResponse } from 'next/server';
-import { RateLimiter } from './utils/rateLimiter';
+import { RateLimiter } from './utils/rate-limiter';
 
 const rateLimiter = new RateLimiter({
   requestLimit: 10,

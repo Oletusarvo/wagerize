@@ -2,7 +2,7 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import { parse } from 'url';
 import next from 'next';
-import { socketConfig } from './src/socketConfig.mjs';
+import { socketConfig } from './src/socket-config.mjs';
 
 const port = parseInt(process.env.PORT || '3000', 10);
 const dev = process.env.NODE_ENV !== 'production';

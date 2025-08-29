@@ -1,8 +1,8 @@
-import { AppFooter } from '@/components/AppFooter';
-import { AppHeader } from '@/components/AppHeader';
-import { CookieNoticeTrigger } from '@/features/cookies/components/CookieNoticeTrigger';
-import { CookieNoticeProvider } from '@/features/cookies/providers/CookieNoticeProvider';
-import { MainMenuProvider } from '@/features/mainMenu/providers/MainMenuProvider';
+import { AppFooter } from '@/components/app-footer';
+import { AppHeader } from '@/components/app-header';
+import { CookieNoticeTrigger } from '@/features/cookies/components/cookie-notice-trigger';
+import { CookieNoticeProvider } from '@/features/cookies/providers/cookie-notice-provider';
+import { MainMenuProvider } from '@/features/main-menu/providers/main-menu-provider';
 
 export default async function SiteLayout({ children }) {
   return (

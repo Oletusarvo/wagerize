@@ -1,9 +1,9 @@
-import { Button } from '@/components/feature/Button';
-import { Container } from '@/components/ui/Container';
+import { Button } from '@/components/feature/button';
+import { Container } from '@/components/ui/container';
 import Link from 'next/link';
 import pkg from 'betting_app/package.json';
-import { Logo } from '@/components/Logo';
-import { Die } from '@/components/ui/Die';
+import { Logo } from '@/components/logo';
+import { Die } from '@/components/ui/die';
 
 export default async function Home() {
   return (

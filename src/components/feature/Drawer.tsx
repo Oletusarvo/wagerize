@@ -1,5 +1,5 @@
 import { ReactNode, useState } from 'react';
-import { ToggleProvider } from '../../providers/ToggleProvider';
+import { ToggleProvider } from '../../providers/toggle-provider';
 
 export function Drawer({ children, title }: DrawerProps) {
   return (
