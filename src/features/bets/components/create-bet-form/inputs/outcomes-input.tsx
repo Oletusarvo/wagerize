@@ -5,7 +5,7 @@ import { Check, Plus } from 'lucide-react';
 import { useRef } from 'react';
 import { useCreateBetFormContext } from '../../create-bet-form';
 import { Icon } from '@/components/ui/icon';
-import { Chip } from '@/components/ui/chip';
+import { Chip } from '@/components/ui/chip-temp';
 
 export function OutcomesInput() {
   const ref = useRef(null);
