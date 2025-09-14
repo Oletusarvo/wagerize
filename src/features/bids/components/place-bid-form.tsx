@@ -27,48 +27,49 @@ export function PlaceBidForm(props: React.ComponentProps<'form'>) {
   };
 
   return (
-    <Modal
-      {...props}
-      title='Place Bid'>
-      <Form
-        {...props}
-        onSubmit={onSubmit}>
-        <div className='flex w-full flex-col gap-2 bg-background-light'>
-          <input
-            name='bet_id'
-            value={bet.id}
-            hidden
-          />
-
-          {!bid && (
-            <OutcomeSelector
-              values={bet.outcomes}
-              selectedValue={selectedOutcome}
-              onChange={value => setSelectedOutcome(value)}
+    <Modal {...props}>
+      <Modal.Title>Place Bid</Modal.Title>
+      <Modal.Body>
+        <Form
+          {...props}
+          onSubmit={onSubmit}>
+          <div className='flex w-full flex-col gap-2 bg-background-light'>
+            <input
+              name='bet_id'
+              value={bet.id}
+              hidden
             />
-          )}
 
-          <BidAmountInput />
-          <div className='flex gap-2 w-full'>
-            <ToggleProvider.Trigger>
-              <Button
-                color='secondary'
-                variant='outlined'
-                fullWidth>
-                Cancel
-              </Button>
-            </ToggleProvider.Trigger>
-            <LoaderButton
-              fullWidth
-              type='submit'
-              color='accent'
-              loading={status === 'loading'}
-              disabled={isSubmitDisabled()}>
-              Confirm
-            </LoaderButton>
+            {!bid && (
+              <OutcomeSelector
+                values={bet.outcomes}
+                selectedValue={selectedOutcome}
+                onChange={value => setSelectedOutcome(value)}
+              />
+            )}
+
+            <BidAmountInput />
+            <div className='flex gap-2 w-full'>
+              <ToggleProvider.Trigger>
+                <Button
+                  color='secondary'
+                  variant='outlined'
+                  fullWidth>
+                  Cancel
+                </Button>
+              </ToggleProvider.Trigger>
+              <LoaderButton
+                fullWidth
+                type='submit'
+                color='accent'
+                loading={status === 'loading'}
+                disabled={isSubmitDisabled()}>
+                Confirm
+              </LoaderButton>
+            </div>
           </div>
-        </div>
-      </Form>
+        </Form>
+      </Modal.Body>
     </Modal>
   );
 }

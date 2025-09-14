@@ -39,7 +39,7 @@ export function BetHeader() {
         <div className='flex w-full justify-between items-center'>
           <div className='flex gap-2 items-center'>
             <button
-              className='outlined --secondary rounded-full text-sm'
+              className='button --no-default outlined --secondary --round text-sm'
               onClick={() => router.push('/app/feed')}>
               <ArrowLeft />
             </button>

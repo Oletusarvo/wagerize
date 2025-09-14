@@ -63,10 +63,9 @@ export function ConfirmModal({
   });
 
   return (
-    <Modal
-      {...props}
-      title={title}>
-      {content}
+    <Modal {...props}>
+      <Modal.Title>{title}</Modal.Title>
+      <Modal.Body>{content}</Modal.Body>
     </Modal>
   );
 }

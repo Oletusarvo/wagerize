@@ -1,3 +1,9 @@
+## [0.10.0-alpha.3] - 14-09-2025
+
+### Changed
+
+- Moved the bid outcome of a users bid to the right of the screen.
+
 ## [0.10.0-alpha.2] - 29-08-2025
 
 ### Fixed

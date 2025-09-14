@@ -23,7 +23,6 @@ export default async function BetPage({ params }) {
   const bet = await betService.repo.findById(betId, db);
   const bid = await bidService.repo.findBy({ user_id: session.user.id, bet_id: betId }, db).first();
 
-  console.log('Bid: ', bid);
   return (
     <BetProvider initialBet={bet}>
       <BidProvider initialBid={bid}>

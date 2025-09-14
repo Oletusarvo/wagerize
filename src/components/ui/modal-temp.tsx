@@ -1,12 +1,12 @@
 'use client';
 
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import { ToggleProvider } from '../../providers/toggle-provider';
 import { X } from 'lucide-react';
 import { Button } from '../feature/button-temp';
 import { useClassName } from '@/hooks/use-class-name';
 
-export function Modal({ children, onClose = null, fullHeight = false, title }) {
+export function Modal({ children, onClose = null, fullHeight = false }) {
   const ref = useRef(null);
 
   const closeButton = (
@@ -22,6 +22,12 @@ export function Modal({ children, onClose = null, fullHeight = false, title }) {
     'flex flex-col p-4 rounded-md relative w-full',
     fullHeight ? 'h-full' : ''
   );
+
+  const childArray = React.Children.toArray(children);
+
+  const title = childArray.find((c: any) => c.type == Modal.Title);
+  const body = childArray.find((c: any) => c.type == Modal.Body);
+  console.log(childArray.length);
   return (
     <ModalContainer>
       <div
@@ -31,10 +37,10 @@ export function Modal({ children, onClose = null, fullHeight = false, title }) {
         className={bodyClassName}
         ref={ref}>
         <div className='flex w-full items-center justify-between py-2'>
-          <h1 className='font-semibold text-accent'>{title}</h1>
+          {title}
           {!onClose ? <ToggleProvider.Trigger>{closeButton}</ToggleProvider.Trigger> : closeButton}
         </div>
-        {children}
+        {body}
       </div>
     </ModalContainer>
   );
@@ -47,3 +53,11 @@ function ModalContainer({ children }) {
     </div>
   );
 }
+
+Modal.Title = function ({ children }: React.PropsWithChildren) {
+  return <h1 className='font-semibold text-accent'>{children}</h1>;
+};
+
+Modal.Body = function ({ children }: React.PropsWithChildren) {
+  return children;
+};

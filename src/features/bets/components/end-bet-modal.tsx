@@ -32,34 +32,37 @@ export function EndBetModal(props) {
       {...props}
       title='End Bet'
       onClose={() => setShowEndBetModal(false)}>
-      <Form onSubmit={onSubmit}>
-        <div className='flex gap-2 w-full flex-col'>
-          <OutcomeSelector
-            selectedValue={selectedOutcome}
-            values={bet.outcomes}
-            onChange={val => setSelectedOutcome(val)}
-          />
-        </div>
+      <Modal.Title>End Bet</Modal.Title>
+      <Modal.Body>
+        <Form onSubmit={onSubmit}>
+          <div className='flex gap-2 w-full flex-col'>
+            <OutcomeSelector
+              selectedValue={selectedOutcome}
+              values={bet.outcomes}
+              onChange={val => setSelectedOutcome(val)}
+            />
+          </div>
 
-        <div className='flex gap-2 w-full'>
-          <ToggleProvider.Trigger>
-            <Button
+          <div className='flex gap-2 w-full'>
+            <ToggleProvider.Trigger>
+              <Button
+                fullWidth
+                variant='outlined'
+                color='secondary'>
+                Cancel
+              </Button>
+            </ToggleProvider.Trigger>
+
+            <LoaderButton
               fullWidth
-              variant='outlined'
-              color='secondary'>
-              Cancel
-            </Button>
-          </ToggleProvider.Trigger>
-
-          <LoaderButton
-            fullWidth
-            loading={status === 'loading'}
-            disabled={status === 'success' || status === 'loading'}>
-            Confirm
-          </LoaderButton>
-        </div>
-        <StatusNotice status={status} />
-      </Form>
+              loading={status === 'loading'}
+              disabled={status === 'success' || status === 'loading'}>
+              Confirm
+            </LoaderButton>
+          </div>
+          <StatusNotice status={status} />
+        </Form>
+      </Modal.Body>
     </Modal>
   );
 }

@@ -9,6 +9,11 @@
   transition: background-color 0.3s ease-out;
   border-radius: var(--radius-inputs);
   cursor: pointer;
+  transition: transform 0.2s ease-out;
+}
+
+.button:enabled:active {
+  transform: scale(0.9, 0.9);
 }
 
 .button.--full-width {
